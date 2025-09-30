@@ -1,0 +1,76 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "courses": "Cours",
+    "about": "À propos",
+    "contact": "Contact",
+    "login": "Connexion",
+    "register": "S'inscrire",
+    "dashboard": "Tableau de bord",
+    "logout": "Déconnexion"
+  },
+  "hero": {
+    "title": "Apprenez l'éthique de la recherche auprès d'experts",
+    "subtitle": "Maîtrisez la méthodologie de recherche, l'éthique et la rédaction académique avec notre plateforme de formation complète",
+    "cta": "Commencer",
+    "ctaSecondary": "Parcourir les cours"
+  },
+  "features": {
+    "title": "Pourquoi choisir la plateforme ResearchEthics",
+    "experts": {
+      "title": "Instructeurs experts",
+      "description": "Apprenez de chercheurs expérimentés et de professionnels académiques"
+    },
+    "actionable": {
+      "title": "Formation pratique",
+      "description": "Des compétences pratiques que vous pouvez appliquer immédiatement à votre recherche"
+    },
+    "quizzes": {
+      "title": "Quiz interactifs",
+      "description": "Testez vos connaissances avec des évaluations engageantes"
+    },
+    "certificates": {
+      "title": "Certificats vérifiés",
+      "description": "Obtenez des certificats reconnus à la fin du cours"
+    }
+  },
+  "courses": {
+    "title": "Nos modules de formation à la recherche",
+    "subtitle": "Cours complets conçus pour améliorer vos compétences en recherche",
+    "free": "Gratuit",
+    "paid": "Premium",
+    "enroll": "S'inscrire maintenant",
+    "learnMore": "En savoir plus"
+  },
+  "footer": {
+    "about": "À propos",
+    "privacy": "Politique de confidentialité",
+    "terms": "Conditions d'utilisation",
+    "contact": "Contactez-nous",
+    "copyright": "© 2025 Plateforme ResearchEthics. Tous droits réservés."
+  },
+  "auth": {
+    "loginTitle": "Connectez-vous à votre compte",
+    "registerTitle": "Créez votre compte",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "name": "Nom complet",
+    "phone": "Numéro de téléphone",
+    "department": "Département/Faculté",
+    "loginButton": "Connexion",
+    "registerButton": "S'inscrire",
+    "forgotPassword": "Mot de passe oublié?",
+    "noAccount": "Vous n'avez pas de compte?",
+    "hasAccount": "Vous avez déjà un compte?",
+    "signUp": "S'inscrire",
+    "signIn": "Se connecter"
+  },
+  "dashboard": {
+    "welcome": "Bon retour",
+    "myModules": "Mes modules",
+    "progress": "Progrès",
+    "certificates": "Certificats",
+    "settings": "Paramètres"
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "hero": {
+    "title": "Learn Research Ethics from Industry Experts",
+    "subtitle": "Master research methodology, ethics, and academic writing with our comprehensive training platform",
+    "cta": "Get Started",
+    "ctaSecondary": "Browse Courses"
+  },
+  "features": {
+    "title": "Why Choose ResearchEthics Platform",
+    "experts": {
+      "title": "Expert Instructors",
+      "description": "Learn from experienced researchers and academic professionals"
+    },
+    "actionable": {
+      "title": "Actionable Training",
+      "description": "Practical skills you can apply to your research immediately"
+    },
+    "quizzes": {
+      "title": "Interactive Quizzes",
+      "description": "Test your knowledge with engaging assessments"
+    },
+    "certificates": {
+      "title": "Verified Certificates",
+      "description": "Earn recognized certificates upon course completion"
+    }
+  },
+  "courses": {
+    "title": "Our Research Training Modules",
+    "subtitle": "Comprehensive courses designed to enhance your research skills",
+    "free": "Free",
+    "paid": "Premium",
+    "enroll": "Enroll Now",
+    "learnMore": "Learn More"
+  },
+  "footer": {
+    "about": "About Us",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us",
+    "copyright": "© 2025 ResearchEthics Platform. All rights reserved."
+  },
+  "auth": {
+    "loginTitle": "Login to Your Account",
+    "registerTitle": "Create Your Account",
+    "email": "Email Address",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "department": "Department/Faculty",
+    "loginButton": "Login",
+    "registerButton": "Register",
+    "forgotPassword": "Forgot Password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "signUp": "Sign Up",
+    "signIn": "Sign In"
+  },
+  "password": {
+    "forgotTitle": "Forgot Password?",
+    "forgotSubtitle": "Enter your email to receive a reset link",
+    "resetTitle": "Reset Password",
+    "resetSubtitle": "Enter your new password",
+    "emailSent": "Email Sent!",
+    "emailSentMessage": "If an account exists with this email, you will receive a reset link shortly.",
+    "checkSpam": "Check your spam folder if you don't see it.",
+    "sendResetLink": "Send Reset Link",
+    "sending": "Sending...",
+    "resetButton": "Reset Password",
+    "resetting": "Resetting...",
+    "backToLogin": "Back to login",
+    "success": "Success!",
+    "successMessage": "Your password has been reset successfully.",
+    "redirecting": "Redirecting to login...",
+    "invalidLink": "Reset link is invalid or has expired",
+    "passwordMin": "Password must be at least 6 characters",
+    "passwordMismatch": "Passwords do not match"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "myModules": "My Modules",
+    "progress": "Progress",
+    "certificates": "Certificates",
+    "settings": "Settings"
+  }
+}
