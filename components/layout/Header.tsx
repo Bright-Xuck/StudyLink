@@ -4,10 +4,10 @@ import { useTranslations } from 'next-intl';
 import { useParams, usePathname } from 'next/navigation';
 import { GraduationCap, Menu, X, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
-import { Link } from "@/i18n/navigation";
 import { useTheme } from "next-themes";
 import { useAuth } from '@/lib/contexts/AuthProvider';
 import { logoutUser as signOut } from '@/lib/actions/auth.actions';
+import Link from "next/link";
 
 const LOCALES = [
   {
@@ -31,7 +31,7 @@ export default function Header() {
   const locale = params.locale as string;
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
-  const { user, loading, refreshUser } = useAuth(); // Use the useAuth hook
+  const { user, loading, refreshUser } = useAuth();
 
   const toggleLocale = (newLocale: string) => {
     const segments = pathname.split('/');
