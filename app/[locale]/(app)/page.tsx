@@ -1,10 +1,8 @@
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import Hero from '@/components/home/Hero';
 import Features from '@/components/home/Features';
 import Courses from '@/components/home/Courses';
 import { getAllModules } from '@/lib/actions/module.actions';
-import { Link } from "../../i18n/navigation";
+import { Link } from "../../../i18n/navigation";
 
 export default async function HomePage({
   params: { locale },
@@ -16,10 +14,8 @@ export default async function HomePage({
 
   return (
     <div className="min-h-screen flex flex-col">
-
-      <Header />
       
-      <main className="flex-1">
+      <div className="flex-1">
         <Hero />
         <Features />
         <Courses modules={modules} />
@@ -45,9 +41,8 @@ export default async function HomePage({
             </Link>
           </div>
         </section>
-      </main>
+      </div>
       
-      <Footer />
     </div>
   );
 }

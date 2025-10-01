@@ -2,8 +2,6 @@ import { notFound } from 'next/navigation';
 import { getModuleBySlug } from '@/lib/actions/module.actions';
 import { getAuthenticatedUser } from '@/lib/actions/auth.actions';
 import { getTranslations } from 'next-intl/server';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import { Clock, BookOpen, Lock, CheckCircle } from 'lucide-react';
 import EnrollButton from '@/components/modules/EnrollButton';
 import ModuleContent from '@/components/modules/ModuleContent';
@@ -29,11 +27,9 @@ export default async function ModuleDetailPage({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header />
-
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-primary text-primary-foreground py-12 md:py-20 lg:py-40">
+        <section className="relative bg-primary text-primary-foreground lg:py-46 py-20 md:py-32">
           <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,_currentColor_1px,_transparent_1px)] bg-[length:24px_24px]"></div>
           
           <div className="px-8">
@@ -84,7 +80,7 @@ export default async function ModuleDetailPage({
 
           {/* Wave Divider */}
           <div className="absolute bottom-0 left-0 right-0">
-            <svg viewBox="0 -1 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-background">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="text-background">
               <path
                 d="M0 120L60 105C120 90 240 60 360 45C480 30 600 30 720 37.5C840 45 960 60 1080 67.5C1200 75 1320 75 1380 75L1440 75V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z"
                 fill="currentColor"
@@ -187,8 +183,6 @@ export default async function ModuleDetailPage({
           </div>
         </div>
       </main>
-
-      <Footer />
     </div>
   );
 }
