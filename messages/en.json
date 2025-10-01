@@ -1,7 +1,7 @@
 {
   "nav": {
     "home": "Home",
-    "welcome":"Welcome",
+    "welcome": "Welcome",
     "courses": "Courses",
     "about": "About",
     "contact": "Contact",
@@ -10,12 +10,14 @@
     "dashboard": "Dashboard",
     "logout": "Logout"
   },
+
   "hero": {
     "title": "Learn Research Ethics from Industry Experts",
     "subtitle": "Master research methodology, ethics, and academic writing with our comprehensive training platform",
     "cta": "Get Started",
     "ctaSecondary": "Browse Courses"
   },
+
   "features": {
     "title": "Why Choose ResearchEthics Platform",
     "experts": {
@@ -35,6 +37,7 @@
       "description": "Earn recognized certificates upon course completion"
     }
   },
+
   "courses": {
     "title": "Our Research Training Modules",
     "subtitle": "Comprehensive courses designed to enhance your research skills",
@@ -43,13 +46,29 @@
     "enroll": "Enroll Now",
     "learnMore": "Learn More"
   },
+
   "footer": {
     "about": "About Us",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "contact": "Contact Us",
-    "copyright": "© 2025 ResearchEthics Platform. All rights reserved."
+    "copyright": "© 2025 ResearchEthics Platform. All rights reserved.",
+    "tagline": "Empowering researchers with ethical practices and methodological excellence.",
+    "quickLinks": "Quick Links",
+    "home": "Home",
+    "courses": "Courses",
+    "legal": "Legal",
+    "disclaimer": "Disclaimer",
+    "cookies": "Cookie Policy",
+    "compliance": "Compliance",
+    "contactTitle": "Contact",
+    "email": "info@researchethics.com",
+    "phone": "+237 123 456 789",
+    "address": "University of Buea, Cameroon",
+    "foundedBy": "Founded by",
+    "bioticUniverse": "BiotecUniverse"
   },
+
   "auth": {
     "loginTitle": "Login to Your Account",
     "registerTitle": "Create Your Account",
@@ -67,6 +86,7 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
+
   "password": {
     "forgotTitle": "Forgot Password?",
     "forgotSubtitle": "Enter your email to receive a reset link",
@@ -87,11 +107,127 @@
     "passwordMin": "Password must be at least 6 characters",
     "passwordMismatch": "Passwords do not match"
   },
+
   "dashboard": {
     "welcome": "Welcome back",
     "myModules": "My Modules",
     "progress": "Progress",
     "certificates": "Certificates",
     "settings": "Settings"
+  },
+
+  "Legal": {
+    "home": "Home",
+    "legal": "Legal",
+    "backToLegal": "Back to Legal Center",
+    "lastUpdated": "Last Updated",
+    "version": "Version",
+    "print": "Print",
+    "download": "Download PDF",
+    "importantNotice": "Important Notice",
+    "legalNoticeText": "This document constitutes a legal agreement. Please read carefully and consult legal counsel if needed.",
+    "questionsContact": "Questions or Concerns?",
+    "contactInstructions": "If you have questions about this document, please contact us:",
+    "contactUs": "Contact Us",
+    "documentHistory": "Document History",
+    "effectiveDate": "Effective Date",
+    "relatedDocuments": "Related Legal Documents",
+    "termsOfService": "Terms of Service",
+    "privacyPolicy": "Privacy Policy",
+    "cookiePolicy": "Cookie Policy",
+    "disclaimer": "Disclaimer",
+    "compliance": "Compliance",
+    "termsDescription": "Terms and conditions for using DigiPlug services",
+    "privacyDescription": "How we collect, use, and protect your personal information",
+    "cookiesDescription": "Information about cookies and tracking technologies",
+    "disclaimerDescription": "Important legal disclaimers and limitations",
+    "complianceDescription": "Our commitment to adhering to legal and regulatory standards"
+  },
+
+  "legal": {
+    "pageTitle": "Legal Documents",
+    "pageSubtitle": "Important information about your rights, our privacy practices, and terms of use",
+    "lastUpdatedTitle": "Last Updated",
+    "lastUpdatedText": "All our legal documents were last updated on January 15, 2025. We are committed to maintaining transparency and keeping you informed of any changes.",
+    "readDocument": "Read document",
+    "yourRights": "Your Rights",
+    "rightAccessData": "Access your personal data",
+    "rightCorrectDelete": "Correct or delete your information",
+    "rightExportData": "Export your data",
+    "rightWithdrawConsent": "Withdraw your consent",
+    "contactUs": "Contact Us",
+    "legalInquiries": "Legal inquiries:",
+    "dataProtection": "Data protection:",
+    "phone": "Phone:",
+    "compliantWith": "Compliant with:",
+    "terms": {
+      "title": "Terms of Service",
+      "description": "Rules for using our platform"
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "How we protect your data"
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "description": "Our use of cookies"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "description": "Limitations and warnings"
+    },
+    "compliance": {
+      "title": "Legal Compliance",
+      "description": "Regulatory compliance"
+    }
+  },
+
+  "CoursesPage": {
+    "header": {
+      "title": "Our Training Modules",
+      "description": "Explore our complete catalog of research modules"
+    },
+    "freeModules": {
+      "title": "Free Modules",
+      "description": "Start learning at no cost",
+      "countLabel": "modules"
+    },
+    "premiumModules": {
+      "title": "Premium Modules",
+      "description": "Advanced and specialized content",
+      "countLabel": "modules"
+    },
+    "emptyState": {
+      "title": "No modules available",
+      "description": "Check back soon for new modules"
+    }
+  },
+
+  "module": {
+    "free": "Free",
+    "premium": "Premium",
+    "objectives": "objectives",
+    "accessGranted": "Access granted",
+    "learningObjectives": "Learning Objectives",
+    "contentLocked": "Content Locked",
+    "contentLockedDescription": "Enroll in this module to access the full content",
+    "moduleContent": "Module Content",
+    "oneTimePayment": "One-time payment",
+    "duration": "Duration",
+    "level": "Level",
+    "access": "Access",
+    "lifetime": "Lifetime",
+    "lesson": "Lesson",
+    "readyForQuiz": "Ready for the Quiz?",
+    "testKnowledge": "Test your knowledge and earn your certificate",
+    "startQuiz": "Start Quiz"
+  },
+  
+  "enrollment": {
+    "alreadyEnrolled": "Already Enrolled",
+    "enrollFree": "Enroll for Free",
+    "buyNow": "Buy Now",
+    "enrolling": "Enrolling...",
+    "loading": "Loading..."
   }
 }

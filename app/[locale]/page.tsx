@@ -4,6 +4,7 @@ import Hero from '@/components/home/Hero';
 import Features from '@/components/home/Features';
 import Courses from '@/components/home/Courses';
 import { getAllModules } from '@/lib/actions/module.actions';
+import { Link } from "../../i18n/navigation";
 
 export default async function HomePage({
   params: { locale },
@@ -11,10 +12,11 @@ export default async function HomePage({
   params: { locale: string };
 }) {
 
-  const modules = await getAllModules(locale);
+  const modules = await getAllModules();
 
   return (
     <div className="min-h-screen flex flex-col">
+
       <Header />
       
       <main className="flex-1">
@@ -35,12 +37,12 @@ export default async function HomePage({
                 ? 'Join thousands of researchers who have enhanced their skills with our comprehensive training platform.'
                 : 'Rejoignez des milliers de chercheurs qui ont amélioré leurs compétences avec notre plateforme de formation complète.'}
             </p>
-            <a
-              href={`/${locale}/register`}
+            <Link
+              href={`/register`}
               className="inline-block bg-background text-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg"
             >
               {locale === 'en' ? 'Get Started for Free' : 'Commencer gratuitement'}
-            </a>
+            </Link>
           </div>
         </section>
       </main>

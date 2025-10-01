@@ -1,8 +1,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { GraduationCap, Mail, Phone, MapPin } from 'lucide-react';
+import { GraduationCap, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 
 export default function Footer() {
   const t = useTranslations('footer');
@@ -19,34 +20,52 @@ export default function Footer() {
                 ResearchEthics
               </span>
             </div>
-            <p className="text-muted-foreground leading-relaxed">
-              Empowering researchers with ethical practices and methodological excellence.
+            <p className="text-muted-foreground leading-relaxed mb-4">
+              {t('tagline')}
             </p>
+            <div className="text-sm text-muted-foreground">
+              <p className="mb-1">{t('foundedBy')}</p>
+              <a 
+                href="https://biotecuniverse.org" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex text-xl font-bold items-center gap-1 text-[#3d8b40] hover:opacity-80 transition-opacity"
+              >
+                <Image
+                  src="/btverse.png"
+                  alt="BiotecUniverse"
+                  width={24}
+                  height={24}
+                />
+                {t('bioticUniverse')}
+                <ExternalLink className="h-6 w-6" />
+              </a>
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-foreground font-semibold mb-4">{t('quickLinks')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href={`/`}
+                  href="/"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Home
+                  {t('home')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={`/courses`}
+                  href="/courses"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
-                  Courses
+                  {t('courses')}
                 </Link>
               </li>
               <li>
                 <Link
-                  href={`/about`}
+                  href="/about"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('about')}
@@ -54,7 +73,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href={`/contact`}
+                  href="/contact"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('contact')}
@@ -65,11 +84,11 @@ export default function Footer() {
 
           {/* Legal */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Legal</h3>
+            <h3 className="text-foreground font-semibold mb-4">{t('legal')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link
-                  href={`/privacy`}
+                  href="/privacy"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('privacy')}
@@ -77,10 +96,34 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href={`/terms`}
+                  href="/terms"
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
                   {t('terms')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/disclaimer"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('disclaimer')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/cookies"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('cookies')}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/compliance"
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('compliance')}
                 </Link>
               </li>
             </ul>
@@ -88,19 +131,29 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-foreground font-semibold mb-4">Contact</h3>
+            <h3 className="text-foreground font-semibold mb-4">{t('contactTitle')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <Mail className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">inforesearchethics@biotecuniverse.org</span>
+                <a 
+                  href={`mailto:${t('email')}`}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('email')}
+                </a>
               </li>
               <li className="flex items-start gap-2">
                 <Phone className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">+237 123 456 789</span>
+                <a 
+                  href={`tel:${t('phone').replace(/\s/g, '')}`}
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {t('phone')}
+                </a>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
-                <span className="text-muted-foreground">University of Buea, Cameroon</span>
+                <span className="text-muted-foreground">{t('address')}</span>
               </li>
             </ul>
           </div>
@@ -108,7 +161,7 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-border pt-8">
-          <p className="text-center text-muted-foreground">
+          <p className="text-center text-muted-foreground text-sm">
             {t('copyright')}
           </p>
         </div>

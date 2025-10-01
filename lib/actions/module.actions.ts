@@ -2,10 +2,12 @@
 
 import { connectDB } from "@/lib/db";
 import Module from "@/lib/models/Module";
+import { getLocale } from "next-intl/server";
 
-export async function getAllModules(locale: string = "en") {
+export async function getAllModules() {
   try {
     await connectDB();
+    const locale = await getLocale();
 
     const modules = await Module.find({ isPublished: true })
       .sort({ order: 1 })
@@ -30,9 +32,10 @@ export async function getAllModules(locale: string = "en") {
   }
 }
 
-export async function getModuleBySlug(slug: string, locale: string = "en") {
+export async function getModuleBySlug(slug: string) {
   try {
     await connectDB();
+    const locale = await getLocale();
 
     // eslint-disable-next-line @next/next/no-assign-module-variable
     const module = await Module.findOne({ slug, isPublished: true }).lean();
@@ -54,6 +57,7 @@ export async function getModuleBySlug(slug: string, locale: string = "en") {
       duration: module.duration,
       level: module.level,
       order: module.order,
+      lessons: module.lessons,
     };
   } catch (error) {
     console.error("Error fetching module:", error);
@@ -61,12 +65,10 @@ export async function getModuleBySlug(slug: string, locale: string = "en") {
   }
 }
 
-export async function getFeaturedModules(
-  limit: number = 6,
-  locale: string = "en"
-) {
+export async function getFeaturedModules(limit: number = 6) {
   try {
     await connectDB();
+    const locale = await getLocale();
 
     const modules = await Module.find({ isPublished: true })
       .sort({ order: 1 })
