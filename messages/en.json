@@ -10,14 +10,12 @@
     "dashboard": "Dashboard",
     "logout": "Logout"
   },
-
   "hero": {
     "title": "Learn Research Ethics from Industry Experts",
     "subtitle": "Master research methodology, ethics, and academic writing with our comprehensive training platform",
     "cta": "Get Started",
     "ctaSecondary": "Browse Courses"
   },
-
   "features": {
     "title": "Why Choose ResearchEthics Platform",
     "experts": {
@@ -37,7 +35,6 @@
       "description": "Earn recognized certificates upon course completion"
     }
   },
-
   "courses": {
     "title": "Our Research Training Modules",
     "subtitle": "Comprehensive courses designed to enhance your research skills",
@@ -46,7 +43,6 @@
     "enroll": "Enroll Now",
     "learnMore": "Learn More"
   },
-
   "footer": {
     "about": "About Us",
     "privacy": "Privacy Policy",
@@ -68,7 +64,6 @@
     "foundedBy": "Founded by",
     "bioticUniverse": "BiotecUniverse"
   },
-
   "auth": {
     "loginTitle": "Login to Your Account",
     "registerTitle": "Create Your Account",
@@ -86,7 +81,6 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
-
   "password": {
     "forgotTitle": "Forgot Password?",
     "forgotSubtitle": "Enter your email to receive a reset link",
@@ -107,7 +101,6 @@
     "passwordMin": "Password must be at least 6 characters",
     "passwordMismatch": "Passwords do not match"
   },
-
   "dashboard": {
     "welcome": "Welcome back",
     "myModules": "My Modules",
@@ -115,7 +108,6 @@
     "certificates": "Certificates",
     "settings": "Settings"
   },
-
   "Legal": {
     "home": "Home",
     "legal": "Legal",
@@ -143,7 +135,6 @@
     "disclaimerDescription": "Important legal disclaimers and limitations",
     "complianceDescription": "Our commitment to adhering to legal and regulatory standards"
   },
-
   "legal": {
     "pageTitle": "Legal Documents",
     "pageSubtitle": "Important information about your rights, our privacy practices, and terms of use",
@@ -181,7 +172,6 @@
       "description": "Regulatory compliance"
     }
   },
-
   "CoursesPage": {
     "header": {
       "title": "Our Training Modules",
@@ -202,7 +192,6 @@
       "description": "Check back soon for new modules"
     }
   },
-
   "module": {
     "free": "Free",
     "premium": "Premium",
@@ -222,12 +211,57 @@
     "testKnowledge": "Test your knowledge and earn your certificate",
     "startQuiz": "Start Quiz"
   },
-  
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
     "enrollFree": "Enroll for Free",
     "buyNow": "Buy Now",
     "enrolling": "Enrolling...",
     "loading": "Loading..."
+  },
+  "about": {
+    "title": "About Us",
+    "header": "Welcome to blah blah blah",
+    "story": "Our Story",
+    "storydescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat, neque nec posuere tincidunt, dolor libero pharetra ex, nec iaculis metus nibh a libero. Suspendisse laoreet neque et commodo viverra. Nullam vestibulum urna sed turpis fringilla, ac sollicitudin augue interdum. Proin congue enim imperdiet tincidunt vulputate. Donec hendrerit, neque nec condimentum posuere, metus ipsum lacinia quam, eget porta nibh purus vel risus.u00a0",
+    "meet": "Meet Our Lead Instructors",
+    "meetdescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac eros ut dui bibendum ultricies. Maecenas egestas fringilla semper.",
+    "instructor1": "Info about Instructor 1",
+    "instructor2": "Info about Instructor 2",
+    "instructor3": "Info about Instructor 3",
+    "number": "Number Speaks",
+    "award": "Awards",
+    "country": "Countries",
+    "partner": "Partners",
+    "student": "Students",
+    "studentstitle": "What Our Students Have to Say"
+  },
+  "aboutReviews": {
+    "review1": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location1": "From Buea, Cameroon",
+    "review2": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location2": "From Buea, Cameroon",
+    "review3": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location3": "From Buea, Cameroon",
+    "review4": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location4": "From Buea, Cameroon"
+  },
+  "contactUs": {
+    "title": "Need Help?",
+    "header": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.",
+    "callUs": "Call Us",
+    "writeUs": "Write Us",
+    "mainoffice": "Main Office",
+    "message": "Send Us a Message"
+  },
+  "contactfaq": {
+    "title": "Frequently asked questions",
+    "question1": "How Does CamChop Work",
+    "answer1": "CamChop connects you with the best nearby restaurants. Use the DoorDash website or app to browse eligible restaurants. Order and securely pay online and your food is on the way! You can even track your delivery right to your door. Getting your favorite foods delivered is that easy.",
+    "question2": "Can I schedule a delivery in advance?",
+    "answer2": " Yes. Before clicking Place Order, simply select Scheduled and you can select the date and time you wish to have your meal delivered. After selecting the date and time you want, click Place Order and we'll handle the rest.",
+    "question3": "How fast will I get my food?",
+    "answer3": " How fast you'll get your food depends on a number of things. How far is the restaurant? How bad is traffic? Is it snowing out?",
+    "question4": "What is a group order and how can I create one?",
+    "answer4": "A group order allows multiple people to add items into an order at the same time. Once a group order is created through a DoorDash"
   }
 }
