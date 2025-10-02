@@ -2,8 +2,6 @@
 
 import React from "react";
 import { useTranslations } from "next-intl";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import TeamMembers from "@/components/about/TeamMembers.jsx";
 import Instructors from "@/components/about/Instructors.jsx"
 import Informational from "@/components/about/Informational.jsx"
@@ -14,7 +12,6 @@ export default function AboutUs() {
 
   return (
     <div className="bg-neutral-100">
-      <Header />
       <section className="py-12 md:py-16 lg:py-20 relative mb-5">
         <article className="text-primary-foreground">
           <div className="bg-primary py-16 md:py-24 lg:py-32 flex flex-col justify-center items-center px-4">
@@ -60,7 +57,6 @@ export default function AboutUs() {
         <Informational/>
         <Reviews/>
       </section>
-      <Footer/>
     </div>
   );
 }
