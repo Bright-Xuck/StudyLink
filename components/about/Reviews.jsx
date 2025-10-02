@@ -32,7 +32,7 @@ export default function Reviews() {
   ];
 
   return (
-    <section className="py-12 md:py-16 lg:py-20 bg-neutral-50">
+    <section className="py-12 md:py-16 lg:py-20 bg-muted">
       <div className="w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-7xl mx-auto">
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-8 md:mb-12 lg:mb-16 text-primary">
           What Our Students Say
@@ -41,7 +41,7 @@ export default function Reviews() {
           {reviews.map((review, index) => (
             <div 
               key={index}
-              className="bg-white rounded-xl md:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col gap-4 md:gap-5 border border-border transform hover:-translate-y-1"
+              className="bg-card rounded-xl md:rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 p-6 md:p-8 flex flex-col gap-4 md:gap-5 border border-border transform hover:-translate-y-1"
             >
               {/* Quote Icon */}
               <div className="flex justify-start">

@@ -30,7 +30,7 @@ export default function FAQ(){
   ];
 
   return(
-    <section className="w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-5xl mx-auto my-12 md:my-16 lg:my-20 bg-white rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-10 shadow-lg border border-border">
+    <section className="w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-5xl mx-auto my-12 md:my-16 lg:my-20 bg-card rounded-xl md:rounded-2xl p-6 md:p-8 lg:p-10 shadow-lg border border-border">
       <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-6 md:mb-8 lg:mb-10 text-primary">
         {t('title')}
       </h1>
@@ -42,7 +42,7 @@ export default function FAQ(){
           >
             <div 
               onClick={() => toggleFaq(faq.key)}
-              className="flex justify-between items-center p-4 md:p-5 cursor-pointer bg-neutral-50 hover:bg-neutral-100 transition-colors duration-300"
+              className="flex justify-between items-center p-4 md:p-5 cursor-pointer bg-muted hover:bg-muted/70 transition-colors duration-300"
             >
               <span className="font-semibold text-sm md:text-base lg:text-lg text-card-foreground pr-4">
                 {faq.question}
@@ -56,7 +56,7 @@ export default function FAQ(){
             <div className={`overflow-hidden transition-all duration-300 ${
               openFaqs[faq.key] ? "max-h-96" : "max-h-0"
             }`}>
-              <p className="p-4 md:p-5 text-sm md:text-base text-muted-foreground leading-relaxed bg-white">
+              <p className="p-4 md:p-5 text-sm md:text-base text-muted-foreground leading-relaxed bg-card">
                 {faq.answer}
               </p>
             </div>

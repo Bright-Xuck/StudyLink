@@ -30,7 +30,7 @@ export default function Instructors() {
       {instructors.map((instructor, index) => (
         <div
           key={index}
-          className="group bg-white rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+          className="group bg-card rounded-xl md:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
         >
           <div className="relative overflow-hidden aspect-square">
             <img
@@ -38,7 +38,7 @@ export default function Instructors() {
               alt={instructor.alt}
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </div>
           <div className="flex flex-col items-center gap-2 md:gap-3 p-5 md:p-6 lg:p-8">
             <h3 className="text-lg md:text-xl lg:text-2xl font-semibold text-center">
@@ -47,7 +47,7 @@ export default function Instructors() {
             <p className="text-sm md:text-base font-normal text-muted-foreground text-center leading-relaxed">
               {instructor.description}
             </p>
-            <div className="flex text-white gap-3 mt-2">
+            <div className="flex text-foreground gap-3 mt-2">
               <a
                 href="#"
                 className="bg-primary rounded-full p-2 hover:bg-primary/80 transition-all duration-300 hover:scale-110"

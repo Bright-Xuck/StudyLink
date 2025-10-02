@@ -37,10 +37,10 @@ export default function ContactCards() {
           return (
             <div
               key={index}
-              className="group bg-white rounded-xl md:rounded-2xl p-6 md:p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-border transform hover:-translate-y-2"
+              className="group bg-muted rounded-xl md:rounded-2xl p-6 md:p-8 shadow-md hover:shadow-2xl transition-all duration-300 border border-border transform hover:-translate-y-2"
             >
               <div className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 md:mb-6 mx-auto group-hover:scale-110 transition-transform duration-300`}>
-                <Icon className="w-8 h-8 md:w-10 md:h-10 text-white" />
+                <Icon className="w-8 h-8 md:w-10 md:h-10 text-background" />
               </div>
               <h2 className="text-lg md:text-xl lg:text-2xl font-semibold text-center mb-3 md:mb-4">
                 {item.title}

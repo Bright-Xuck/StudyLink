@@ -3,7 +3,7 @@ import { Send } from "lucide-react";
 export default function Form() {
   return (
     <div className="w-[95%] md:w-[90%] lg:w-[85% max-w-5xl mx-auto my-8 md:my-12 lg:my-16">
-      <form className="bg-white rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 lg:p-10 border border-border">
+      <form className="bg-card rounded-xl md:rounded-2xl shadow-lg p-6 md:p-8 lg:p-10 border border-border">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-6">
           {/* Full Name */}
           <div className="flex flex-col gap-2">
@@ -11,7 +11,7 @@ export default function Form() {
               htmlFor="name" 
               className="text-sm md:text-base font-semibold text-card-foreground"
             >
-              Full Name <span className="text-red-500">*</span>
+              Full Name <span className="text-destructive">*</span>
             </label>
             <input
               type="text"
@@ -29,7 +29,7 @@ export default function Form() {
               htmlFor="email" 
               className="text-sm md:text-base font-semibold text-card-foreground"
             >
-              Email <span className="text-red-500">*</span>
+              Email <span className="text-destructive">*</span>
             </label>
             <input
               type="email"
@@ -65,7 +65,7 @@ export default function Form() {
             htmlFor="comment" 
             className="text-sm md:text-base font-semibold text-card-foreground"
           >
-            Comment or Message <span className="text-red-500">*</span>
+            Comment or Message <span className="text-destructive">*</span>
           </label>
           <textarea
             name="comment"
