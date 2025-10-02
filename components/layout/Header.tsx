@@ -59,7 +59,7 @@ export default function Header() {
 
   return (
     <header className="bg-card shadow-sm fixed w-full top-0 z-50 border-b border-border">
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href={`/`} className="flex items-center space-x-2">

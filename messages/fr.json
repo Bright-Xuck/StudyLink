@@ -1,77 +1,233 @@
 {
   "nav": {
     "home": "Accueil",
-    "welcom": "",
+    "welcome": "Bienvenue",
     "courses": "Cours",
     "about": "À propos",
     "contact": "Contact",
     "login": "Connexion",
-    "register": "S'inscrire",
+    "register": "Inscription",
     "dashboard": "Tableau de bord",
     "logout": "Déconnexion"
   },
+
   "hero": {
-    "title": "Apprenez l'éthique de la recherche auprès d'experts",
-    "subtitle": "Maîtrisez la méthodologie de recherche, l'éthique et la rédaction académique avec notre plateforme de formation complète",
+    "title": "Apprenez l'Éthique de la Recherche auprès d'Experts de l'Industrie",
+    "subtitle": "Maîtrisez la méthodologie de recherche, l'éthique et l'écriture académique avec notre plateforme de formation complète",
     "cta": "Commencer",
-    "ctaSecondary": "Parcourir les cours"
+    "ctaSecondary": "Parcourir les Cours"
   },
+
   "features": {
-    "title": "Pourquoi choisir la plateforme ResearchEthics",
+    "title": "Pourquoi Choisir la Plateforme ResearchEthics",
     "experts": {
-      "title": "Instructeurs experts",
-      "description": "Apprenez de chercheurs expérimentés et de professionnels académiques"
+      "title": "Instructeurs Experts",
+      "description": "Apprenez des chercheurs expérimentés et des professionnels académiques"
     },
     "actionable": {
-      "title": "Formation pratique",
-      "description": "Des compétences pratiques que vous pouvez appliquer immédiatement à votre recherche"
+      "title": "Formation Actionnable",
+      "description": "Compétences pratiques que vous pouvez appliquer à votre recherche immédiatement"
     },
     "quizzes": {
-      "title": "Quiz interactifs",
+      "title": "Quiz Interactifs",
       "description": "Testez vos connaissances avec des évaluations engageantes"
     },
     "certificates": {
-      "title": "Certificats vérifiés",
+      "title": "Certificats Vérifiés",
       "description": "Obtenez des certificats reconnus à la fin du cours"
     }
   },
+
   "courses": {
-    "title": "Nos modules de formation à la recherche",
+    "title": "Nos Modules de Formation en Recherche",
     "subtitle": "Cours complets conçus pour améliorer vos compétences en recherche",
     "free": "Gratuit",
     "paid": "Premium",
-    "enroll": "S'inscrire maintenant",
-    "learnMore": "En savoir plus"
+    "enroll": "S'inscrire Maintenant",
+    "learnMore": "En Savoir Plus"
   },
+
   "footer": {
-    "about": "À propos",
-    "privacy": "Politique de confidentialité",
-    "terms": "Conditions d'utilisation",
-    "contact": "Contactez-nous",
-    "copyright": "© 2025 Plateforme ResearchEthics. Tous droits réservés."
+    "about": "À Propos de Nous",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'Utilisation",
+    "contact": "Contactez-Nous",
+    "copyright": "© 2025 Plateforme ResearchEthics. Tous droits réservés.",
+    "tagline": "Autonomiser les chercheurs avec des pratiques éthiques et une excellence méthodologique.",
+    "quickLinks": "Liens Rapides",
+    "home": "Accueil",
+    "courses": "Cours",
+    "legal": "Légal",
+    "disclaimer": "Avertissement",
+    "cookies": "Politique en Matière de Cookies",
+    "compliance": "Conformité",
+    "contactTitle": "Contact",
+    "email": "info@researchethics.com",
+    "phone": "+237 123 456 789",
+    "address": "University of Buea, Cameroon",
+    "foundedBy": "Fondé par",
+    "bioticUniverse": "BiotecUniverse"
   },
+
   "auth": {
-    "loginTitle": "Connectez-vous à votre compte",
-    "registerTitle": "Créez votre compte",
-    "email": "Adresse e-mail",
-    "password": "Mot de passe",
-    "confirmPassword": "Confirmer le mot de passe",
-    "name": "Nom complet",
-    "phone": "Numéro de téléphone",
+    "loginTitle": "Connexion à Votre Compte",
+    "registerTitle": "Créer Votre Compte",
+    "email": "Adresse Email",
+    "password": "Mot de Passe",
+    "confirmPassword": "Confirmer le Mot de Passe",
+    "name": "Nom Complet",
+    "phone": "Numéro de Téléphone",
     "department": "Département/Faculté",
     "loginButton": "Connexion",
-    "registerButton": "S'inscrire",
-    "forgotPassword": "Mot de passe oublié?",
-    "noAccount": "Vous n'avez pas de compte?",
-    "hasAccount": "Vous avez déjà un compte?",
-    "signUp": "S'inscrire",
-    "signIn": "Se connecter"
+    "registerButton": "S'Inscrire",
+    "forgotPassword": "Mot de Passe Oublié ?",
+    "noAccount": "Pas de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "signUp": "S'Inscrire",
+    "signIn": "Se Connecter"
   },
+
+  "password": {
+    "forgotTitle": "Mot de Passe Oublié ?",
+    "forgotSubtitle": "Entrez votre email pour recevoir un lien de réinitialisation",
+    "resetTitle": "Réinitialiser le Mot de Passe",
+    "resetSubtitle": "Entrez votre nouveau mot de passe",
+    "emailSent": "Email Envoyé !",
+    "emailSentMessage": "Si un compte existe avec cet email, vous recevrez un lien de réinitialisation sous peu.",
+    "checkSpam": "Vérifiez votre dossier spam si vous ne le voyez pas.",
+    "sendResetLink": "Envoyer le Lien de Réinitialisation",
+    "sending": "Envoi en cours...",
+    "resetButton": "Réinitialiser le Mot de Passe",
+    "resetting": "Réinitialisation en cours...",
+    "backToLogin": "Retour à la connexion",
+    "success": "Succès !",
+    "successMessage": "Votre mot de passe a été réinitialisé avec succès.",
+    "redirecting": "Redirection vers la connexion...",
+    "invalidLink": "Le lien de réinitialisation est invalide ou a expiré",
+    "passwordMin": "Le mot de passe doit comporter au moins 6 caractères",
+    "passwordMismatch": "Les mots de passe ne correspondent pas"
+  },
+
   "dashboard": {
-    "welcome": "Bon retour",
-    "myModules": "Mes modules",
+    "welcome": "Bienvenue de retour",
+    "myModules": "Mes Modules",
     "progress": "Progrès",
     "certificates": "Certificats",
     "settings": "Paramètres"
+  },
+
+  "Legal": {
+    "home": "Accueil",
+    "legal": "Légal",
+    "backToLegal": "Retour au Centre Légal",
+    "lastUpdated": "Dernière Mise à Jour",
+    "version": "Version",
+    "print": "Imprimer",
+    "download": "Télécharger le PDF",
+    "importantNotice": "Avis Important",
+    "legalNoticeText": "Ce document constitue un accord légal. Veuillez le lire attentivement et consulter un conseiller juridique si nécessaire.",
+    "questionsContact": "Questions ou Inquiétudes ?",
+    "contactInstructions": "Si vous avez des questions sur ce document, veuillez nous contacter :",
+    "contactUs": "Contactez-Nous",
+    "documentHistory": "Historique du Document",
+    "effectiveDate": "Date d'Entrée en Vigueur",
+    "relatedDocuments": "Documents Légaux Connexes",
+    "termsOfService": "Conditions d'Utilisation",
+    "privacyPolicy": "Politique de Confidentialité",
+    "cookiePolicy": "Politique en Matière de Cookies",
+    "disclaimer": "Avertissement",
+    "compliance": "Conformité",
+    "termsDescription": "Conditions générales pour l'utilisation des services DigiPlug",
+    "privacyDescription": "Comment nous collectons, utilisons et protégeons vos informations personnelles",
+    "cookiesDescription": "Informations sur les cookies et les technologies de suivi",
+    "disclaimerDescription": "Avertissements et limitations légaux importants",
+    "complianceDescription": "Notre engagement à respecter les normes légales et réglementaires"
+  },
+
+  "legal": {
+    "pageTitle": "Documents Légaux",
+    "pageSubtitle": "Informations importantes sur vos droits, nos pratiques de confidentialité et conditions d'utilisation",
+    "lastUpdatedTitle": "Dernière Mise à Jour",
+    "lastUpdatedText": "Tous nos documents légaux ont été mis à jour pour la dernière fois le 15 janvier 2025. Nous nous engageons à maintenir la transparence et à vous informer de tout changement.",
+    "readDocument": "Lire le document",
+    "yourRights": "Vos Droits",
+    "rightAccessData": "Accéder à vos données personnelles",
+    "rightCorrectDelete": "Corriger ou supprimer vos informations",
+    "rightExportData": "Exporter vos données",
+    "rightWithdrawConsent": "Retirer votre consentement",
+    "contactUs": "Contactez-Nous",
+    "legalInquiries": "Demandes légales :",
+    "dataProtection": "Protection des données :",
+    "phone": "Téléphone :",
+    "compliantWith": "Conforme à :",
+    "terms": {
+      "title": "Conditions d'Utilisation",
+      "description": "Règles pour l'utilisation de notre plateforme"
+    },
+    "privacy": {
+      "title": "Politique de Confidentialité",
+      "description": "Comment nous protégeons vos données"
+    },
+    "cookies": {
+      "title": "Politique en Matière de Cookies",
+      "description": "Notre utilisation des cookies"
+    },
+    "disclaimer": {
+      "title": "Avertissement",
+      "description": "Limitations et avertissements"
+    },
+    "compliance": {
+      "title": "Conformité Légale",
+      "description": "Conformité réglementaire"
+    }
+  },
+
+  "CoursesPage": {
+    "header": {
+      "title": "Nos Modules de Formation",
+      "description": "Explorez notre catalogue complet de modules de recherche"
+    },
+    "freeModules": {
+      "title": "Modules Gratuits",
+      "description": "Commencez à apprendre gratuitement",
+      "countLabel": "modules"
+    },
+    "premiumModules": {
+      "title": "Modules Premium",
+      "description": "Contenu avancé et spécialisé",
+      "countLabel": "modules"
+    },
+    "emptyState": {
+      "title": "Aucun module disponible",
+      "description": "Revenez bientôt pour de nouveaux modules"
+    }
+  },
+
+  "module": {
+    "free": "Gratuit",
+    "premium": "Premium",
+    "objectives": "objectifs",
+    "accessGranted": "Accès accordé",
+    "learningObjectives": "Objectifs d'Apprentissage",
+    "contentLocked": "Contenu Verrouillé",
+    "contentLockedDescription": "Inscrivez-vous à ce module pour accéder au contenu complet",
+    "moduleContent": "Contenu du Module",
+    "oneTimePayment": "Paiement unique",
+    "duration": "Durée",
+    "level": "Niveau",
+    "access": "Accès",
+    "lifetime": "À Vie",
+    "lesson": "Leçon",
+    "readyForQuiz": "Prêt pour le Quiz ?",
+    "testKnowledge": "Testez vos connaissances et obtenez votre certificat",
+    "startQuiz": "Commencer le Quiz"
+  },
+
+  "enrollment": {
+    "alreadyEnrolled": "Déjà Inscrit",
+    "enrollFree": "S'Inscrire Gratuitement",
+    "buyNow": "Acheter Maintenant",
+    "enrolling": "Inscription en cours...",
+    "loading": "Chargement..."
   }
 }
