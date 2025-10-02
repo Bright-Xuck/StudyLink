@@ -93,5 +93,32 @@
     "progress": "Progress",
     "certificates": "Certificates",
     "settings": "Settings"
+  },
+  "about":{
+    "title":"About Us",
+    "header":"Welcome to blah blah blah",
+    "story":"Our Story",
+    "storydescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat, neque nec posuere tincidunt, dolor libero pharetra ex, nec iaculis metus nibh a libero. Suspendisse laoreet neque et commodo viverra. Nullam vestibulum urna sed turpis fringilla, ac sollicitudin augue interdum. Proin congue enim imperdiet tincidunt vulputate. Donec hendrerit, neque nec condimentum posuere, metus ipsum lacinia quam, eget porta nibh purus vel risus.u00a0",
+    "meet":"Meet Our Lead Instructors",
+    "meetdescription":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac eros ut dui bibendum ultricies. Maecenas egestas fringilla semper.",
+    "instructor1":"Info about Instructor 1",
+    "instructor2":"Info about Instructor 2",
+    "instructor3":"Info about Instructor 3",
+    "number": "Number Speaks",
+    "award": "Awards",
+    "country": "Countries",
+    "partner": "Partners",
+    "student": "Students",
+    "studentstitle": "What Our Students Have to Say"
+  },
+  "aboutReviews":{
+    "review1":"Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location1": "From Buea, Cameroon",
+    "review2":"Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location2": "From Buea, Cameroon",
+    "review3":"Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location3": "From Buea, Cameroon",
+    "review4":"Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
+    "location4": "From Buea, Cameroon"
   }
 }
