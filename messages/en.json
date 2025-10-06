@@ -209,7 +209,8 @@
     "lesson": "Lesson",
     "readyForQuiz": "Ready for the Quiz?",
     "testKnowledge": "Test your knowledge and earn your certificate",
-    "startQuiz": "Start Quiz"
+    "startQuiz": "Start Quiz",
+    "backToModules": "Back to Modules"
   },
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
