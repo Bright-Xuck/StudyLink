@@ -97,7 +97,7 @@ export default async function ModuleDetailPage({
           </div>
         </section>
 
-        <div className="px-8 py-12">
+        <div className="px-4 py-6 md:px-8 md:py-12">
           <div className="">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Main Content */}

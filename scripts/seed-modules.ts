@@ -309,7 +309,7 @@ You now understand:
 `,
         duration: 15,
         order: 1,
-        isPreview: true,
+        isPreview: false,
       },
       {
         title: "Philosophical Foundations of Research",
@@ -888,7 +888,227 @@ A **research design** is the logical structure connecting research questions to 
 ✨ *In summary, the research process is a disciplined, iterative, and evidence-based journey—from identifying a problem to communicating findings—that builds reliable knowledge and advances human understanding.*
 `,
         duration: 20,
-        order: 1,
+        order: 4,
+        isPreview: false,
+      },
+      {
+        title: "Ethics in Research",
+        titleFr: "Effectuer des recherches de littérature",
+        description:
+          "To instill a deep understanding of the ethical principles and professional integrity required in all research.",
+        descriptionFr:
+          "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
+        type: "video" as const,
+        content: `## **Introduction**
+Research ethics are not just a set of rules to follow; they are the **moral compass** that guides the entire research process. Ethical conduct ensures that the pursuit of knowledge does not come at the cost of human dignity or scientific truth. Lapses in ethics can harm individuals, erode public trust in science, and invalidate research findings. This module covers the **non-negotiable principles** that every researcher must uphold.
+
+---
+
+## **Topic 1: Importance of Ethics in Research**
+
+The importance of research ethics rests on three fundamental pillars:
+
+### **1. Protecting Human Participants**
+The primary ethical obligation is to protect research participants from **physical, psychological, social,** and **economic harm**.  
+Historical examples, such as the *Tuskegee Syphilis Study*, remind us of the consequences of unethical research practices where participants were deceived and denied treatment for decades. These cases led to the establishment of strict ethical codes to ensure participant welfare remains the top priority.
+
+### **2. Ensuring Research Integrity and Validity**
+Ethics are essential to the **quality and reliability** of research.  
+Scientific knowledge depends on trust. When researchers fabricate or falsify data, they not only act dishonestly but also contaminate the scientific record — potentially leading to serious consequences, especially in fields like medicine. Upholding integrity ensures that research findings remain **valid and credible**.
+
+### **3. Maintaining Public Trust**
+Since much research is **publicly funded** and intended to benefit society, researchers must maintain transparency and honesty.  
+Public trust is essential for:
+- Continued funding and support.  
+- Willing participation in studies.  
+- Acceptance and application of research findings in policy and practice.
+
+---
+
+## **Topic 2: Informed Consent, Confidentiality, and Anonymity**
+
+These are the **three core mechanisms** for protecting research participants.
+
+### **Informed Consent**
+Informed consent is a **continuous dialogue** through which individuals voluntarily agree to participate in a study after being fully informed.  
+Key elements include:
+
+- **Full Disclosure:** Clear explanation of the research purpose, procedures, duration, risks, and benefits.  
+- **Comprehension:** Information should be understandable and free from technical jargon.  
+- **Voluntariness:** Participation must be free from coercion or undue influence.  
+- **Right to Withdraw:** Participants can leave at any time without penalty.  
+- **Special Populations:** Extra care must be taken for children, prisoners, and those with diminished cognitive capacity.
+
+### **Confidentiality**
+Confidentiality means the researcher **knows the participant’s identity** but protects it from disclosure.  
+Data is de-identified by removing personal details and replacing them with **codes or pseudonyms**.
+
+### **Anonymity**
+Anonymity provides an even higher level of privacy—**the researcher does not know** who the participant is.  
+This often applies to anonymous surveys or suggestion boxes.
+
+| **Feature** | **Confidentiality** | **Anonymity** |
+|--------------|---------------------|----------------|
+| **Researcher’s Knowledge** | Researcher knows the participant’s identity. | Researcher does not know the participant’s identity. |
+| **Promise** | To protect the identity from being disclosed. | The identity cannot be disclosed because it is unknown. |
+| **Example** | An in-depth interview where names are coded. | An online survey with no login required. |
+
+---
+
+## **Topic 3: Avoiding Plagiarism and Data Fabrication**
+
+These principles protect the **integrity** of the researcher’s work.
+
+### **Plagiarism**
+Plagiarism is the act of using another person’s ideas, words, or work **without proper acknowledgment**.  
+It includes:
+- Copying text directly.  
+- Paraphrasing too closely.  
+- **Self-plagiarism** (reusing one’s own published work without citation).  
+
+✅ *Avoid plagiarism through careful note-taking and consistent, accurate citation.*
+
+### **Data Fabrication and Falsification**
+These are serious forms of research misconduct:
+
+- **Fabrication:** Making up data or results.  
+- **Falsification:** Manipulating materials, equipment, or data to misrepresent results.  
+
+Both actions corrupt the research record, **undermine science**, and **destroy credibility**.
+
+---
+
+## **Topic 4: Ethical Review Boards and Approvals**
+
+### **Ethical Review Board (ERB) / Institutional Review Board (IRB)**
+An ERB (or IRB) is a committee that **reviews and approves** research proposals involving human participants.  
+These boards include researchers, community representatives, and legal experts.  
+In **Cameroon**, universities like the **University of Buea** have their own ERBs.
+
+### **Purpose and Process**
+The ERB ensures that all research is **ethically sound** and protects participant rights.  
+Before starting data collection, researchers must submit:
+- The research protocol and design.  
+- Informed consent forms.  
+- Recruitment strategies.  
+- Data security measures.  
+- Risk assessments and mitigation plans.  
+
+The board may approve, request revisions, or reject a study.  
+**ERB approval is mandatory** before any participant interaction begins.
+
+---
+
+## ✅ **Conclusion**
+Ethical conduct is the **foundation of all credible research**.  
+It safeguards participants, preserves scientific integrity, and sustains public trust — ensuring that the pursuit of knowledge remains a force for good.`,
+        duration: 20,
+        order: 5,
+        isPreview: false,
+      },
+      {
+        title: "Practical Applications and Project",
+        titleFr: "Effectuer des recherches de littérature",
+        description:
+          "To transition from theory to practice by guiding learners through the process of developing a mini research proposal",
+        descriptionFr:
+          "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
+        type: "video" as const,
+        content: `## **Welcome**
+Welcome to the final module of **Introduction to Research**. Throughout this course we explored the *what*, *why*, and *how* of research. Now it’s time to put that knowledge into action. This module gives you the tools and confidence to begin your own research journey: how to structure a research proposal (your blueprint) and how to read and critique the work of others — a core skill for every researcher.
+
+---
+
+## **Lesson 6.1: Developing a Mini Research Proposal**
+**Objective:** Learn essential proposal components and prepare a basic proposal for a small-scale study.
+
+### **Introduction to Proposals**
+A research proposal is a clear, concise, structured document that:
+- Serves as a roadmap for your project, and  
+- Persuades supervisors or funders that your study is worthwhile, valid, and feasible.
+
+### **Topic 1: Choosing a Topic**
+A strong topic is the foundation of a good project.
+
+- **Follow Your Interest:** Pick subjects that genuinely intrigue you — coursework topics, daily-life problems, or local issues in Buea. Passion fuels persistence.  
+- **Look for Gaps:** While reading, ask: *What isn’t being discussed?* Is there a local context (e.g., Cameroon) missing from the literature?  
+- **Be Practical:** Use the **FINER** criteria (Feasible, Interesting, Novel, Ethical, Relevant). Make sure you have time, resources, and access.  
+- **Narrow It Down:** Move from broad to focused:
+
+  - **Broad area:** Public Health  
+  - **Specific field:** Water-borne diseases in urban areas  
+  - **Focused topic:** Community perceptions of cholera prevention  
+  - **Researchable problem:** *Investigating the factors influencing the adoption of water purification practices among households in the Bova Bomboko community.*
+
+### **Topic 2: Writing Core Sections**
+**Problem Statement** — the heart of your proposal. Structure it like this:
+1. **The Ideal / Context:** Describe the desired state.  
+   *Example:* “Access to clean drinking water is essential for public health…”  
+2. **The Reality / Gap:** State the problem.  
+   *Example:* “However, communities like Bova Bomboko still face recurrent cholera outbreaks…”  
+3. **Consequence & Proposal:** Why it matters and what your study will do.  
+   *Example:* “This study will identify barriers to adopting safe water practices to inform targeted health campaigns.”
+
+**Research Objectives** — make them SMART (Specific, Measurable, Achievable, Relevant, Time-bound).  
+- *Example Objective 1:* Identify primary sources of household drinking water in Bova Bomboko.  
+- *Example Objective 2:* Assess residents’ knowledge of water purification methods.  
+- *Example Objective 3:* Determine socio-economic factors influencing adoption.
+
+**Methodology** — the “how-to”:
+- **Research Design:** e.g., descriptive cross-sectional study.  
+- **Population & Sampling:** e.g., heads of households in Bova Bomboko; convenience sample of 100 households.  
+- **Data Collection:** e.g., structured questionnaire via face-to-face interviews.  
+- **Data Analysis:** e.g., descriptive statistics (frequencies, percentages) using Microsoft Excel.
+
+### **Topic 3: Drafting Timelines and Expected Outcomes**
+**Timelines:** Use a simple table or Gantt chart to show feasibility.
+
+| Phase                          | Week 1–2 | Week 3–4 | Week 5–6 | Week 7–8 |
+|-------------------------------:|:--------:|:--------:|:--------:|:--------:|
+| Finalize proposal & get approval|    X     |          |          |          |
+| Develop questionnaire          |    X     |    X     |          |          |
+| Data collection                |          |          |    X     |    X     |
+| Data analysis & report writing |          |          |          |    X     |
+
+*Export to Sheets*
+
+**Expected Outcomes:**
+- **Academic:** Contribute to limited literature on water sanitation practices in semi-urban Cameroon.  
+- **Practical:** Provide local health authorities with data to design effective cholera prevention interventions.
+
+---
+
+## **Lesson 6.2: Case Studies and Review**
+**Objective:** Develop skills to critically analyze published research and understand strengths and weaknesses.
+
+### **Introduction**
+Good researchers are also good consumers of research. Critical reading helps you learn methods, spot gaps, and understand quality standards in your field.
+
+### **Topic 1: How to Analyze a Published Research Paper**
+- Use Google Scholar (or another database) to find a relevant article.  
+- **Reading order:** Abstract → Introduction & Conclusion → Methods & Results. Don’t try to understand every word; extract the core elements.
+
+### **Topic 2: Identify Key Research Elements**
+Use these guiding questions when deconstructing a paper:
+
+- **Research Problem:** What central question do the authors address? (Usually at the Introduction’s end.)  
+- **Literature Review / Gap:** What gap does the study aim to fill?  
+- **Methodology:** What is the design (experiment, survey, case study)? Who were participants and how were they sampled? What tools were used?  
+- **Findings:** What are the main results? (Check key tables/figures and Results text.)  
+- **Discussion & Conclusion:** How do authors interpret results? What implications do they claim? What limitations do they acknowledge?  
+- **Your Critique:** Are the conclusions convincing? Any unacknowledged methodological weaknesses?
+
+### **Topic 3: Reflection on Learning**
+This course maps a path from the philosophy of knowledge to practical research skills. Reflect on these prompts:
+- How has your definition of *research* changed since Module 1?  
+- What is the single most important concept you’ll take away from the course?  
+- What area of research are you now most interested in exploring?
+
+> Research is a skill that grows with practice. This course is a starting point — your research journey has just begun.
+
+---`,
+        duration: 20,
+        order: 6,
         isPreview: false,
       },
     ],
