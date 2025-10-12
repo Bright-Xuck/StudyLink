@@ -99,22 +99,366 @@ const modules = [
         descriptionFr:
           "Comprendre les concepts fondamentaux et la définition de la recherche",
         type: "video" as const,
-        content:
-          "Research is a systematic and purposeful process of inquiry aimed at generating knowledge, solving problems, and expanding our understanding of the world around us. It is not merely the act of gathering facts or browsing through information, but rather a structured and logical approach that demands patience, rigor, and critical evaluation. At its foundation, research begins with curiosity—a question, problem, or observation that prompts the desire to know more. From there, it progresses through the careful design of methods, the collection of data, and the analysis of results, leading to conclusions that either confirm what we suspected or reveal entirely new insights. True research is defined by its systematic nature; every step must be planned, justified, and documented so that others can replicate the study and verify its outcomes. This ensures that knowledge is not built on speculation but on evidence that withstands scrutiny. The importance of research cannot be overstated, as it fuels advancement in science, medicine, technology, and countless other fields. For example, medical research has led to vaccines, treatments, and life-saving innovations, while educational research helps improve learning methods and policies that shape the future of entire generations. In business, research supports market analysis, product development, and strategic planning, while in social sciences it helps us understand behaviors, cultures, and the complexities of human interaction. Research can be broadly divided into basic and applied categories: basic research seeks to expand knowledge for its own sake, without immediate concern for application, whereas applied research addresses specific, real-world problems and often results in practical solutions. Furthermore, research can be qualitative, focusing on meanings, experiences, and subjective perspectives, or quantitative, centered on numerical data, measurement, and statistical relationships. The two are often combined to provide a more comprehensive understanding of complex issues. Beyond its categories, good research has certain defining characteristics: it is objective, meaning that personal bias must be minimized; it is logical, following a clear line of reasoning; it is empirical, relying on observable and measurable evidence; and it is replicable, allowing others to repeat the process and confirm findings. We conduct research not only to satisfy intellectual curiosity but also to improve quality of life, guide decision-making, and contribute to innovation that shapes the future. It provides the evidence that underpins laws, policies, and practices, ensuring that decisions are made on facts rather than assumptions. Without research, societies would stagnate, relying on tradition and guesswork rather than informed progress. In essence, research is both a tool and a discipline, a pathway to discovery that encourages us to challenge existing ideas, test new possibilities, and continually push the boundaries of human knowledge.",
+        content:`# 🧭 Module 1: Understanding the Concept of Research
+
+## Lesson 1.1: What is Research?
+
+**Objective:** To introduce learners to the formal definition, characteristics, and purposes of research, distinguishing it from everyday inquiry.
+
+---
+
+### **Topic 1: Definition of Research**
+
+Research is a systematic and logical process of inquiry and investigation. It involves collecting, analyzing, and interpreting data to answer questions, solve problems, or understand a phenomenon.  
+The word *“research”* is derived from the French *“rechercher,”* meaning “to seek out” or “to search again.” This implies a careful and structured search for new knowledge.
+
+**Formal Definition:**  
+> Research is a systematic investigative process employed to increase or revise current knowledge by discovering new facts. It is not just about gathering information; it is about creating new knowledge that is verifiable and built upon previous knowledge.
+
+At its core, research is about moving from the known to the unknown with a clear plan.
+
+---
+
+### **Topic 2: Characteristics of Good Research**
+
+A good research study must possess several key characteristics:
+
+- **Systematic:** Follows a structured, planned, and orderly process.  
+- **Empirical:** Based on observation or experience; supported by evidence.  
+- **Logical:** Guided by reasoning (inductive and deductive).  
+- **Replicable and Transmittable:** Procedures and findings can be repeated and verified.  
+- **Objective:** Free from personal bias or emotions.  
+- **Controlled:** Ensures variables are managed for accurate results.  
+- **Rigorous:** Follows justified and appropriate methods to find answers.
+
+---
+
+### **Topic 3: Purposes of Research**
+
+Research serves various purposes, broadly categorized as:
+
+1. **Exploratory Research:** Conducted to explore a poorly understood problem or generate new ideas.  
+   *Example:* Studying customer preferences before launching a new product.
+
+2. **Descriptive Research:** Aims to describe a situation, phenomenon, or population accurately.  
+   *Example:* Conducting a national census.
+
+3. **Explanatory (Causal) Research:** Seeks to explain why things happen by identifying cause-and-effect relationships.  
+   *Example:* Studying the relationship between study hours and exam scores.
+
+4. **Predictive Research:** Uses existing data to forecast future trends or outcomes.  
+   *Example:* Predicting future sales based on marketing spend.
+
+---
+
+### **Topic 4: Difference Between Everyday Inquiry and Scientific Research**
+
+| **Feature** | **Everyday Inquiry** | **Scientific Research** |
+|--------------|----------------------|---------------------------|
+| **Approach** | Intuitive, casual, subjective | Systematic, structured, objective |
+| **Observation** | Casual and uncontrolled | Deliberate, controlled, systematic |
+| **Hypotheses** | Vague guesses or assumptions | Testable and structured |
+| **Evidence** | Based on personal experience or anecdotes | Based on empirical, verifiable data |
+| **Bias** | Prone to personal biases | Actively minimizes bias |
+| **Conclusion** | Often final and resistant to change | Tentative; open to revision |
+| **Example** | Asking a friend if a coffee shop is good | Conducting a customer satisfaction study using a survey |
+
+---
+
+### **Topic 5: Examples from Different Fields**
+
+- **Natural Sciences (Biology):** Testing a new vaccine’s effectiveness.  
+- **Social Sciences (Sociology):** Studying how social media affects youth political engagement.  
+- **Engineering:** Designing efficient materials for solar panels.  
+- **Business:** Using A/B testing to optimize website conversion rates.
+
+---
+
+## Lesson 1.2: Importance of Research
+
+**Objective:** To help learners appreciate the critical role of research in advancing knowledge, shaping society, solving complex problems, and understanding researcher responsibilities.
+
+---
+
+### **Topic 1: Role of Research in Knowledge Generation**
+
+Research is the engine of knowledge creation — transforming speculation into proven understanding.
+
+- **Building on Existing Knowledge:** Builds upon previous findings to expand understanding.  
+- **Challenging Previous Findings:** Self-correcting nature refines and improves old theories.  
+- **Filling Knowledge Gaps:** Explores unanswered questions.  
+- **Developing Theories and Frameworks:** Creates models that explain complex phenomena.
+
+---
+
+### **Topic 2: Impact of Research on Society, Policy, and Innovation**
+
+#### **Impact on Society:**
+- **Health and Medicine:** Leads to vaccines, treatments, and longer lifespans.  
+- **Technology:** Powers innovations like smartphones and the internet.  
+- **Understanding Ourselves:** Enhances understanding of human behavior and culture.
+
+#### **Impact on Policy:**
+- **Evidence-Based Decision-Making:** Informs rational government and organizational policies.  
+  - *Example:* Economic research shapes fiscal policy; environmental studies guide climate policies.
+
+#### **Impact on Innovation:**
+- **Driving Economic Growth:** R&D creates new industries and jobs.  
+- **Innovation Pipeline:** Foundational studies lead to future breakthroughs (e.g., quantum computing).
+
+---
+
+### **Topic 3: The Link Between Research and Problem-Solving**
+
+Research is structured problem-solving through:
+
+1. **Defining the Problem:** Framing the issue precisely.  
+2. **Diagnosing the Cause:** Using data to find root causes.  
+3. **Developing and Testing Solutions:** Experimenting and evaluating potential solutions.  
+4. **Evaluating the Outcome:** Measuring and refining the results for continuous improvement.
+
+---
+
+### **Topic 4: Ethical and Social Responsibilities of Researchers**
+
+#### **Ethical Responsibilities:**
+- **Integrity:** Honesty in reporting data; no falsification or plagiarism.  
+- **Participant Welfare:** Respecting consent, privacy, and dignity.  
+- **Objectivity:** Avoiding bias and maintaining neutrality.
+
+#### **Social Responsibilities:**
+- **Impact Awareness:** Considering how findings are used or misused.  
+- **Contribution to the Public Good:** Conducting research that benefits society and promotes accessibility of findings.
+
+---
+
+## Lesson 1.3: Characteristics of a Good Researcher
+
+**Objective:** To identify the personal and professional qualities essential for effective, rigorous, and ethical research.
+
+---
+
+### **Introduction**
+
+The researcher is the heart of the research process. Their mindset, values, and discipline determine the quality of outcomes.
+
+---
+
+### **Topic 1: Curiosity and Critical Thinking**
+
+- **Curiosity (The Engine):** A constant desire to understand “why” and “how.”  
+  - *Examples of curiosity-driven questions:*  
+    - Why does this happen?  
+    - Can we do this better?  
+    - What if we changed our perspective?
+
+- **Critical Thinking (The Steering Wheel):** The ability to analyze, evaluate, and question information objectively.  
+  - Analyze data critically.  
+  - Evaluate arguments logically.  
+  - Recognize biases and question assumptions.
+
+---
+
+### **Topic 2: Objectivity and Honesty**
+
+- **Objectivity:**  
+  - Let evidence, not emotion, guide conclusions.  
+  - Avoid manipulating data to confirm personal beliefs.
+
+- **Honesty:**  
+  - Never fabricate or falsify data.  
+  - Cite sources accurately to avoid plagiarism.  
+  - Acknowledge study limitations transparently.
+
+---
+
+### **Topic 3: Perseverance and Time Management**
+
+- **Perseverance:**  
+  - Embrace setbacks as learning opportunities.  
+  - Maintain patience and determination throughout long projects.
+
+- **Time Management:**  
+  - Set achievable goals and deadlines.  
+  - Break large projects into smaller tasks.  
+  - Keep detailed records and balance multiple tasks efficiently.
+
+---
+
+### **Topic 4: Ethical Integrity**
+
+Ethical integrity is the researcher's moral compass.
+
+- Prioritize participant welfare and rights.  
+- Uphold accountability and transparency.  
+- Follow professional ethical standards.  
+- Consider societal impacts before publication or implementation.
+
+> A brilliant mind without ethical integrity can cause more harm than good.  
+> The credibility of research relies on the honesty and responsibility of researchers.
+
+---
+
+## ✅ **Conclusion**
+
+This concludes **Module 1: Understanding the Concept of Research**.  
+You now understand:
+- What research is and its main characteristics.  
+- Why research matters in knowledge, society, and innovation.  
+- The ethical and personal qualities of a good researcher.
+`,
         duration: 15,
         order: 1,
         isPreview: true,
       },
       {
-        title: "Types of Research",
+        title: "Philosophical Foundations of Research",
         titleFr: "Types de recherche",
         description:
-          "Explore qualitative, quantitative, and mixed methods research",
+          "To introduce learners to the core philosophical assumptions (paradigms, ontology, epistemology, and axiology) that underpin all research.",
         descriptionFr:
           "Explorez la recherche qualitative, quantitative et les méthodes mixtes",
         type: "reading" as const,
         content:
-          "<h2>Types of Research</h2><p>There are three main types of research: qualitative, quantitative, and mixed methods...</p>",
+          `
+
+## Lesson 2.1: Research Paradigms
+
+**Objective:**  
+To explain what research paradigms are and to introduce the three major paradigms that guide scientific and social inquiry: **positivism, interpretivism, and pragmatism**.
+
+---
+
+### 🔹 Topic 1: Definition of Paradigms
+
+In the context of research, a *paradigm* is a fundamental model or frame of reference that shapes how we see the world and how we conduct our research. It is a set of shared beliefs, assumptions, and principles that influence what is studied, how it is studied, and how the results are interpreted.
+
+Think of a paradigm as a pair of glasses — the color and prescription of the lenses determine how you see everything. Similarly, a researcher's chosen paradigm influences their entire approach: from the questions they ask to the methods they use.  
+It’s the **"worldview"** of the researcher. Understanding paradigms helps explain why different studies are designed in such different ways.
+
+---
+
+### 🔹 Topic 2: Overview of the Three Main Paradigms
+
+While there are many philosophical paradigms, most research can be understood through three major ones:
+
+#### 1. **Positivism**
+The positivist paradigm is the foundation of the traditional scientific method. It assumes that there is a single, objective reality that exists independently of our perceptions. The goal is to discover this reality and the universal laws that govern it.
+
+- **Core Beliefs:** Reality is objective, measurable, and predictable.  
+- **Researcher's Role:** Neutral, detached observer.  
+- **Typical Methods:** Quantitative (controlled experiments, surveys, statistical analysis).  
+- **Example:** A medical researcher conducts a double-blind clinical trial to test a drug’s effectiveness under controlled conditions.
+
+#### 2. **Interpretivism (Constructivism)**
+Interpretivism contrasts positivism. It assumes that reality is socially constructed and subjective. There are multiple realities created by individuals and groups based on their experiences, cultures, and interpretations.
+
+- **Core Beliefs:** Reality is subjective, complex, and socially constructed.  
+- **Researcher's Role:** Active participant who interprets meaning.  
+- **Typical Methods:** Qualitative (interviews, observations, case studies).  
+- **Example:** An anthropologist lives within a community to understand its cultural rituals and social structures.
+
+#### 3. **Pragmatism**
+Pragmatism offers a middle ground. It focuses on *what works* to solve a particular problem rather than abstract debates about reality. The research question drives the choice of methods.
+
+- **Core Beliefs:** Reality is practical and problem-centered.  
+- **Researcher's Role:** Practical problem-solver, method-flexible.  
+- **Typical Methods:** Mixed methods (combining quantitative & qualitative).  
+- **Example:** Educational researchers use surveys to measure outcomes and interviews to explore reasons behind them.
+
+---
+
+### 🔹 Topic 3: Comparison of Paradigms
+
+| **Feature** | **Positivism** | **Interpretivism** | **Pragmatism** |
+|--------------|----------------|--------------------|----------------|
+| **View of Reality** | Objective, single, measurable | Subjective, multiple, socially constructed | Practical, problem-centered |
+| **Goal of Research** | To explain, predict, and control | To understand and interpret meaning | To solve practical problems |
+| **Researcher's Role** | Detached observer | Engaged participant | Flexible problem-solver |
+| **Common Methods** | Quantitative | Qualitative | Mixed methods |
+| **Associated Reasoning** | Deductive (theory → data) | Inductive (data → theory) | Abductive (moving between data & theory) |
+
+---
+
+## Lesson 2.2: Research Ontology, Epistemology, and Axiology
+
+**Objective:**  
+To define the core philosophical concepts of **ontology**, **epistemology**, and **axiology**, and explain how they relate to a researcher's choice of paradigm and methodology.
+
+---
+
+### 🔹 Introduction
+If a paradigm is the researcher's overall *worldview*, then ontology, epistemology, and axiology are the specific philosophical beliefs that make up that worldview.  
+Understanding these helps deconstruct a paradigm into its core components.
+
+---
+
+### 🔹 Topic 1: Ontology (The Nature of Reality)
+
+Ontology asks: **"What exists?"** or **"What is the nature of being?"**
+
+In research, the ontological question is whether there is one objective reality or multiple subjective realities.
+
+- **Objectivism:**  
+  Ontological stance of *Positivism.*  
+  Reality exists independently of perception; it can be discovered through observation.  
+
+- **Constructivism / Subjectivism:**  
+  Ontological stance of *Interpretivism.*  
+  Reality is constructed through social interaction and meaning-making.
+
+---
+
+### 🔹 Topic 2: Epistemology (The Nature of Knowledge)
+
+Epistemology asks: **"What can we know?"** and **"How can we know it?"**
+
+It deals with how a researcher gains knowledge about reality and is directly linked to ontology.
+
+- **Objectivist Epistemology (Positivism):**  
+  Knowledge is discovered through objective measurement and observation.  
+
+- **Constructivist Epistemology (Interpretivism):**  
+  Knowledge is created through interaction and interpretation of human experiences.
+
+---
+
+### 🔹 Topic 3: Axiology (The Role of Values in Research)
+
+Axiology concerns **values and ethics** — it asks: *"What role do values play in inquiry?"*
+
+- **Value-Free (Positivism):**  
+  Research should be neutral and objective; values must not influence findings.
+
+- **Value-Laden (Interpretivism & Pragmatism):**  
+  Research is inherently influenced by the researcher's values and context.  
+  Emphasis is on transparency (reflexivity) rather than eliminating bias.
+
+---
+
+### 🔹 Topic 4: Relationship Among Ontology, Epistemology, and Methodology
+
+These philosophical concepts form a logical chain — the **“Golden Thread”** of research design:
+
+\`\`\`
+Paradigm → Ontology → Epistemology → Methodology → Methods
+\`\`\`
+
+- **Paradigm:** The worldview (e.g., Positivism)  
+- **Ontology:** Nature of reality (e.g., objective)  
+- **Epistemology:** Nature of knowledge (e.g., measurable through observation)  
+- **Methodology:** Overall research strategy (e.g., experimental)  
+- **Methods:** Tools used (e.g., surveys, experiments)
+
+**Example Chain**
+
+- **Paradigm:** Interpretivism  
+- **Ontology:** Reality is subjective and socially constructed  
+- **Epistemology:** Knowledge is gained through understanding people’s lived experiences  
+- **Methodology:** Ethnography  
+- **Methods:** Participant observation & unstructured interviews  
+
+Understanding this chain helps researchers design coherent, defensible studies and critically evaluate others' work.`,
         contentFr:
           "<h2>Types de recherche</h2><p>Il existe trois principaux types de recherche: qualitative, quantitative et méthodes mixtes...</p>",
         duration: 30,
@@ -122,15 +466,429 @@ const modules = [
         isPreview: false,
       },
       {
-        title: "Research Resources",
+        title: "Types and Approaches of Research",
         titleFr: "Ressources de recherche",
-        description: "Download templates and guides for your research",
+        description: "To classify the major types of research and provide a detailed understanding of the three main research approaches",
         descriptionFr:
           "Téléchargez des modèles et des guides pour votre recherche",
         type: "document" as const,
-        content: "/documents/research-templates.pdf",
+        content: ` **Introduction**  
+Research is not a monolithic activity. Studies can be categorized in several ways, often along different dimensions simultaneously. Understanding these classifications helps you quickly grasp the intent and design of a research paper — and choose the right approach for your own questions.
+
+---
+
+## Lesson 3.1: Classifications of Research
+
+---
+
+### 🔹 Topic 1: Basic vs. Applied Research
+**Classification Basis:** Purpose or objective of the research.
+
+#### **Basic Research (Fundamental or Pure Research)**
+- **Goal:** To expand existing knowledge and develop or refine theories. It is curiosity-driven, seeking understanding without immediate practical application.  
+- **Question:** "Why do things happen the way they do?"  
+- **Example:** A physicist studying the behavior of subatomic particles to understand fundamental laws of physics.
+
+#### **Applied Research**
+- **Goal:** To solve specific, practical problems and produce findings that can be applied directly.  
+- **Question:** "How can we solve this problem?"  
+- **Example:** An agricultural researcher testing fertilizers to determine which yields the highest crop output.
+
+---
+
+### 🔹 Topic 2: Quantitative vs. Qualitative Research
+**Classification Basis:** The nature of the data collected.
+
+#### **Quantitative Research**
+- Gathers **numerical data** analyzed statistically.  
+- Focuses on **measurement**, **relationships between variables**, and **generalization** to larger populations.  
+- Example: Measuring income levels and education attainment across regions.
+
+#### **Qualitative Research**
+- Gathers **non-numerical data** (words, images, observations).  
+- Focuses on **depth**, **context**, and **meaning** rather than generalization.  
+- Example: Conducting interviews to explore people’s lived experiences.
+
+---
+
+### 🔹 Topic 3: Experimental vs. Non-Experimental Research
+**Classification Basis:** The researcher’s control or manipulation of variables.
+
+#### **Experimental Research**
+- **Design:** Researcher introduces an *intervention* (independent variable) and measures its *effect* (dependent variable).  
+- **Goal:** To establish cause-and-effect relationships.  
+- **Example:** Comparing test results between students using a new app vs. traditional teaching.
+
+#### **Non-Experimental Research**
+- **Design:** Observes variables as they occur naturally, without manipulation.  
+- **Goal:** To describe phenomena or explore relationships.  
+- **Example:** Surveying students’ study hours and comparing with academic performance.
+
+---
+
+### 🔹 Topic 4: Descriptive, Analytical, Exploratory & Explanatory Research
+
+| **Type** | **Goal** | **Example** |
+|-----------|-----------|--------------|
+| **Exploratory** | Explore an unclear problem; gain insights and hypotheses for future study. | Conducting interviews to understand a new social trend. |
+| **Descriptive** | Describe characteristics of a population or event (“what,” “where,” “when”). | A market survey describing consumer demographics. |
+| **Explanatory (Causal)** | Explain “why” — determine cause-and-effect relationships. | Experimenting to test if a new drug reduces symptoms. |
+| **Analytical** | Critically analyze existing data or literature. | Reviewing prior studies to synthesize findings on climate change. |
+
+---
+
+## Lesson 3.2: Quantitative Research
+
+**Objective:**  
+To understand the nature, logic, and core components of quantitative research.
+
+---
+
+### 🔹 Topic 1: Nature of Quantitative Research
+Grounded in the **positivist paradigm**, quantitative research emphasizes **objectivity**, **measurement**, and **statistical analysis**.  
+It tests theories and hypotheses using structured tools like surveys and experiments.
+
+---
+
+### 🔹 Topic 2: Deductive Reasoning
+Quantitative research follows **deductive (“top-down”) reasoning**:
+
+1. **Start with a Theory** – General idea about how the world works.  
+2. **Formulate a Hypothesis** – A specific, testable statement.  
+3. **Collect Data** – Measure variables systematically.  
+4. **Analyze Results** – Accept or reject the hypothesis.  
+
+\`\`\`
+Theory → Hypothesis → Observation → Confirmation
+\`\`\`
+
+---
+
+### 🔹 Topic 3: Measurement, Variables, and Hypothesis Testing
+
+- **Variable:** Any characteristic that can vary or be measured.  
+  - **Independent Variable (IV):** Manipulated cause.  
+  - **Dependent Variable (DV):** Observed effect.  
+
+**Measurement:** Assigning numbers to variables based on defined rules.
+
+**Hypothesis Testing:**  
+- **H₀ (Null Hypothesis):** No effect or relationship.  
+- **H₁ (Alternative Hypothesis):** There is an effect or relationship.  
+Statistical analysis determines if results are significant enough to reject H₀.
+
+---
+
+### 🔹 Topic 4: Data Collection Tools
+- **Questionnaires/Surveys:** Structured, close-ended questions (e.g., Likert scales).  
+- **Experiments:** Controlled tests to measure effects of variables.  
+- **Structured Observation:** Systematic recording of observed behavior or events.
+
+---
+
+### 🔹 Topic 5: Data Analysis Basics
+
+| **Type** | **Purpose** | **Examples** |
+|-----------|--------------|---------------|
+| **Descriptive Statistics** | Summarize and describe data. | Mean, median, mode, standard deviation. |
+| **Inferential Statistics** | Draw conclusions from a sample to a population. | T-tests, chi-square tests, regression analysis. |
+
+---
+
+## Lesson 3.3: Qualitative Research
+
+**Objective:**  
+To explain the nature, logic, and components of qualitative research.
+
+---
+
+### 🔹 Topic 1: Nature of Qualitative Research
+Grounded in the **interpretivist paradigm**, qualitative research explores **meaning**, **context**, and **experience**.  
+Data is often textual, visual, or verbal — collected through direct engagement in the participant’s environment.
+
+---
+
+### 🔹 Topic 2: Inductive Reasoning
+Qualitative research uses **inductive (“bottom-up”) reasoning**:
+
+1. **Collect Observations:** Gather rich, detailed data.  
+2. **Identify Patterns:** Detect recurring ideas or behaviors.  
+3. **Formulate Hypothesis:** Develop tentative explanations.  
+4. **Build Theory:** Derive conceptual understanding from data.
+
+\`\`\`
+Observation → Pattern → Hypothesis → Theory
+\`\`\`
+
+---
+
+### 🔹 Topic 3: Common Methods
+- **In-depth Interviews:** Open-ended conversations exploring participants’ perspectives.  
+- **Focus Groups:** Group discussions generating interactive insights.  
+- **Observations:** Immersive fieldwork documenting real-world behaviors and events.
+
+---
+
+### 🔹 Topic 4: Data Interpretation (Themes and Patterns)
+Qualitative data analysis involves identifying **themes** and **patterns**:
+
+1. **Familiarization:** Immerse in data.  
+2. **Coding:** Tag data with labels.  
+3. **Theme Generation:** Cluster related codes.  
+4. **Review & Define Themes:** Craft coherent narratives.
+
+---
+
+### 🔹 Topic 5: Ensuring Trustworthiness
+Qualitative rigor is built on **trustworthiness**, using four criteria:
+
+| **Criterion** | **Equivalent in Quantitative Research** | **Meaning** |
+|----------------|------------------------------------------|-------------|
+| **Credibility** | Internal Validity | Accuracy of representation |
+| **Transferability** | External Validity | Applicability to other contexts |
+| **Dependability** | Reliability | Stability and consistency of data |
+| **Confirmability** | Objectivity | Freedom from researcher bias |
+
+---
+
+## Lesson 3.4: Mixed Methods Research
+
+**Objective:**  
+To describe how mixed methods combine quantitative and qualitative paradigms for comprehensive insights.
+
+---
+
+### 🔹 Topic 1: Combining Approaches
+**Mixed Methods Research** (MMR) integrates both **quantitative** and **qualitative** data to capture the strengths of each.  
+It is grounded in the **pragmatist paradigm**, emphasizing **“what works”** to answer complex research questions.
+
+---
+
+### 🔹 Topic 2: Common Design Types
+
+| **Design Type** | **Description** | **Example** |
+|------------------|-----------------|--------------|
+| **Sequential** | One phase informs the next (e.g., qualitative → quantitative). | Use interviews to design a follow-up survey. |
+| **Concurrent** | Collect both data types simultaneously and merge results. | Run surveys and interviews at the same time. |
+| **Transformative** | Guided by social justice or theoretical framework. | Using feminist theory to design inclusive research. |
+
+---
+
+### 🔹 Topic 3: Strengths and Challenges
+
+#### **Strengths**
+- Provides richer, more comprehensive understanding.  
+- Answers broader research questions.  
+- Enables triangulation — validating results through multiple methods.  
+- Compensates for the weaknesses of individual approaches.
+
+#### **Challenges**
+- Time-consuming and complex to execute.  
+- Requires dual expertise in quantitative and qualitative methods.  
+- Integration and interpretation can be conceptually demanding.
+
+---
+
+✅ **This completes Module 3: Classifications and Approaches to Research.**  
+You now understand the key distinctions and integrations among **quantitative, qualitative, and mixed methods** approaches.`,
         duration: 10,
         order: 3,
+        isPreview: false,
+      },
+      {
+        title: "The Research Process",
+        titleFr: "Effectuer des recherches de littérature",
+        description:
+          "To provide a comprehensive, step-by-step guide to the entire research process",
+        descriptionFr:
+          "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
+        type: "video" as const,
+        content: `# **The Research Process**
+
+The **research process** is a structured sequence of steps that guides a researcher from an initial question to a well-reasoned conclusion. While it is often presented as a linear list, in practice, it is a **cyclical and iterative process**—researchers may move back and forth between steps as their understanding deepens. However, this formal structure provides an essential roadmap for conducting **rigorous and logical research**.
+
+---
+
+## **Lesson 4.1: Steps in the Research Process**
+
+The research journey can be broken down into **seven key steps**:
+
+1. **Identifying a Research Problem**  
+   This involves finding a gap in existing knowledge, a contradiction in previous findings, or a real-world problem needing a solution. A broad topic is narrowed down to a specific, researchable issue.
+
+2. **Reviewing the Literature**  
+   Understanding what is already known about your topic by systematically finding, reading, and synthesizing previous research.
+
+3. **Formulating Objectives and Hypotheses**  
+   Clearly stating what you intend to achieve. Develop specific research questions, measurable objectives, and testable hypotheses.
+
+4. **Selecting a Research Design and Methodology**  
+   This is your study’s **blueprint**—decide the approach (quantitative, qualitative, or mixed methods) and design (experiment, survey, case study, etc.) best suited to your research.
+
+5. **Collecting Data**  
+   Execute your plan by gathering data using your chosen methods (e.g., interviews, surveys, experiments).
+
+6. **Analyzing and Interpreting Data**  
+   Process the data to find meaning—using statistics for quantitative research and thematic analysis for qualitative research.
+
+7. **Drawing Conclusions and Reporting Results**  
+   Summarize findings, explain their significance, acknowledge limitations, and make recommendations in a report, thesis, or presentation.
+
+---
+
+## **Lesson 4.2: Problem Identification and Research Questions**
+
+### **Defining a Research Problem**
+A research problem is a **specific issue, difficulty, or gap** in knowledge that justifies your study. It may arise from:
+- Observations in your field  
+- A gap in existing literature  
+- Theoretical debates needing resolution  
+- Practical real-world issues  
+
+### **Criteria for a Good Research Problem (FINER)**
+- **Feasible:** You can complete it with available time and resources.  
+- **Interesting:** Keeps you motivated.  
+- **Novel:** Adds new knowledge or confirms/refutes existing work.  
+- **Ethical:** Can be done without harming participants.  
+- **Relevant:** Adds value to the field or society.
+
+### **Developing Research Questions and Objectives**
+- **Research Questions** guide the entire project.  
+  - *Example:* “What is the impact of mobile banking adoption on the financial inclusion of small business owners in Buea?”
+- **Research Objectives** break down what needs to be done.  
+  - *Objective 1:* To identify the adoption rates of mobile banking services among small business owners in Buea.  
+  - *Objective 2:* To assess the relationship between mobile banking usage and small enterprise growth.
+
+### **From Broad Topic to Specific Focus**
+| Stage | Example |
+|-------|----------|
+| Broad Topic | Digital Technology |
+| Narrower Field | FinTech in Africa |
+| Specific Topic | Mobile Banking's Impact on Small Businesses |
+| Focused Problem | Barriers and benefits of mobile banking for female-owned SMEs in Cameroon |
+
+---
+
+## **Lesson 4.3: Literature Review**
+
+### **Purpose of a Literature Review**
+A **literature review** critically evaluates existing research to:
+- Demonstrate knowledge of the field  
+- Identify research gaps  
+- Discover theoretical frameworks  
+- Avoid duplication  
+- Refine research questions  
+
+### **Sources of Literature**
+- **Primary Sources:** Original research studies (journal articles).  
+- **Secondary Sources:** Reviews, textbooks, encyclopedias.  
+- **Databases:** Google Scholar, JSTOR, PubMed, Scopus, university portals.
+
+### **Synthesizing Findings**
+- **Identify Themes:** Look for common topics or trends.  
+- **Structure by Theme:** Discuss agreements/disagreements among authors.  
+- **Use a Synthesis Matrix:** Map articles (rows) to key themes (columns).
+
+### **Avoiding Plagiarism**
+- **Cite Everything** used from other works.  
+- **Paraphrase Correctly**—express ideas in your own words.  
+- **Quote Sparingly** and always cite with page numbers.  
+- **Use Reference Managers** like Zotero or Mendeley.
+
+---
+
+## **Lesson 4.4: Research Design**
+
+### **Concept and Importance**
+A **research design** is the logical structure connecting research questions to data collection and analysis. It ensures your evidence supports valid conclusions.
+
+### **Types of Research Designs**
+- **Experimental:** Tests cause-and-effect relationships.  
+- **Correlational:** Measures statistical relationships without manipulation.  
+- **Descriptive:** Describes characteristics or phenomena.  
+- **Case Study:** In-depth investigation of one subject or event.
+
+### **Variables, Sampling, and Control**
+- **Variables:**  
+  - Independent (IV), Dependent (DV), Confounding variables.  
+- **Sampling:**  
+  - *Probability Sampling:* Random, generalizable.  
+  - *Non-Probability Sampling:* Convenience or purposive sampling.  
+- **Control:** Minimize confounding effects, often with a control group.
+
+### **Validity and Reliability**
+- **Reliability:** Consistency of results.  
+- **Validity:** Accuracy of measurement.  
+  - *Internal Validity:* Confidence in causal relationships.  
+  - *External Validity:* Generalizability of results.
+
+---
+
+## **Lesson 4.5: Data Collection Methods**
+
+### **Primary vs. Secondary Data**
+- **Primary Data:** Collected firsthand (surveys, interviews, experiments).  
+- **Secondary Data:** Previously collected data (census, archives, prior studies).
+
+### **Tools for Data Collection**
+- **Questionnaires/Surveys:** Quantitative, standardized data.  
+- **Interviews:** Qualitative, in-depth insights.  
+- **Observations:** Behavior in natural settings.  
+- **Documents/Records:** Existing materials and reports.
+
+### **Ethical Considerations**
+- **Informed Consent:** Participation must be voluntary and informed.  
+- **Confidentiality & Anonymity:** Protect participant identity.  
+- **Do No Harm:** Safeguard participants from physical/psychological harm.
+
+---
+
+## **Lesson 4.6: Data Analysis and Interpretation**
+
+### **Quantitative Analysis**
+- **Descriptive Statistics:** Summarize data (mean, median, SD).  
+- **Inferential Statistics:** Generalize findings and test hypotheses (*p* < .05).
+
+### **Qualitative Analysis**
+- **Transcription:** Convert recordings to text.  
+- **Coding:** Label key ideas.  
+- **Thematic Analysis:** Group codes into major themes.
+
+### **Presenting Findings**
+- **Tables:** Show exact data values.  
+- **Charts & Graphs:** Visualize trends and comparisons.  
+- **Narratives:** Describe qualitative results with quotes.
+
+---
+
+## **Lesson 4.7: Report Writing and Presentation**
+
+### **Structure of a Research Report (IMRaD)**
+1. **Abstract:** 150–250-word summary.  
+2. **Introduction:** Research problem, literature review, hypotheses.  
+3. **Methods:** Detailed description of design, participants, and procedures.  
+4. **Results:** Findings with tables and figures (no interpretation).  
+5. **Discussion:** Interpretation, comparison with prior work, limitations.  
+6. **Conclusion:** Summary, implications, and future recommendations.  
+7. **References:** Full list of cited works.
+
+### **Referencing Styles**
+- **APA:** Social sciences.  
+- **MLA:** Humanities.  
+- **Chicago/Turabian:** History and related fields.  
+
+### **Effective Presentation of Results**
+- **Know Your Audience:** Adjust detail and terminology.  
+- **Tell a Story:** Clear beginning, middle, and end.  
+- **Use Visuals:** Clean, labeled graphs and charts.  
+- **Be Clear and Concise:** Focus on key insights and implications.
+
+---
+
+✨ *In summary, the research process is a disciplined, iterative, and evidence-based journey—from identifying a problem to communicating findings—that builds reliable knowledge and advances human understanding.*
+`,
+        duration: 20,
+        order: 1,
         isPreview: false,
       },
     ],
