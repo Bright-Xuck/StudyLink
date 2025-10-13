@@ -9,7 +9,6 @@ import {
   Book,
   ChevronLeft,
   ChevronRight,
-  Target,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
@@ -107,25 +106,25 @@ function PaginatedContent({
           remarkPlugins={[remarkGfm]}
           components={{
             // Headings
-            h1: ({ node, ...props }) => (
+            h1: (props) => (
               <h1
                 className="text-4xl font-bold mt-8 mb-4 text-primary border-b border-border pb-2"
                 {...props}
               />
             ),
-            h2: ({ node, ...props }) => (
+            h2: (props) => (
               <h2
                 className="text-3xl font-semibold mt-6 mb-3 text-primary"
                 {...props}
               />
             ),
-            h3: ({ node, ...props }) => (
+            h3: (props) => (
               <h3
                 className="text-2xl font-semibold mt-5 mb-2 text-foreground"
                 {...props}
               />
             ),
-            h4: ({ node, ...props }) => (
+            h4: (props) => (
               <h4
                 className="text-xl font-medium mt-4 mb-2 text-foreground"
                 {...props}
@@ -133,7 +132,7 @@ function PaginatedContent({
             ),
 
             // Paragraphs
-            p: ({ node, ...props }) => (
+            p: (props) => (
               <p
                 className="text-base leading-7 mb-4 text-foreground/90"
                 {...props}
@@ -141,22 +140,22 @@ function PaginatedContent({
             ),
 
             // Lists
-            ul: ({ node, ...props }) => (
+            ul: (props) => (
               <ul
                 className="list-disc list-inside mb-4 space-y-2 text-foreground/90"
                 {...props}
               />
             ),
-            ol: ({ node, ...props }) => (
+            ol: (props) => (
               <ol
                 className="list-decimal list-inside mb-4 space-y-2 text-foreground/90"
                 {...props}
               />
             ),
-            li: ({ node, ...props }) => <li className="ml-4" {...props} />,
+            li: (props) => <li className="ml-4" {...props} />,
 
             // Blockquotes
-            blockquote: ({ node, ...props }) => (
+            blockquote: (props) => (
               <blockquote
                 className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground"
                 {...props}
@@ -164,7 +163,10 @@ function PaginatedContent({
             ),
 
             // Code
-            code: ({ node, inline, ...props }: any) =>
+            code: ({
+              inline,
+              ...props
+            }: React.HTMLAttributes<HTMLElement> & { inline?: boolean }) =>
               inline ? (
                 <code
                   className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary"
@@ -176,7 +178,7 @@ function PaginatedContent({
                   {...props}
                 />
               ),
-            pre: ({ node, ...props }) => (
+            pre: (props) => (
               <pre
                 className="bg-muted p-4 rounded-lg my-4 overflow-x-auto"
                 {...props}
@@ -184,7 +186,7 @@ function PaginatedContent({
             ),
 
             // Tables
-            table: ({ node, ...props }) => (
+            table: (props) => (
               <div className="overflow-x-auto my-4">
                 <table
                   className="min-w-full border-collapse border border-border"
@@ -192,18 +194,18 @@ function PaginatedContent({
                 />
               </div>
             ),
-            th: ({ node, ...props }) => (
+            th: (props) => (
               <th
                 className="border border-border bg-muted px-4 py-2 text-left font-semibold"
                 {...props}
               />
             ),
-            td: ({ node, ...props }) => (
+            td: (props) => (
               <td className="border border-border px-4 py-2" {...props} />
             ),
 
             // Links
-            a: ({ node, ...props }) => (
+            a: (props) => (
               <a
                 className="text-primary hover:underline font-medium"
                 {...props}
@@ -211,13 +213,13 @@ function PaginatedContent({
             ),
 
             // Strong and emphasis
-            strong: ({ node, ...props }) => (
+            strong: (props) => (
               <strong className="font-bold text-foreground" {...props} />
             ),
-            em: ({ node, ...props }) => <em className="italic" {...props} />,
+            em: (props) => <em className="italic" {...props} />,
 
             // Horizontal rule
-            hr: ({ node, ...props }) => (
+            hr: (props) => (
               <hr className="my-8 border-t border-border" {...props} />
             ),
           }}
