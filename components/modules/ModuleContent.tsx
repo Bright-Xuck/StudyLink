@@ -245,11 +245,16 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
     }
   };
 
-  const handleLesson = (lesson: Lesson) => {
-    const newSearchParams = new URLSearchParams(searchParams.toString());
-    newSearchParams.set("lesson", lesson.order.toString());
-    router.push(`?${newSearchParams.toString()}`);
-  };
+ const handleLesson = (lesson: Lesson) => {
+  console.log('Current searchParams:', searchParams.toString());
+  console.log('Lesson order:', lesson.order);
+  const currentPath = window.location.pathname;
+  const newSearchParams = new URLSearchParams(searchParams.toString());
+  newSearchParams.set("lesson", lesson.order.toString());
+  const newUrl = `${currentPath}?${newSearchParams.toString()}`;
+  console.log('Navigating to:', newUrl);
+  router.push(newUrl, { scroll: false });
+};
 
   const lessonParam = searchParams.toString()
     ? new URLSearchParams(searchParams.toString()).get('lesson')
@@ -289,7 +294,11 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
             <div className="space-y-6">
               {lessons.map((lesson, index) => (
                 <div
-                  onClick={() => handleLesson(lesson)}
+                 onClick={(e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  handleLesson(lesson);
+}}
                   key={index}
                   className="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer"
                 >
