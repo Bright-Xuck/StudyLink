@@ -131,7 +131,7 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
             ),
             
             // Tables
-            table: ({ node, ...props }) => (
+            table: (props) => (
               <div className="overflow-x-auto my-4">
                 <table className="min-w-full border-collapse border border-border" {...props} />
               </div>
@@ -139,7 +139,7 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
             th: ({ node, ...props }) => (
               <th className="border border-border bg-muted px-4 py-2 text-left font-semibold" {...props} />
             ),
-            td: ({ node, ...props }) => (
+            td: (props) => (
               <td className="border border-border px-4 py-2" {...props} />
             ),
             
@@ -149,7 +149,7 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
             ),
             
             // Strong and emphasis
-            strong: ({ node, ...props }) => (
+            strong: (props) => (
               <strong className="font-bold text-foreground" {...props} />
             ),
             em: ({ node, ...props }) => (
@@ -157,7 +157,7 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
             ),
             
             // Horizontal rule
-            hr: ({ node, ...props }) => (
+            hr: (props) => (
               <hr className="my-8 border-t border-border" {...props} />
             ),
           }}
