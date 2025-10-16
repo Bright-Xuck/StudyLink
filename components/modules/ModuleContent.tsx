@@ -1,16 +1,23 @@
-'use client';
+"use client";
 
-import { useState, useMemo } from 'react';
-import { useTranslations } from 'next-intl';
-import { Play, FileText, Download, Book, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { useState, useMemo } from "react";
+import { useTranslations } from "next-intl";
+import {
+  Play,
+  FileText,
+  Download,
+  Book,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface Lesson {
   title: string;
   description: string;
-  type: 'video' | 'reading' | 'document' | 'quiz';
+  type: "video" | "reading" | "document" | "quiz";
   content: string;
   duration: number;
   order: number;
@@ -22,41 +29,47 @@ interface ModuleContentProps {
 }
 
 // Paginated Content Component
-function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wordsPerPage?: number }) {
+function PaginatedContent({
+  content,
+  wordsPerPage = 250,
+}: {
+  content: string;
+  wordsPerPage?: number;
+}) {
   const [currentPage, setCurrentPage] = useState(0);
 
   const pages = useMemo(() => {
     // Fix escaped newlines and normalize content
     const correctedContent = content
-      .replace(/\\n/g, '\n')  // Replace escaped newlines
-      .replace(/\r\n/g, '\n')  // Normalize line endings
+      .replace(/\\n/g, "\n") // Replace escaped newlines
+      .replace(/\r\n/g, "\n") // Normalize line endings
       .trim();
-    
+
     // Split into paragraphs/blocks (separated by double newlines)
     const blocks = correctedContent.split(/\n\n+/);
     const pageArray = [];
-    let currentPage = '';
+    let currentPage = "";
     let currentWordCount = 0;
-    
+
     for (const block of blocks) {
       const blockWordCount = block.split(/\s+/).length;
-      
+
       // If adding this block exceeds the word limit and we already have content
       if (currentWordCount + blockWordCount > wordsPerPage && currentPage) {
         pageArray.push(currentPage.trim());
-        currentPage = block + '\n\n';
+        currentPage = block + "\n\n";
         currentWordCount = blockWordCount;
       } else {
-        currentPage += block + '\n\n';
+        currentPage += block + "\n\n";
         currentWordCount += blockWordCount;
       }
     }
-    
+
     // Add the last page if it has content
     if (currentPage.trim()) {
       pageArray.push(currentPage.trim());
     }
-    
+
     return pageArray.length > 0 ? pageArray : [correctedContent];
   }, [content, wordsPerPage]);
 
@@ -65,14 +78,14 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
   const goToNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const goToPreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -85,77 +98,114 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
           components={{
             // Headings
             h1: ({ node, ...props }) => (
-              <h1 className="text-4xl font-bold mt-8 mb-4 text-foreground border-b border-border pb-2" {...props} />
+              <h1
+                className="text-4xl font-bold mt-8 mb-4 text-primary border-b border-border pb-2"
+                {...props}
+              />
             ),
             h2: ({ node, ...props }) => (
-              <h2 className="text-3xl font-semibold mt-6 mb-3 text-foreground" {...props} />
+              <h2
+                className="text-3xl font-semibold mt-6 mb-3 text-primary"
+                {...props}
+              />
             ),
             h3: ({ node, ...props }) => (
-              <h3 className="text-2xl font-semibold mt-5 mb-2 text-foreground" {...props} />
+              <h3
+                className="text-2xl font-semibold mt-5 mb-2 text-foreground"
+                {...props}
+              />
             ),
             h4: ({ node, ...props }) => (
-              <h4 className="text-xl font-medium mt-4 mb-2 text-foreground" {...props} />
+              <h4
+                className="text-xl font-medium mt-4 mb-2 text-foreground"
+                {...props}
+              />
             ),
-            
+
             // Paragraphs
             p: ({ node, ...props }) => (
-              <p className="text-base leading-7 mb-4 text-foreground/90" {...props} />
+              <p
+                className="text-base leading-7 mb-4 text-foreground/90"
+                {...props}
+              />
             ),
-            
+
             // Lists
             ul: ({ node, ...props }) => (
-              <ul className="list-disc list-inside mb-4 space-y-2 text-foreground/90" {...props} />
+              <ul
+                className="list-disc list-inside mb-4 space-y-2 text-foreground/90"
+                {...props}
+              />
             ),
             ol: ({ node, ...props }) => (
-              <ol className="list-decimal list-inside mb-4 space-y-2 text-foreground/90" {...props} />
+              <ol
+                className="list-decimal list-inside mb-4 space-y-2 text-foreground/90"
+                {...props}
+              />
             ),
-            li: ({ node, ...props }) => (
-              <li className="ml-4" {...props} />
-            ),
-            
+            li: ({ node, ...props }) => <li className="ml-4" {...props} />,
+
             // Blockquotes
             blockquote: ({ node, ...props }) => (
-              <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground" {...props} />
+              <blockquote
+                className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground"
+                {...props}
+              />
             ),
-            
+
             // Code
-            code: ({ node, inline, ...props }: any) => (
+            code: ({ node, inline, ...props }: any) =>
               inline ? (
-                <code className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary" {...props} />
+                <code
+                  className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary"
+                  {...props}
+                />
               ) : (
-                <code className="block bg-muted p-4 rounded-lg my-4 overflow-x-auto text-sm font-mono" {...props} />
-              )
-            ),
+                <code
+                  className="block bg-muted p-4 rounded-lg my-4 overflow-x-auto text-sm font-mono"
+                  {...props}
+                />
+              ),
             pre: ({ node, ...props }) => (
-              <pre className="bg-muted p-4 rounded-lg my-4 overflow-x-auto" {...props} />
+              <pre
+                className="bg-muted p-4 rounded-lg my-4 overflow-x-auto"
+                {...props}
+              />
             ),
-            
+
             // Tables
             table: (props) => (
               <div className="overflow-x-auto my-4">
-                <table className="min-w-full border-collapse border border-border" {...props} />
+                <table
+                  className="min-w-full border-collapse border border-border"
+                  {...props}
+                />
               </div>
             ),
             th: ({ node, ...props }) => (
-              <th className="border border-border bg-muted px-4 py-2 text-left font-semibold" {...props} />
+              <th
+                className="border border-border bg-muted px-4 py-2 text-left font-semibold"
+                {...props}
+              />
             ),
             td: (props) => (
               <td className="border border-border px-4 py-2" {...props} />
             ),
-            
+
             // Links
             a: ({ node, ...props }) => (
-              <a className="text-primary hover:underline font-medium" {...props} />
+              <a
+                className="text-primary hover:underline font-medium"
+                {...props}
+              />
             ),
-            
+
             // Strong and emphasis
             strong: (props) => (
               <strong className="font-bold text-foreground" {...props} />
             ),
-            em: ({ node, ...props }) => (
-              <em className="italic" {...props} />
-            ),
-            
+            em: ({ node, ...props }) => <em className="italic" {...props} />,
+
             // Horizontal rule
             hr: (props) => (
               <hr className="my-8 border-t border-border" {...props} />
@@ -173,8 +223,8 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
           disabled={currentPage === 0}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             currentPage === 0
-              ? 'bg-muted text-muted-foreground cursor-not-allowed'
-              : 'bg-primary text-primary-foreground hover:opacity-90'
+              ? "bg-muted text-muted-foreground cursor-not-allowed"
+              : "bg-primary text-primary-foreground hover:opacity-90"
           }`}
         >
           <ChevronLeft size={20} />
@@ -190,8 +240,8 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
           disabled={currentPage === totalPages - 1}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
             currentPage === totalPages - 1
-              ? 'bg-muted text-muted-foreground cursor-not-allowed'
-              : 'bg-primary text-primary-foreground hover:opacity-90'
+              ? "bg-muted text-muted-foreground cursor-not-allowed"
+              : "bg-primary text-primary-foreground hover:opacity-90"
           }`}
         >
           Next
@@ -211,19 +261,19 @@ function PaginatedContent({ content, wordsPerPage = 250 }: { content: string; wo
 }
 
 export default function ModuleContent({ lessons }: ModuleContentProps) {
-  const t = useTranslations('module');
+  const t = useTranslations("module");
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const getIcon = (type: string) => {
     switch (type) {
-      case 'video':
+      case "video":
         return <Play className="h-6 w-6 text-primary" />;
-      case 'reading':
+      case "reading":
         return <Book className="h-6 w-6 text-accent-foreground" />;
-      case 'document':
+      case "document":
         return <Download className="h-6 w-6 text-secondary-foreground" />;
-      case 'quiz':
+      case "quiz":
         return <FileText className="h-6 w-6 text-primary" />;
       default:
         return <FileText className="h-6 w-6" />;
@@ -232,40 +282,43 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
 
   const getIconBg = (type: string) => {
     switch (type) {
-      case 'video':
-        return 'bg-primary/10';
-      case 'reading':
-        return 'bg-accent';
-      case 'document':
-        return 'bg-secondary';
-      case 'quiz':
-        return 'bg-primary/10';
+      case "video":
+        return "bg-primary/10";
+      case "reading":
+        return "bg-accent";
+      case "document":
+        return "bg-secondary";
+      case "quiz":
+        return "bg-primary/10";
       default:
-        return 'bg-muted';
+        return "bg-muted";
     }
   };
 
- const handleLesson = (lesson: Lesson) => {
-  console.log('Current searchParams:', searchParams.toString());
-  console.log('Lesson order:', lesson.order);
-  const currentPath = window.location.pathname;
-  const newSearchParams = new URLSearchParams(searchParams.toString());
-  newSearchParams.set("lesson", lesson.order.toString());
-  const newUrl = `${currentPath}?${newSearchParams.toString()}`;
-  console.log('Navigating to:', newUrl);
-  router.push(newUrl, { scroll: false });
-};
+  const handleLesson = (lesson: Lesson) => {
+    console.log("Current searchParams:", searchParams.toString());
+    console.log("Lesson order:", lesson.order);
+    const currentPath = window.location.pathname;
+    const newSearchParams = new URLSearchParams(searchParams.toString());
+    newSearchParams.set("lesson", lesson.order.toString());
+    const newUrl = `${currentPath}?${newSearchParams.toString()}`;
+    console.log("Navigating to:", newUrl);
+    router.push(newUrl, { scroll: false });
+  };
 
   const lessonParam = searchParams.toString()
-    ? new URLSearchParams(searchParams.toString()).get('lesson')
+    ? new URLSearchParams(searchParams.toString()).get("lesson")
     : null;
 
   const selectedLesson = lessonParam
-    ? lessons.find(l => l.order.toString() === lessonParam)
+    ? lessons.find((l) => l.order.toString() === lessonParam)
     : null;
 
   return (
-    <div id="module-content" className="bg-card rounded-xl p-8 border border-border">
+    <div
+      id="module-content"
+      className="bg-card rounded-xl p-8 border border-border"
+    >
       {selectedLesson ? (
         <>
           <div className="flex items-center gap-4 mb-8">
@@ -273,20 +326,23 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
               onClick={() => router.back()}
               className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-lg transition-colors"
             >
-              {t('backToModules')}
+              {t("backToModules")}
             </button>
             <h2 className="text-2xl font-bold text-foreground">
-              {t('lesson')} {selectedLesson.order}: {selectedLesson.title}
+              {t("lesson")} {selectedLesson.order}: {selectedLesson.title}
             </h2>
           </div>
-          
+
           {/* Use Paginated Content Component */}
-          <PaginatedContent content={selectedLesson.content} wordsPerPage={250} />
+          <PaginatedContent
+            content={selectedLesson.content}
+            wordsPerPage={250}
+          />
         </>
       ) : (
         <>
           <h2 className="text-2xl font-bold text-foreground mb-6">
-            {t('moduleContent')}
+            {t("moduleContent")}
           </h2>
 
           {/* Lessons List */}
@@ -294,11 +350,11 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
             <div className="space-y-6">
               {lessons.map((lesson, index) => (
                 <div
-                 onClick={(e) => {
-  e.preventDefault();
-  e.stopPropagation();
-  handleLesson(lesson);
-}}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleLesson(lesson);
+                  }}
                   key={index}
                   className="border border-border rounded-lg p-4 hover:border-primary transition-colors cursor-pointer"
                 >
@@ -308,7 +364,7 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
                     </div>
                     <div className="flex-1">
                       <h3 className="font-semibold text-foreground mb-1">
-                        {t('lesson')} {lesson.order}: {lesson.title}
+                        {t("lesson")} {lesson.order}: {lesson.title}
                       </h3>
                       <p className="text-sm text-muted-foreground mb-2">
                         {lesson.description}
@@ -331,9 +387,7 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
           ) : (
             <div className="text-center py-12">
               <FileText className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-              <p className="text-muted-foreground">
-                Content coming soon...
-              </p>
+              <p className="text-muted-foreground">Content coming soon...</p>
             </div>
           )}
 
@@ -341,13 +395,13 @@ export default function ModuleContent({ lessons }: ModuleContentProps) {
           {lessons.length > 0 && (
             <div className="mt-8 p-6 bg-muted rounded-lg text-center">
               <h3 className="text-lg font-semibold text-foreground mb-2">
-                {t('readyForQuiz')}
+                {t("readyForQuiz")}
               </h3>
               <p className="text-sm text-muted-foreground mb-4">
-                {t('testKnowledge')}
+                {t("testKnowledge")}
               </p>
               <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:opacity-90 transition-opacity">
-                {t('startQuiz')}
+                {t("startQuiz")}
               </button>
             </div>
           )}
