@@ -112,8 +112,21 @@
     "welcome": "Bienvenue de retour",
     "myModules": "Mes Modules",
     "progress": "Progrès",
+    "settings": "Paramètres",
+    "welcomeMessage": "Suivez votre progression et continuez où vous vous êtes arrêté",
+    "totalModules": "Modules totaux",
+    "completed": "Terminés",
+    "timeSpent": "Temps passé",
     "certificates": "Certificats",
-    "settings": "Paramètres"
+    "continueLearning": "Continuer l'apprentissage",
+    "continueLesson": "Continuer la leçon",
+    "browseAll": "Tout parcourir",
+    "noModulesYet": "Aucun module pour le moment",
+    "noModulesMessage": "Commencez votre parcours d'apprentissage en vous inscrivant à un module",
+    "exploreCourses": "Explorer les cours",
+    "free": "Gratuit",
+    "premium": "Premium",
+    "complete": "terminé"
   },
 
   "Legal": {
@@ -220,7 +233,21 @@
     "lesson": "Leçon",
     "readyForQuiz": "Prêt pour le Quiz ?",
     "testKnowledge": "Testez vos connaissances et obtenez votre certificat",
-    "startQuiz": "Commencer le Quiz"
+    "startQuiz": "Commencer le Quiz",
+    "timeSpent": "Temps passé",
+    "minutes": "minutes",
+    "markComplete": "Marquer comme Terminé",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page",
+    "of": "de",
+    "backToModules": "Retour aux Modules",
+    "completed": "Terminé",
+    "yourProgress": "Votre Progrès",
+    "lessonsCompleted": "leçons terminées",
+    "contentComingSoon": "Contenu à venir...",
+    "complete": "complet",
+    "pleaseLoginToComplete": "Veuillez vous connecter pour terminer la leçon."
   },
 
   "enrollment": {

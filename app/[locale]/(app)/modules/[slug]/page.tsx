@@ -1,77 +1,53 @@
-'use client';
-
-import { use, useState, useEffect } from 'react';
-import { notFound, useParams, useSearchParams } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 import { getModuleBySlug } from '@/lib/actions/module.actions';
 import { getAuthenticatedUser } from '@/lib/actions/auth.actions';
+import { getModuleProgress, initializeModuleProgress } from '@/lib/actions/progress.actions';
 import { Clock, BookOpen, Lock, CheckCircle } from 'lucide-react';
 import EnrollButton from '@/components/modules/EnrollButton';
 import ModuleContent from '@/components/modules/ModuleContent';
 import Image from "next/image";
-
-type CModule = Awaited<ReturnType<typeof getModuleBySlug>>;
-type User = Awaited<ReturnType<typeof getAuthenticatedUser>>;
 
 type ModuleDetailPageProps = {
   params: Promise<{ slug: string }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default function ModuleDetailPage({ params, searchParams }: ModuleDetailPageProps) {
-  const unwrappedParams = use(params);
-  const unwrappedSearchParams = use(searchParams);
-  const clientSearchParams = useSearchParams();
-  const t = useTranslations('module');
+export default async function ModuleDetailPage({ params, searchParams }: ModuleDetailPageProps) {
+  const { slug } = await params;
+  const { lesson: lessonParam } = await searchParams;
 
-  const [cmodule, setCModule] = useState<CModule>(null);
-  const [user, setUser] = useState<User>(null);
-  const [hasAccess, setHasAccess] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const slug = unwrappedParams?.slug || '';
-  const lessonParam = unwrappedSearchParams?.lesson || clientSearchParams.get('lesson');
-
-  useEffect(() => {
-    if (!slug) return;
-
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const [moduleData, userData] = await Promise.all([
-          getModuleBySlug(slug),
-          getAuthenticatedUser(),
-        ]);
-
-        if (!moduleData) {
-          setCModule(null);
-        } else {
-          setCModule(moduleData);
-          setUser(userData);
-
-          const access =
-            moduleData.isFree ||
-            !!(userData && userData.purchasedModules.includes(moduleData._id));
-
-          setHasAccess(access);
-        }
-      } catch (error) {
-        console.error("Failed to fetch module data:", error);
-        setCModule(null);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, [slug]);
-
-  if (isLoading) {
-    return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
+  if (!slug) {
+    return notFound();
   }
+
+  const t = await getTranslations('module');
+
+  const [cmodule, user] = await Promise.all([
+    getModuleBySlug(slug),
+    getAuthenticatedUser(),
+  ]);
 
   if (!cmodule) {
     return notFound();
+  }
+
+  const hasAccess =
+    cmodule.isFree ||
+    !!(user && user.purchasedModules.includes(cmodule._id));
+
+  // Get or initialize progress tracking
+  let progress = null;
+  if (hasAccess && user) {
+    progress = await getModuleProgress(cmodule._id);
+    
+    // Initialize progress if doesn't exist
+    if (!progress) {
+      const initResult = await initializeModuleProgress(cmodule._id);
+      if (initResult.success) {
+        progress = initResult.progress;
+      }
+    }
   }
 
   const showSidebar = !lessonParam;
@@ -108,10 +84,10 @@ export default function ModuleDetailPage({ params, searchParams }: ModuleDetailP
                   <BookOpen className="h-5 w-5" />
                   <span>{cmodule.objectives.length} {t('objectives')}</span>
                 </div>
-                {hasAccess && (
+                {hasAccess && progress && (
                   <div className="flex items-center gap-2 text-accent">
                     <CheckCircle className="h-5 w-5" />
-                    <span>{t('accessGranted')}</span>
+                    <span>{progress.progressPercentage}% {t('complete')}</span>
                   </div>
                 )}
               </div>
@@ -149,7 +125,11 @@ export default function ModuleDetailPage({ params, searchParams }: ModuleDetailP
                 </ul>
               </div>
               {hasAccess ? (
-                <ModuleContent lessons={JSON.parse(JSON.stringify(cmodule.lessons || []))} />
+                <ModuleContent 
+                  lessons={JSON.parse(JSON.stringify(cmodule.lessons || []))} 
+                  moduleId={cmodule._id}
+                  progress={progress}
+                />
               ) : (
                 <div className="bg-card rounded-xl p-12 border border-border text-center">
                   <Lock className="h-16 w-16 text-muted-foreground mx-auto mb-4" />

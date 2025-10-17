@@ -106,7 +106,20 @@
     "myModules": "My Modules",
     "progress": "Progress",
     "certificates": "Certificates",
-    "settings": "Settings"
+    "settings": "Settings",
+    "welcomeMessage": "Track your learning progress and continue where you left off",
+    "totalModules": "Total Modules",
+    "completed": "Completed",
+    "timeSpent": "Time Spent",
+    "continueLearning": "Continue Learning",
+    "continueLesson": "Continue Lesson",
+    "browseAll": "Browse All",
+    "noModulesYet": "No modules yet",
+    "noModulesMessage": "Start your learning journey by enrolling in a module",
+    "exploreCourses": "Explore Courses",
+    "free": "Free",
+    "premium": "Premium",
+    "complete": "complete"
   },
   "Legal": {
     "home": "Home",
@@ -210,7 +223,20 @@
     "readyForQuiz": "Ready for the Quiz?",
     "testKnowledge": "Test your knowledge and earn your certificate",
     "startQuiz": "Start Quiz",
-    "backToModules": "Back to Modules"
+    "backToModules": "Back to Modules",
+    "timeSpent": "Time spent",
+    "minutes": "minutes",
+    "markComplete": "Mark as Complete",
+    "previous": "Previous",
+    "next": "Next",
+    "page": "Page",
+    "of": "of",
+    "completed": "Completed",
+    "yourProgress": "Your Progress",
+    "lessonsCompleted": "lessons completed",
+    "contentComingSoon": "Content coming soon...",
+    "complete": "complete",
+    "pleaseLoginToComplete": "Please login to complete the lesson."
   },
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
