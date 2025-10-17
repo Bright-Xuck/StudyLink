@@ -15,7 +15,10 @@ import {
 import { useRouter, useSearchParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { markLessonComplete, updateLessonTime } from "@/lib/actions/progress.actions";
+import {
+  markLessonComplete,
+  updateLessonTime,
+} from "@/lib/actions/progress.actions";
 import { toast } from "sonner";
 
 interface Lesson {
@@ -52,6 +55,8 @@ function PaginatedContent({
   lessonOrder,
   lessonCompleted,
   onComplete,
+  hasNextLesson,
+  onNextLesson,
 }: {
   content: string;
   wordsPerPage?: number;
@@ -59,12 +64,20 @@ function PaginatedContent({
   lessonOrder: number;
   lessonCompleted: boolean;
   onComplete: () => void;
+  hasNextLesson: boolean;
+  onNextLesson: () => void;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [timeSpent, setTimeSpent] = useState(0);
   const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const t = useTranslations("module");
-  const router = useRouter()
+  const router = useRouter();
+
+  // Reset to first page when lesson changes
+  useEffect(() => {
+    setCurrentPage(0);
+    setTimeSpent(0);
+  }, [lessonOrder]);
 
   // Track time spent on lesson
   useEffect(() => {
@@ -125,6 +138,7 @@ function PaginatedContent({
   }, [content, wordsPerPage]);
 
   const totalPages = pages.length;
+  const isLastPage = currentPage === totalPages - 1;
 
   const goToNextPage = () => {
     if (currentPage < totalPages - 1) {
@@ -142,15 +156,28 @@ function PaginatedContent({
 
   const handleCompleteLesson = async () => {
     const result = await markLessonComplete(moduleId, lessonOrder, timeSpent);
-    if (result.success && 'message' in result) {
+    if (result.success && "message" in result) {
       toast.success(result.message);
       onComplete();
-    } else if ('error' in result) {
-      if(result.error === "Not authenticated" || result.error === "Non authentifié") {
+    } else if ("error" in result) {
+      if (
+        result.error === "Not authenticated" ||
+        result.error === "Non authentifié"
+      ) {
         toast.error(t("pleaseLoginToComplete"));
         router.push(`/login`);
       }
       toast.error(result.error);
+    }
+  };
+
+  const handleNextAction = () => {
+    if (isLastPage && hasNextLesson) {
+      // Go to next lesson
+      onNextLesson();
+    } else {
+      // Go to next page
+      goToNextPage();
     }
   };
 
@@ -164,7 +191,7 @@ function PaginatedContent({
             {t("timeSpent")}: {timeSpent} {t("minutes")}
           </span>
         </div>
-        {!lessonCompleted && currentPage === totalPages - 1 && (
+        {!lessonCompleted && isLastPage && (
           <button
             onClick={handleCompleteLesson}
             className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
@@ -229,7 +256,10 @@ function PaginatedContent({
                 {...props}
               />
             ),
-            code: ({ inline, ...props }: React.ComponentPropsWithoutRef<'code'> & { inline?: boolean }) =>
+            code: ({
+              inline,
+              ...props
+            }: React.ComponentPropsWithoutRef<"code"> & { inline?: boolean }) =>
               inline ? (
                 <code
                   className="bg-muted px-1.5 py-0.5 rounded text-sm font-mono text-primary"
@@ -303,15 +333,15 @@ function PaginatedContent({
         </div>
 
         <button
-          onClick={goToNextPage}
-          disabled={currentPage === totalPages - 1}
+          onClick={handleNextAction}
+          disabled={isLastPage && !hasNextLesson}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-            currentPage === totalPages - 1
+            isLastPage && !hasNextLesson
               ? "bg-muted text-muted-foreground cursor-not-allowed"
               : "bg-primary text-primary-foreground hover:opacity-90"
           }`}
         >
-          {t("next")}
+          {isLastPage && hasNextLesson ? t("nextLesson") : t("next")}
           <ChevronRight size={20} />
         </button>
       </div>
@@ -335,7 +365,6 @@ export default function ModuleContent({
   const t = useTranslations("module");
   const router = useRouter();
   const searchParams = useSearchParams();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [localProgress, setLocalProgress] = useState(progress);
 
   const getIcon = (type: string) => {
@@ -395,6 +424,27 @@ export default function ModuleContent({
     ? lessons.find((l) => l.order.toString() === lessonParam)
     : null;
 
+  const hasNextLesson = () => {
+    if (!selectedLesson) return false;
+    const currentIndex = lessons.findIndex(
+      (l) => l.order === selectedLesson.order
+    );
+    return currentIndex < lessons.length - 1;
+  };
+
+  const nextLesson = () => {
+    if (!selectedLesson) return;
+
+    const currentIndex = lessons.findIndex(
+      (l) => l.order === selectedLesson.order
+    );
+    const nextLessonItem = lessons[currentIndex + 1];
+
+    if (nextLessonItem) {
+      handleLesson(nextLessonItem);
+    }
+  };
+
   return (
     <div
       id="module-content"
@@ -430,6 +480,8 @@ export default function ModuleContent({
             lessonOrder={selectedLesson.order}
             lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
             onComplete={handleLessonComplete}
+            hasNextLesson={hasNextLesson()}
+            onNextLesson={nextLesson}
           />
         </>
       ) : (
@@ -452,8 +504,11 @@ export default function ModuleContent({
                 />
               </div>
               <p className="text-sm text-muted-foreground mt-2">
-                {localProgress.lessonsProgress.filter((lp) => lp.completed).length} {t("of")}{" "}
-                {lessons.length} {t("lessonsCompleted")}
+                {
+                  localProgress.lessonsProgress.filter((lp) => lp.completed)
+                    .length
+                }{" "}
+                {t("of")} {lessons.length} {t("lessonsCompleted")}
               </p>
             </div>
           )}
@@ -482,7 +537,9 @@ export default function ModuleContent({
                     }`}
                   >
                     <div className="flex items-start gap-4">
-                      <div className={`${getIconBg(lesson.type)} p-3 rounded-lg`}>
+                      <div
+                        className={`${getIconBg(lesson.type)} p-3 rounded-lg`}
+                      >
                         {getIcon(lesson.type)}
                       </div>
                       <div className="flex-1">

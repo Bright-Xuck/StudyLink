@@ -236,7 +236,8 @@
     "lessonsCompleted": "lessons completed",
     "contentComingSoon": "Content coming soon...",
     "complete": "complete",
-    "pleaseLoginToComplete": "Please login to complete the lesson."
+    "pleaseLoginToComplete": "Please login to complete the lesson.",
+    "nextLesson": "Next Lesson"
   },
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
