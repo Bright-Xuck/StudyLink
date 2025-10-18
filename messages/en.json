@@ -237,7 +237,14 @@
     "contentComingSoon": "Content coming soon...",
     "complete": "complete",
     "pleaseLoginToComplete": "Please login to complete the lesson.",
-    "nextLesson": "Next Lesson"
+    "nextLesson": "Next Lesson",
+    "watchVideoToComplete": "Watch at least 80% of the video to mark it as complete",
+    "download": "Download",
+    "pdfLoadError": "Unable to load PDF. Please try downloading instead.",
+    "downloadInstead": "Download Document",
+    "viewPagesToComplete": "View at least {{required}} of {{total}} pages to complete ({{viewed}} viewed)",
+    "documentPreviewNotAvailable": "Preview not available for this document type. Please download to view.",
+    "downloadDocument": "Download Document"
   },
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
@@ -312,7 +319,7 @@
       "certificate": "Certificate upon completion",
       "paymentMethod": "Select Payment Method",
       "phoneNumber": "Mobile Money Number",
-      "phoneHelp": "Enter your MTN or Orange Money number",
+      "phoneHint": "Enter your MTN or Orange Money number",
       "invalidPhone": "Invalid phone number. Expected format: 6XXXXXXXX",
       "module": "Module",
       "amount": "Amount",
@@ -332,7 +339,11 @@
       "tryAgain": "Try Again",
       "paymentTimeout": "Payment verification timed out. Please check your payment history.",
       "initiationFailed": "Failed to initiate payment. Please try again.",
-      "checkFailed": "Failed to check payment status. Please try again."
+      "checkFailed": "Failed to check payment status. Please try again.",
+      "howItWorks": "How It Works",
+      "step1": "Enter your mobile money number and click 'Pay Now'",
+      "step2": "You'll receive a payment prompt on your phone, else dial *126# for MTN or *150# for Orange",
+      "step3": "Approve the payment and get instant access to the module"
     }
   }
 }

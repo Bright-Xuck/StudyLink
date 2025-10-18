@@ -43,7 +43,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-20">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="text-center mb-12">
@@ -66,7 +66,6 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
                   moduleId={courseModule._id}
                   moduleSlug={courseModule.slug}
                   amount={courseModule.price || 0}
-                  moduleName={courseModule.title}
                 />
               </div>
 

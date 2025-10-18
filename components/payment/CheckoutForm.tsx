@@ -14,7 +14,6 @@ interface CheckoutFormProps {
   moduleId: string;
   moduleSlug: string;
   amount: number;
-  moduleName: string;
 }
 
 type PaymentStatus = "idle" | "initiating" | "pending" | "checking" | "success" | "failed";
@@ -23,7 +22,6 @@ export default function CheckoutForm({
   moduleId,
   moduleSlug,
   amount,
-  moduleName,
 }: CheckoutFormProps) {
   const t = useTranslations("payment");
   const router = useRouter();

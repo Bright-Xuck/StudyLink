@@ -278,7 +278,7 @@
       "certificate": "Certificat à la fin",
       "paymentMethod": "Sélectionner le mode de paiement",
       "phoneNumber": "Numéro Mobile Money",
-      "phoneHelp": "Entrez votre numéro MTN ou Orange Money",
+      "phoneHint": "Entrez votre numéro MTN ou Orange Money",
       "invalidPhone": "Numéro invalide. Format attendu: 6XXXXXXXX",
       "module": "Module",
       "amount": "Montant",
@@ -298,7 +298,11 @@
       "tryAgain": "Réessayer",
       "paymentTimeout": "La vérification du paiement a expiré. Veuillez vérifier votre historique de paiement.",
       "initiationFailed": "Échec de l'initiation du paiement. Veuillez réessayer.",
-      "checkFailed": "Échec de la vérification du statut. Veuillez réessayer."
+      "checkFailed": "Échec de la vérification du statut. Veuillez réessayer.",
+      "howItWorks": "How It Works",
+      "step1": "Enter your mobile money number and click 'Pay Now'",
+      "step2": "You'll receive a payment prompt on your phone",
+      "step3": "Approve the payment and get instant access to the module"
     }
   }
 }
