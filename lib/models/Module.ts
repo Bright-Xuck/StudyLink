@@ -163,7 +163,7 @@ const ModuleSchema = new mongoose.Schema<IModule>(
 );
 
 // Index for faster queries
-ModuleSchema.index({ slug: 1 });
+//ModuleSchema.index({ slug: 1 });
 ModuleSchema.index({ order: 1 });
 ModuleSchema.index({ isFree: 1 });
 

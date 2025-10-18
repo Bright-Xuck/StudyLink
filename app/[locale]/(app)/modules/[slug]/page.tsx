@@ -166,9 +166,8 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
                   </div>
                   <EnrollButton
                     moduleId={cmodule._id}
-                    moduleTitle={cmodule.title}
+                    moduleSlug={cmodule.slug}
                     isFree={cmodule.isFree}
-                    price={cmodule.price || 0}
                     hasAccess={hasAccess}
                     isAuthenticated={!!user}
                   />

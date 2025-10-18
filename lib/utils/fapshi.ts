@@ -4,8 +4,10 @@ import axios, { AxiosRequestConfig } from "axios";
 export interface FapshiResponse<T = unknown> {
   message?: string;
   statusCode: number;
-  data?: T;
   success?: boolean;
+  transId?: string;
+  dateInitiated?: string;
+  //data?: T;
 }
 
 export interface FapshiInitiatePaymentData {
@@ -48,7 +50,7 @@ export interface FapshiPaymentResponse {
 export interface FapshiTransactionStatus {
   transId: string;
   amount: number;
-  status: "created" | "successful" | "failed" | "expired";
+  status: "created" | "pending" | "successful" | "failed" | "expired";
   phone?: string;
   medium?: string;
   userId?: string;
@@ -56,6 +58,10 @@ export interface FapshiTransactionStatus {
   message?: string;
   createdAt: string;
   updatedAt?: string;
+  statusCode?: number;
+  success?: boolean;
+  dateInitiated?: string;
+  dateConfirmed?: string;
 }
 
 export interface FapshiBalance {
@@ -202,6 +208,47 @@ class FapshiClient {
       throw new FapshiError("Unexpected error occurred", 500, error);
     }
   }
+  private async makeRequest2(
+    config: AxiosRequestConfig
+  ) {
+    try {
+      const response = await axios({
+        ...config,
+        headers: {
+          ...this.headers,
+          ...config.headers,
+        },
+      });
+
+      return {
+        ...response.data,
+        statusCode: response.status,
+        success: true,
+      };
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          // Server responded with error
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const errorData = error.response.data as any;
+          throw new FapshiError(
+            errorData.message || "Fapshi API error",
+            error.response.status,
+            errorData
+          );
+        } else if (error.request) {
+          // Request made but no response
+          throw new FapshiError(
+            "No response from Fapshi API - network or timeout error",
+            500,
+            error
+          );
+        }
+      }
+      // Other errors
+      throw new FapshiError("Unexpected error occurred", 500, error);
+    }
+  }
 
   /**
    * Initiates a payment and returns a redirect link for the user to complete payment
@@ -274,9 +321,7 @@ class FapshiClient {
   /**
    * Gets the status of a payment transaction
    */
-  async getPaymentStatus(
-    transId: string
-  ): Promise<FapshiResponse<FapshiTransactionStatus>> {
+  async getPaymentStatus(transId: string): Promise<FapshiTransactionStatus> {
     try {
       this.validateTransactionId(transId);
 
@@ -285,19 +330,32 @@ class FapshiClient {
         url: `${this.baseUrl}/payment-status/${transId}`,
       };
 
-      return await this.makeRequest<FapshiTransactionStatus>(config);
+      const response = await this.makeRequest2(config);
+
+      return {
+        ...response,
+        status: (response.status as string).toLowerCase() as "created" | "pending" | "successful" | "failed" | "expired",
+      } as FapshiTransactionStatus;
     } catch (error) {
       if (error instanceof FapshiError) {
         return {
-          message: error.message,
-          statusCode: error.statusCode,
+          transId,
+          status: "failed",
+          amount: 0,
+          createdAt: "",
           success: false,
+          statusCode: error.statusCode,
+          message: error.message,
         };
       }
       return {
-        message: "Unknown error occurred",
-        statusCode: 500,
+        transId,
+        status: "failed",
+        amount: 0,
+        createdAt: "",
         success: false,
+        statusCode: 500,
+        message: "Unknown error occurred",
       };
     }
   }
@@ -482,7 +540,8 @@ export async function createPaymentIntent(
     amount,
     userId,
     externalId,
-    redirectUrl: redirectUrl || `${process.env.NEXT_PUBLIC_APP_URL}/payment/callback`,
+    redirectUrl:
+      redirectUrl || `${process.env.NEXT_PUBLIC_APP_URL}/payment/callback`,
     message: `DigiPlug wallet top-up - ${amount} XAF`,
   });
 }
@@ -506,7 +565,7 @@ export async function processDirectPayment(
 
 export async function checkPaymentStatus(
   transId: string
-): Promise<FapshiResponse<FapshiTransactionStatus>> {
+): Promise<FapshiTransactionStatus> {
   return fapshiClient.getPaymentStatus(transId);
 }
 

@@ -244,7 +244,8 @@
     "enrollFree": "Enroll for Free",
     "buyNow": "Buy Now",
     "enrolling": "Enrolling...",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "error": "There was an issue processing your enrollment. Please try again."
   },
   "about": {
     "title": "About Us",
@@ -291,5 +292,47 @@
     "answer3": " How fast you'll get your food depends on a number of things. How far is the restaurant? How bad is traffic? Is it snowing out?",
     "question4": "What is a group order and how can I create one?",
     "answer4": "A group order allows multiple people to add items into an order at the same time. Once a group order is created through a DoorDash"
+  },
+  "payment": {
+    "checkout": {
+      "title": "Checkout",
+      "description": "Complete your purchase to get instant access",
+      "paymentDetails": "Payment Details",
+      "securePayment": "Secure Payment",
+      "securePaymentDescription": "All transactions are encrypted and processed securely through Fapshi payment gateway.",
+      "orderSummary": "Order Summary",
+      "modulePrice": "Module Price",
+      "fees": "Processing Fees",
+      "included": "Included",
+      "total": "Total",
+      "oneTimePayment": "One-time payment, lifetime access",
+      "whatsIncluded": "What's Included",
+      "lifetimeAccess": "Lifetime access to module",
+      "allLessons": "All lessons and materials",
+      "certificate": "Certificate upon completion",
+      "paymentMethod": "Select Payment Method",
+      "phoneNumber": "Mobile Money Number",
+      "phoneHelp": "Enter your MTN or Orange Money number",
+      "invalidPhone": "Invalid phone number. Expected format: 6XXXXXXXX",
+      "module": "Module",
+      "amount": "Amount",
+      "processing": "Processing...",
+      "payNow": "Pay Now",
+      "terms": "By proceeding, you agree to our Terms of Service and Privacy Policy",
+      "waitingForPayment": "Waiting for Payment",
+      "checkYourPhone": "Please check your phone and approve the payment request",
+      "transactionId": "Transaction ID",
+      "checking": "Checking status...",
+      "waitingConfirmation": "Waiting for payment confirmation",
+      "checkStatus": "Check Payment Status",
+      "paymentSuccess": "Payment Successful!",
+      "paymentSuccessMessage": "Your payment has been confirmed. You now have access to the module.",
+      "redirecting": "Redirecting to module...",
+      "paymentFailed": "Payment Failed",
+      "tryAgain": "Try Again",
+      "paymentTimeout": "Payment verification timed out. Please check your payment history.",
+      "initiationFailed": "Failed to initiate payment. Please try again.",
+      "checkFailed": "Failed to check payment status. Please try again."
+    }
   }
 }

@@ -255,6 +255,50 @@
     "enrollFree": "S'Inscrire Gratuitement",
     "buyNow": "Acheter Maintenant",
     "enrolling": "Inscription en cours...",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "error": "Erreur lors de l'inscription. Veuillez réessayer."
+  },
+
+  "payment": {
+    "checkout": {
+      "title": "Paiement",
+      "description": "Complétez votre achat pour un accès instantané",
+      "paymentDetails": "Détails du paiement",
+      "securePayment": "Paiement sécurisé",
+      "securePaymentDescription": "Toutes les transactions sont cryptées et traitées en toute sécurité via la passerelle Fapshi.",
+      "orderSummary": "Résumé de la commande",
+      "modulePrice": "Prix du module",
+      "fees": "Frais de traitement",
+      "included": "Inclus",
+      "total": "Total",
+      "oneTimePayment": "Paiement unique, accès à vie",
+      "whatsIncluded": "Ce qui est inclus",
+      "lifetimeAccess": "Accès à vie au module",
+      "allLessons": "Toutes les leçons et matériels",
+      "certificate": "Certificat à la fin",
+      "paymentMethod": "Sélectionner le mode de paiement",
+      "phoneNumber": "Numéro Mobile Money",
+      "phoneHelp": "Entrez votre numéro MTN ou Orange Money",
+      "invalidPhone": "Numéro invalide. Format attendu: 6XXXXXXXX",
+      "module": "Module",
+      "amount": "Montant",
+      "processing": "Traitement...",
+      "payNow": "Payer maintenant",
+      "terms": "En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité",
+      "waitingForPayment": "En attente du paiement",
+      "checkYourPhone": "Veuillez vérifier votre téléphone et approuver la demande de paiement",
+      "transactionId": "ID de transaction",
+      "checking": "Vérification du statut...",
+      "waitingConfirmation": "En attente de confirmation du paiement",
+      "checkStatus": "Vérifier le statut du paiement",
+      "paymentSuccess": "Paiement réussi!",
+      "paymentSuccessMessage": "Votre paiement a été confirmé. Vous avez maintenant accès au module.",
+      "redirecting": "Redirection vers le module...",
+      "paymentFailed": "Échec du paiement",
+      "tryAgain": "Réessayer",
+      "paymentTimeout": "La vérification du paiement a expiré. Veuillez vérifier votre historique de paiement.",
+      "initiationFailed": "Échec de l'initiation du paiement. Veuillez réessayer.",
+      "checkFailed": "Échec de la vérification du statut. Veuillez réessayer."
+    }
   }
 }
