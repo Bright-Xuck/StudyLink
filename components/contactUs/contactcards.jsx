@@ -22,35 +22,35 @@ export default function ContactCards() {
       title: `${t("callUs")} 24×7`,
       content: "691311346",
       href: "tel:691311346",
-      color: "from-blue-500 to-blue-600",
+      color: "from-blue-500 to-blue-800",
     },
     {
       icon: Mail,
       title: t("writeUs"),
       content: "btversea@gmail.com",
       href: "mailto:btversea@gmail.com",
-      color: "from-purple-500 to-purple-600",
+      color: "from-purple-500 to-purple-800",
+    },
+    {
+      icon: WhatsAppIcon,
+      title: t("messageUsOnWhatsApp"),
+      content: "691311346",
+      href: "https://wa.me/237691311346",
+      color: "from-emerald-500 to-emerald-800",
     },
     {
       icon: MapPin,
       title: t("mainoffice"),
       content: "Molyko, Buea Cameroon",
-      href: null,
-      color: "from-green-500 to-green-600",
-    },
-    {
-      icon: WhatsAppIcon,
-      title: t("messageUsOnWhatsApp"), 
-      content: "691311346",
-      href: "https://wa.me/237691311346",
-      color: "from-emerald-500 to-emerald-600",
+      href: "https://www.bing.com/ck/a?!&&p=6c3d0b4a4999c43d8353eddbcf693c944bebaa8b2fe64fd59d05c403bf8c8712JmltdHM9MTc2MDc0NTYwMA&ptn=3&ver=2&hsh=4&fclid=0286ed23-163c-6f37-0b35-fb1017636ec1&u=a1L21hcHM_Jm1lcGk9MH5-RW1iZWRkZWR-QWRkcmVzc19MaW5rJnR5PTE4JnE9VW5pdmVyc2l0eSUyMG9mJTIwQnVlYSZzcz15cGlkLllOODA0MHgxMTgxNTA5NzgzMjcxNzA5MDg3MSZwcG9pcz00LjE0NzIyMjA0MjA4Mzc0XzkuMjg1NTU1ODM5NTM4NTc0X1VuaXZlcnNpdHklMjBvZiUyMEJ1ZWFfWU44MDQweDExODE1MDk3ODMyNzE3MDkwODcxfiZjcD00LjE0NzIyMn45LjI4NTU1NiZ2PTImc1Y9MSZGT1JNPU1QU1JQTA",
+      color: "from-orange-500 to-orange-800",
     },
   ];
 
   return (
     <div className="w-[95%] md:w-[90%] lg:w-[85%] xl:w-[80%] max-w-7xl mx-auto mt-8 md:mt-12 lg:mt-16">
       {/* Contact Cards Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-8 md:mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-12">
         {contactInfo.map((item, index) => {
           const Icon = item.icon;
           return (
