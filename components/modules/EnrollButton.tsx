@@ -9,18 +9,16 @@ import { enrollFreeModule } from '@/lib/actions/enrollment.actions';
 
 interface EnrollButtonProps {
   moduleId: string;
-  moduleTitle: string;
+  moduleSlug: string;
   isFree: boolean;
-  price: number;
   hasAccess: boolean;
   isAuthenticated: boolean;
 }
 
 export default function EnrollButton({
   moduleId,
-  //moduleTitle,
+  moduleSlug,
   isFree,
-  //price,
   hasAccess,
   isAuthenticated,
 }: EnrollButtonProps) {
@@ -56,7 +54,7 @@ export default function EnrollButton({
         }
       } else {
         // For paid modules, redirect to checkout
-        router.push(`/payment/checkout?moduleId=${moduleId}`);
+        router.push(`/payment/checkout?module=${moduleSlug}`);
       }
     } catch (error) {
       console.error('Enrollment error:', error);

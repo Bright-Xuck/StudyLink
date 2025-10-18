@@ -98,8 +98,8 @@ const modules = [
           "Understand the fundamental concepts and definition of research",
         descriptionFr:
           "Comprendre les concepts fondamentaux et la définition de la recherche",
-        type: "video" as const,
-        content:`# 🧭 Module 1: Understanding the Concept of Research
+        type: "reading" as const,
+        content: `# 🧭 Module 1: Understanding the Concept of Research
 
 ## Lesson 1.1: What is Research?
 
@@ -319,8 +319,7 @@ You now understand:
         descriptionFr:
           "Explorez la recherche qualitative, quantitative et les méthodes mixtes",
         type: "reading" as const,
-        content:
-          `
+        content: `
 
 ## Lesson 2.1: Research Paradigms
 
@@ -468,10 +467,11 @@ Understanding this chain helps researchers design coherent, defensible studies a
       {
         title: "Types and Approaches of Research",
         titleFr: "Ressources de recherche",
-        description: "To classify the major types of research and provide a detailed understanding of the three main research approaches",
+        description:
+          "To classify the major types of research and provide a detailed understanding of the three main research approaches",
         descriptionFr:
           "Téléchargez des modèles et des guides pour votre recherche",
-        type: "document" as const,
+        type: "reading" as const,
         content: ` **Introduction**  
 Research is not a monolithic activity. Studies can be categorized in several ways, often along different dimensions simultaneously. Understanding these classifications helps you quickly grasp the intent and design of a research paper — and choose the right approach for your own questions.
 
@@ -702,7 +702,7 @@ You now understand the key distinctions and integrations among **quantitative, q
           "To provide a comprehensive, step-by-step guide to the entire research process",
         descriptionFr:
           "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
-        type: "video" as const,
+        type: "reading" as const,
         content: `# **The Research Process**
 
 The **research process** is a structured sequence of steps that guides a researcher from an initial question to a well-reasoned conclusion. While it is often presented as a linear list, in practice, it is a **cyclical and iterative process**—researchers may move back and forth between steps as their understanding deepens. However, this formal structure provides an essential roadmap for conducting **rigorous and logical research**.
@@ -898,7 +898,7 @@ A **research design** is the logical structure connecting research questions to 
           "To instill a deep understanding of the ethical principles and professional integrity required in all research.",
         descriptionFr:
           "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
-        type: "video" as const,
+        type: "reading" as const,
         content: `## **Introduction**
 Research ethics are not just a set of rules to follow; they are the **moral compass** that guides the entire research process. Ethical conduct ensures that the pursuit of knowledge does not come at the cost of human dignity or scientific truth. Lapses in ethics can harm individuals, erode public trust in science, and invalidate research findings. This module covers the **non-negotiable principles** that every researcher must uphold.
 
@@ -1013,7 +1013,7 @@ It safeguards participants, preserves scientific integrity, and sustains public 
           "To transition from theory to practice by guiding learners through the process of developing a mini research proposal",
         descriptionFr:
           "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
-        type: "video" as const,
+        type: "reading" as const,
         content: `## **Welcome**
 Welcome to the final module of **Introduction to Research**. Throughout this course we explored the *what*, *why*, and *how* of research. Now it’s time to put that knowledge into action. This module gives you the tools and confidence to begin your own research journey: how to structure a research proposal (your blueprint) and how to read and critique the work of others — a core skill for every researcher.
 
@@ -1154,7 +1154,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=literature-search-example",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 20,
         order: 1,
         isPreview: true,
@@ -1183,7 +1183,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Introduction au style APA pour les citations dans le texte et les références.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=apa-citation-basics",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 18,
         order: 3,
         isPreview: false,
@@ -1260,7 +1260,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Comment sélectionner des méthodes quantitatives, qualitatives ou mixtes en fonction des questions de recherche.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=choosing-methodology",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 22,
         order: 2,
         isPreview: false,
@@ -1301,7 +1301,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Assurer que votre conception de recherche est valide et fiable.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=validity-reliability",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 25,
         order: 5,
         isPreview: false,
@@ -1348,7 +1348,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Principes pour créer des enquêtes et questionnaires efficaces.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=survey-design",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 28,
         order: 1,
         isPreview: true,
@@ -1376,7 +1376,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Stratégies d'observation participante et non participante.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=observational-methods",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 20,
         order: 3,
         isPreview: false,
@@ -1435,7 +1435,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Statistiques descriptives et inférentielles pour les données quantitatives.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=stats-basics",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 30,
         order: 1,
         isPreview: true,
@@ -1463,7 +1463,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Tirer des conclusions significatives de l'analyse des données.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=interpreting-findings",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 25,
         order: 3,
         isPreview: false,
@@ -1487,7 +1487,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Introduction au logiciel NVivo pour le codage et l'analyse.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=nvivo-intro",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 35,
         order: 5,
         isPreview: false,
@@ -1550,7 +1550,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Rédiger des arguments logiques avec preuves et contre-arguments.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=argument-development",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 22,
         order: 2,
         isPreview: false,
@@ -1623,7 +1623,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         description: "Standard components of a research proposal.",
         descriptionFr: "Composants standards d'une proposition de recherche.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=proposal-structure",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 18,
         order: 1,
         isPreview: true,
@@ -1661,7 +1661,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Estimer les coûts et justifier les éléments budgétaires.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=budget-development",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 25,
         order: 4,
         isPreview: false,
@@ -1735,7 +1735,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         description: "Synthesizing literature into a cohesive chapter.",
         descriptionFr: "Synthétiser la littérature en un chapitre cohérent.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=lit-review-chapter",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 35,
         order: 2,
         isPreview: false,
@@ -1773,7 +1773,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Anticiper les questions et pratiquer votre présentation.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=thesis-defense",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 30,
         order: 5,
         isPreview: false,
@@ -1834,7 +1834,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Principes de base comme la bienfaisance, la non-malfaisance et la justice.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=ethics-principles",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 15,
         order: 1,
         isPreview: true,
@@ -1921,7 +1921,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Créer des diapositives avec des visuels et contenu efficaces.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=design-presentations",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 20,
         order: 1,
         isPreview: true,
@@ -1950,7 +1950,7 @@ This course maps a path from the philosophy of knowledge to practical research s
         descriptionFr:
           "Stratégies pour répondre aux questions difficiles avec confiance.",
         type: "video" as const,
-        content: "https://www.youtube.com/watch?v=handling-questions",
+        content: "https://youtu.be/v-MLGYuWLBo",
         duration: 22,
         order: 3,
         isPreview: false,

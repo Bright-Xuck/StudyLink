@@ -112,8 +112,21 @@
     "welcome": "Bienvenue de retour",
     "myModules": "Mes Modules",
     "progress": "Progrès",
+    "settings": "Paramètres",
+    "welcomeMessage": "Suivez votre progression et continuez où vous vous êtes arrêté",
+    "totalModules": "Modules totaux",
+    "completed": "Terminés",
+    "timeSpent": "Temps passé",
     "certificates": "Certificats",
-    "settings": "Paramètres"
+    "continueLearning": "Continuer l'apprentissage",
+    "continueLesson": "Continuer la leçon",
+    "browseAll": "Tout parcourir",
+    "noModulesYet": "Aucun module pour le moment",
+    "noModulesMessage": "Commencez votre parcours d'apprentissage en vous inscrivant à un module",
+    "exploreCourses": "Explorer les cours",
+    "free": "Gratuit",
+    "premium": "Premium",
+    "complete": "terminé"
   },
 
   "Legal": {
@@ -220,7 +233,21 @@
     "lesson": "Leçon",
     "readyForQuiz": "Prêt pour le Quiz ?",
     "testKnowledge": "Testez vos connaissances et obtenez votre certificat",
-    "startQuiz": "Commencer le Quiz"
+    "startQuiz": "Commencer le Quiz",
+    "timeSpent": "Temps passé",
+    "minutes": "minutes",
+    "markComplete": "Marquer comme Terminé",
+    "previous": "Précédent",
+    "next": "Suivant",
+    "page": "Page",
+    "of": "de",
+    "backToModules": "Retour aux Modules",
+    "completed": "Terminé",
+    "yourProgress": "Votre Progrès",
+    "lessonsCompleted": "leçons terminées",
+    "contentComingSoon": "Contenu à venir...",
+    "complete": "complet",
+    "pleaseLoginToComplete": "Veuillez vous connecter pour terminer la leçon."
   },
 
   "enrollment": {
@@ -228,6 +255,54 @@
     "enrollFree": "S'Inscrire Gratuitement",
     "buyNow": "Acheter Maintenant",
     "enrolling": "Inscription en cours...",
-    "loading": "Chargement..."
+    "loading": "Chargement...",
+    "error": "Erreur lors de l'inscription. Veuillez réessayer."
+  },
+
+  "payment": {
+    "checkout": {
+      "title": "Paiement",
+      "description": "Complétez votre achat pour un accès instantané",
+      "paymentDetails": "Détails du paiement",
+      "securePayment": "Paiement sécurisé",
+      "securePaymentDescription": "Toutes les transactions sont cryptées et traitées en toute sécurité via la passerelle Fapshi.",
+      "orderSummary": "Résumé de la commande",
+      "modulePrice": "Prix du module",
+      "fees": "Frais de traitement",
+      "included": "Inclus",
+      "total": "Total",
+      "oneTimePayment": "Paiement unique, accès à vie",
+      "whatsIncluded": "Ce qui est inclus",
+      "lifetimeAccess": "Accès à vie au module",
+      "allLessons": "Toutes les leçons et matériels",
+      "certificate": "Certificat à la fin",
+      "paymentMethod": "Sélectionner le mode de paiement",
+      "phoneNumber": "Numéro Mobile Money",
+      "phoneHint": "Entrez votre numéro MTN ou Orange Money",
+      "invalidPhone": "Numéro invalide. Format attendu: 6XXXXXXXX",
+      "module": "Module",
+      "amount": "Montant",
+      "processing": "Traitement...",
+      "payNow": "Payer maintenant",
+      "terms": "En continuant, vous acceptez nos Conditions d'utilisation et notre Politique de confidentialité",
+      "waitingForPayment": "En attente du paiement",
+      "checkYourPhone": "Veuillez vérifier votre téléphone et approuver la demande de paiement",
+      "transactionId": "ID de transaction",
+      "checking": "Vérification du statut...",
+      "waitingConfirmation": "En attente de confirmation du paiement",
+      "checkStatus": "Vérifier le statut du paiement",
+      "paymentSuccess": "Paiement réussi!",
+      "paymentSuccessMessage": "Votre paiement a été confirmé. Vous avez maintenant accès au module.",
+      "redirecting": "Redirection vers le module...",
+      "paymentFailed": "Échec du paiement",
+      "tryAgain": "Réessayer",
+      "paymentTimeout": "La vérification du paiement a expiré. Veuillez vérifier votre historique de paiement.",
+      "initiationFailed": "Échec de l'initiation du paiement. Veuillez réessayer.",
+      "checkFailed": "Échec de la vérification du statut. Veuillez réessayer.",
+      "howItWorks": "How It Works",
+      "step1": "Enter your mobile money number and click 'Pay Now'",
+      "step2": "You'll receive a payment prompt on your phone",
+      "step3": "Approve the payment and get instant access to the module"
+    }
   }
 }
