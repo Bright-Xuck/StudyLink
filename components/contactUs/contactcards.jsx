@@ -67,6 +67,7 @@ export default function ContactCards() {
               {item.href ? (
                 <a
                   href={item.href}
+                  target="blanc"
                   className="text-base md:text-lg lg:text-xl text-primary hover:text-primary/80 transition-colors text-center block font-medium"
                 >
                   {item.content}
