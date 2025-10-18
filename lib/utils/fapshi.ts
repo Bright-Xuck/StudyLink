@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 
 // Fapshi API response types
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export interface FapshiResponse<T = unknown> {
   message?: string;
   statusCode: number;

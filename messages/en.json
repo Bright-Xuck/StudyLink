@@ -287,7 +287,8 @@
     "callUs": "Call Us",
     "writeUs": "Write Us",
     "mainoffice": "Main Office",
-    "message": "Send Us a Message"
+    "message": "Send Us a Message",
+    "messageUsOnWhatsApp": "Message Us on WhatsApp"
   },
   "contactfaq": {
     "title": "Frequently asked questions",

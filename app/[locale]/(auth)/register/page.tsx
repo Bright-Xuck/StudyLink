@@ -120,7 +120,7 @@ export default function RegisterPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                placeholder="john@example.com"
+                placeholder="nkengbeza123@gmail.com"
                 className="mt-1"
               />
               {errors.email && (

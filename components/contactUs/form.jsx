@@ -37,7 +37,7 @@ export default function Form() {
               name="email"
               required
               className="px-4 py-3 md:py-3.5 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all duration-300 text-sm md:text-base"
-              placeholder="john@example.com"
+              placeholder="nkengbeza123@gmail.com"
             />
           </div>
         </div>
