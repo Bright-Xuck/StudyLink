@@ -1,6 +1,7 @@
 import mongoose, { Document, Model } from "mongoose";
 
 export interface ILesson {
+  _id?: string;
   title: string;
   titleFr: string;
   description: string;

@@ -8,12 +8,16 @@ import {
   Download,
   Book,
   CheckCircle,
+  Loader2,
 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import PaginatedContent from "../content/PaginatedContent";
 import VideoContent from "../content/VideoContent";
 import DocumentContent from "../content/DocumentContent";
-import QuizContainer from "../quiz/quizcontainer";
+import QuizContainer from "../quiz/QuizContainer";
+import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
+import { toast } from "sonner";
+
 interface Lesson {
   _id: string; // MongoDB ID
   title: string;
@@ -45,15 +49,15 @@ interface ModuleContentProps {
 export default function ModuleContent({
   lessons,
   moduleId,
-  userId,
   progress,
 }: ModuleContentProps) {
   const t = useTranslations("module");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [localProgress, setLocalProgress] = useState(progress);
+  const [localProgress] = useState(progress);
   const [showQuiz, setShowQuiz] = useState(false);
-  const [selectedLessonForQuiz, setSelectedLessonForQuiz] = useState<Lesson | null>(null);
+  const [quizId, setQuizId] = useState<string | null>(null);
+  const [loadingQuiz, setLoadingQuiz] = useState(false);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -104,15 +108,37 @@ export default function ModuleContent({
     router.refresh();
   };
 
-  const handleTakeQuiz = (lesson: Lesson) => {
-    setSelectedLessonForQuiz(lesson);
-    setShowQuiz(true);
+  const handleTakeQuiz = async (lesson: Lesson) => {
+    setLoadingQuiz(true);
+    //setSelectedLessonForQuiz(lesson);
+
+    try {
+      // Fetch quiz for this lesson
+      const quiz = await getQuizByLessonId(lesson._id);
+
+      if (!quiz) {
+        toast.error(t("noQuizForLesson"));
+        setLoadingQuiz(false);
+        //setSelectedLessonForQuiz(null);
+        return;
+      }
+
+      setQuizId(quiz._id);
+      setShowQuiz(true);
+    } catch (error) {
+      console.error("Error loading quiz:", error);
+      toast.error(t("quizLoadError"));
+      //setSelectedLessonForQuiz(null);
+    } finally {
+      setLoadingQuiz(false);
+    }
   };
 
   const handleCloseQuiz = () => {
     setShowQuiz(false);
-    setSelectedLessonForQuiz(null);
-    // Optionally refresh to update any quiz-related progress
+    //setSelectedLessonForQuiz(null);
+    setQuizId(null);
+    // Refresh to update any quiz-related progress
     router.refresh();
   };
 
@@ -175,61 +201,59 @@ export default function ModuleContent({
               {/* Quiz Button for Current Lesson */}
               <button
                 onClick={() => handleTakeQuiz(selectedLesson)}
-                className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
+                disabled={loadingQuiz}
+                className="bg-primary text-primary-foreground hover:opacity-90 px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <FileText className="h-4 w-4" />
-                {t("takeQuiz")}
+                {loadingQuiz ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    {t("loading")}
+                  </>
+                ) : (
+                  <>
+                    <FileText className="h-4 w-4" />
+                    {t("takeQuiz")}
+                  </>
+                )}
               </button>
             </div>
           </div>
 
           {selectedLesson.type === "video" ? (
-            <>
-              {/* Video Player */}
-              <VideoContent
-                url={selectedLesson.content}
-                moduleId={moduleId}
-                lessonOrder={selectedLesson.order}
-                lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-                onComplete={handleLessonComplete}
-                hasNextLesson={hasNextLesson()}
-                onNextLesson={nextLesson}
-              />
-            </>
+            <VideoContent
+              url={selectedLesson.content}
+              moduleId={moduleId}
+              lessonOrder={selectedLesson.order}
+              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
+              onComplete={handleLessonComplete}
+              hasNextLesson={hasNextLesson()}
+              onNextLesson={nextLesson}
+            />
           ) : selectedLesson.type === "document" ? (
-            <>
-              {/* Document Content */}
-              <DocumentContent
-                url={selectedLesson.content}
-                moduleId={moduleId}
-                lessonOrder={selectedLesson.order}
-                lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-                onCompleteAction={handleLessonComplete}
-                hasNextLesson={hasNextLesson()}
-                onNextLessonAction={nextLesson}
-              />
-            </>
+            <DocumentContent
+              url={selectedLesson.content}
+              moduleId={moduleId}
+              lessonOrder={selectedLesson.order}
+              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
+              onCompleteAction={handleLessonComplete}
+              hasNextLesson={hasNextLesson()}
+              onNextLessonAction={nextLesson}
+            />
           ) : selectedLesson.type === "reading" ? (
-            <>
-              {/* Paginated Content */}
-              <PaginatedContent
-                content={selectedLesson.content}
-                wordsPerPage={250}
-                moduleId={moduleId}
-                lessonOrder={selectedLesson.order}
-                lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-                onCompleteAction={handleLessonComplete}
-                hasNextLesson={hasNextLesson()}
-                onNextLessonAction={nextLesson}
-              />
-            </>
+            <PaginatedContent
+              content={selectedLesson.content}
+              wordsPerPage={250}
+              moduleId={moduleId}
+              lessonOrder={selectedLesson.order}
+              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
+              onCompleteAction={handleLessonComplete}
+              hasNextLesson={hasNextLesson()}
+              onNextLessonAction={nextLesson}
+            />
           ) : (
-            <>
-              {/* Other Content */}
-              <div>
-                {selectedLesson.content}
-              </div>
-            </>
+            <div>
+              {selectedLesson.content}
+            </div>
           )}
         </>
       ) : (
@@ -332,9 +356,14 @@ export default function ModuleContent({
                               e.stopPropagation();
                               handleTakeQuiz(lesson);
                             }}
-                            className="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-1"
+                            disabled={loadingQuiz}
+                            className="bg-primary/10 text-primary px-4 py-1.5 rounded-lg hover:bg-primary/20 transition-colors text-sm font-medium flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
                           >
-                            <FileText className="h-3.5 w-3.5" />
+                            {loadingQuiz ? (
+                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                            ) : (
+                              <FileText className="h-3.5 w-3.5" />
+                            )}
                             {t("quiz")}
                           </button>
                         </div>
@@ -354,10 +383,9 @@ export default function ModuleContent({
       )}
 
       {/* Quiz Modal */}
-      {showQuiz && selectedLessonForQuiz && (
+      {showQuiz && quizId && (
         <QuizContainer
-          lessonId={selectedLessonForQuiz._id}
-          userId={userId}
+          quizId={quizId}
           onClose={handleCloseQuiz}
         />
       )}
