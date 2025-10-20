@@ -13,8 +13,9 @@ import { useRouter, useSearchParams } from "next/navigation";
 import PaginatedContent from "../content/PaginatedContent";
 import VideoContent from "../content/VideoContent";
 import DocumentContent from "../content/DocumentContent";
-
+import QuizContainer from "../quiz/quizcontainer";
 interface Lesson {
+  _id: string; // MongoDB ID
   title: string;
   description: string;
   type: "video" | "reading" | "document" | "quiz";
@@ -34,6 +35,7 @@ interface LessonProgress {
 interface ModuleContentProps {
   lessons: Lesson[];
   moduleId: string;
+  userId: string; // Add userId for quiz
   progress?: {
     lessonsProgress: LessonProgress[];
     progressPercentage: number;
@@ -43,13 +45,15 @@ interface ModuleContentProps {
 export default function ModuleContent({
   lessons,
   moduleId,
+  userId,
   progress,
 }: ModuleContentProps) {
   const t = useTranslations("module");
   const router = useRouter();
   const searchParams = useSearchParams();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [localProgress, setLocalProgress] = useState(progress);
+  const [showQuiz, setShowQuiz] = useState(false);
+  const [selectedLessonForQuiz, setSelectedLessonForQuiz] = useState<Lesson | null>(null);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -97,6 +101,18 @@ export default function ModuleContent({
 
   const handleLessonComplete = () => {
     // Refresh to get updated progress
+    router.refresh();
+  };
+
+  const handleTakeQuiz = (lesson: Lesson) => {
+    setSelectedLessonForQuiz(lesson);
+    setShowQuiz(true);
+  };
+
+  const handleCloseQuiz = () => {
+    setShowQuiz(false);
+    setSelectedLessonForQuiz(null);
+    // Optionally refresh to update any quiz-related progress
     router.refresh();
   };
 
@@ -148,13 +164,23 @@ export default function ModuleContent({
                 </div>
               )}
             </div>
-            <button
-              onClick={() => router.back()}
-              className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-lg transition-colors"
-            >
-              {t("backToModules")}
-            </button>
-            
+            <div className="flex gap-3">
+              <button
+                onClick={() => router.back()}
+                className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-lg transition-colors"
+              >
+                {t("backToModules")}
+              </button>
+              
+              {/* Quiz Button for Current Lesson */}
+              <button
+                onClick={() => handleTakeQuiz(selectedLesson)}
+                className="bg-blue-600 text-white hover:bg-blue-700 px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
+              >
+                <FileText className="h-4 w-4" />
+                {t("takeQuiz")}
+              </button>
+            </div>
           </div>
 
           {selectedLesson.type === "video" ? (
@@ -172,7 +198,7 @@ export default function ModuleContent({
             </>
           ) : selectedLesson.type === "document" ? (
             <>
-              {/* Paginated Content */}
+              {/* Document Content */}
               <DocumentContent
                 url={selectedLesson.content}
                 moduleId={moduleId}
@@ -246,13 +272,8 @@ export default function ModuleContent({
                 const completed = isLessonCompleted(lesson.order);
                 return (
                   <div
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                      handleLesson(lesson);
-                    }}
                     key={index}
-                    className={`border rounded-lg p-4 transition-colors cursor-pointer ${
+                    className={`border rounded-lg p-4 transition-colors ${
                       completed
                         ? "border-primary bg-primary/5"
                         : "border-border hover:border-primary"
@@ -276,7 +297,7 @@ export default function ModuleContent({
                         <p className="text-sm text-muted-foreground mb-2">
                           {lesson.description}
                         </p>
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 mb-3">
                           <span className="text-xs text-muted-foreground">
                             {lesson.duration} min
                           </span>
@@ -291,6 +312,32 @@ export default function ModuleContent({
                             </span>
                           )}
                         </div>
+                        
+                        {/* Action Buttons */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleLesson(lesson);
+                            }}
+                            className="bg-primary text-primary-foreground px-4 py-1.5 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
+                          >
+                            {t("startLesson")}
+                          </button>
+                          
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              handleTakeQuiz(lesson);
+                            }}
+                            className="bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium flex items-center gap-1"
+                          >
+                            <FileText className="h-3.5 w-3.5" />
+                            {t("quiz")}
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -303,22 +350,16 @@ export default function ModuleContent({
               <p className="text-muted-foreground">{t("contentComingSoon")}</p>
             </div>
           )}
-
-          {/* Quiz Button */}
-          {lessons.length > 0 && (
-            <div className="mt-8 p-6 bg-muted rounded-lg text-center">
-              <h3 className="text-lg font-semibold text-foreground mb-2">
-                {t("readyForQuiz")}
-              </h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t("testKnowledge")}
-              </p>
-              <button className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:opacity-90 transition-opacity">
-                {t("startQuiz")}
-              </button>
-            </div>
-          )}
         </>
+      )}
+
+      {/* Quiz Modal */}
+      {showQuiz && selectedLessonForQuiz && (
+        <QuizContainer
+          lessonId={selectedLessonForQuiz._id}
+          userId={userId}
+          onClose={handleCloseQuiz}
+        />
       )}
     </div>
   );

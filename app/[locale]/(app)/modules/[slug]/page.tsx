@@ -128,6 +128,7 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
                 <ModuleContent 
                   lessons={JSON.parse(JSON.stringify(cmodule.lessons || []))} 
                   moduleId={cmodule._id}
+                  userId={user?.id || "anonymous"}
                   progress={progress}
                 />
               ) : (
