@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useTranslations } from 'next-intl';
 import { getQuizById, submitQuizAttempt } from '@/lib/actions/quiz.actions';
-import MCQQuestion from '../quiz-questions/MCQQuestion';
-import ShortAnswerQuestion from '../quiz-questions/ShortAnswerQuestion';
+import MCQQuestion from './MCQQuestion';
+import ShortAnswerQuestion from './ShortAnswerQuestion';
 import QuizResults from './QuizResults';
 import { Button } from '@/components/ui/button';
 import { Loader2, X, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';

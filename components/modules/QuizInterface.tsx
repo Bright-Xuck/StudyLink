@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import QuizContainer from '@/components/ui/QuizContainer';
+import QuizContainer from '@/components/quiz-questions/QuizContainer';
 import { Button } from '@/components/ui/button';
 import { PlayCircle, AlertCircle } from 'lucide-react';
 

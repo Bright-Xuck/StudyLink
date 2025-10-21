@@ -14,7 +14,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import PaginatedContent from "../content/PaginatedContent";
 import VideoContent from "../content/VideoContent";
 import DocumentContent from "../content/DocumentContent";
-import QuizContainer from "../ui/QuizContainer";
+import QuizContainer from "../quiz-questions/QuizContainer";
 import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
 import { toast } from "sonner";
 
