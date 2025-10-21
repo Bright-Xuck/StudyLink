@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="flex items-center space-x-2 mb-4">
               <GraduationCap className="h-8 w-8 text-primary" />
               <span className="text-xl font-bold text-foreground">
-                ResearchEthics
+                ZenithScholar
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">

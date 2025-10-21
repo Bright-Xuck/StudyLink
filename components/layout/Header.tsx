@@ -65,7 +65,7 @@ export default function Header() {
           <Link href={`/`} className="flex items-center space-x-2">
             <GraduationCap className="h-8 w-8 text-primary" />
             <span className="text-xl font-bold text-foreground">
-              ResearchEthics
+              ZenithScholar
             </span>
           </Link>
 

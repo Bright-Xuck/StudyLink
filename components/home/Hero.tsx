@@ -8,7 +8,7 @@ export default function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="relative bg-primary text-primary-foreground lg:py-46 py-20 md:py-32">
+    <section className="relative hero-gradient-animated text-primary-foreground lg:py-46 py-20 md:py-32">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,_currentColor_1px,_transparent_1px)] bg-[length:24px_24px]"></div>
       

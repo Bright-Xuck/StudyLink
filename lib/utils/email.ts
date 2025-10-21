@@ -17,8 +17,8 @@ export async function sendWelcomeEmail(
 ) {
   const subject =
     locale === "fr"
-      ? "Bienvenue sur ResearchEthics Platform"
-      : "Welcome to ResearchEthics Platform";
+      ? "Bienvenue sur ZenithScholar Platform"
+      : "Welcome to ZenithScholar Platform";
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -27,8 +27,8 @@ export async function sendWelcomeEmail(
       }, ${name}!</h1>
       <p>${
         locale === "fr"
-          ? "Merci de vous être inscrit sur ResearchEthics Platform."
-          : "Thank you for signing up for ResearchEthics Platform."
+          ? "Merci de vous être inscrit sur ZenithScholar Platform."
+          : "Thank you for signing up for ZenithScholar Platform."
       }</p>
       <p>${
         locale === "fr"

@@ -132,7 +132,7 @@
   * {
     @apply border-border outline-ring/50;
   }
-  
+
   body {
     @apply bg-background text-foreground;
     font-family: var(--font-inter);
@@ -215,19 +215,123 @@
 
 /* Additional brand-specific utilities */
 @layer utilities {
+  /* Text gradient - Teal to Gold */
   .text-gradient {
     @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
   }
 
+  /* Hero background gradient - Full brand palette */
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.45 0.08 195) 0%,
+      oklch(0.42 0.11 155) 50%,
+      oklch(0.75 0.12 85) 100%
+    );
+  }
+
+  /* Alternative hero gradient - Subtle overlay */
+  .hero-gradient-subtle {
+    background: linear-gradient(
+      to bottom right,
+      oklch(0.45 0.08 195 / 0.95),
+      oklch(0.42 0.11 155 / 0.9)
+    );
+  }
+
+  /* Hero gradient with mesh effect */
+  .hero-gradient-mesh {
+    background: radial-gradient(
+        at 0% 0%,
+        oklch(0.45 0.08 195 / 0.3) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 0%,
+        oklch(0.75 0.12 85 / 0.2) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 100%,
+        oklch(0.42 0.11 155 / 0.3) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 100%,
+        oklch(0.45 0.08 195 / 0.2) 0px,
+        transparent 50%
+      ),
+      var(--background);
+  }
+
+  /* Animated hero gradient */
+  .hero-gradient-animated {
+    background: linear-gradient(
+      -45deg,
+      oklch(0.45 0.08 195),
+      oklch(0.42 0.11 155),
+      oklch(0.75 0.12 85),
+      oklch(0.42 0.11 155)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Border gradient */
   .border-gradient {
     border-image: linear-gradient(to right, var(--primary), var(--accent)) 1;
   }
 
+  /* Card gradient border */
+  .card-gradient-border {
+    @apply relative overflow-hidden;
+  }
+
+  .card-gradient-border::before {
+    content: "";
+    @apply absolute inset-0 rounded-lg p-[2px] -z-10;
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      var(--secondary),
+      var(--accent)
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Brand shadow */
   .shadow-brand {
     box-shadow: 0 10px 40px -10px oklch(0.45 0.08 195 / 0.2);
   }
 
+  /* Gold glow effect */
+  .shadow-gold {
+    box-shadow: 0 0 30px oklch(0.75 0.12 85 / 0.3);
+  }
+
+  /* Hover lift effect */
   .hover-lift {
     @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  /* CTA button gradient */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-warning to-accent text-white font-semibold;
+    @apply hover:shadow-lg hover:scale-105 transition-all duration-300;
   }
 }

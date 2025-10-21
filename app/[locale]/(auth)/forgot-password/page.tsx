@@ -49,7 +49,7 @@ export default function ForgotPasswordPage() {
         <div className="text-center">
           <Link href={`/`} className="inline-flex items-center justify-center space-x-2 mb-6">
             <GraduationCap className="h-12 w-12 text-primary" />
-            <span className="text-2xl font-bold text-foreground">ResearchEthics</span>
+            <span className="text-2xl font-bold text-foreground">ZenithScholar</span>
           </Link>
           <h2 className="text-3xl font-bold text-foreground">
             {tp('forgotTitle')}

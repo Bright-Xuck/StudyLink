@@ -3,7 +3,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { Inter, Poppins } from "next/font/google";
+import { Inter, Poppins, Montserrat } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import NextTopLoader from "nextjs-toploader";
@@ -22,11 +22,17 @@ const poppins = Poppins({
   weight: '700'
 });
 
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  variable: '--font-montserrat',
+  weight: '900',
+})
+
 export const metadata: Metadata = {
-  title: 'ResearchEthics Platform - Learn Research Skills',
+  title: 'ZenithScholar Platform - Where Research Excellence Begins',
   description: 'Master research methodology, ethics, and academic writing with our comprehensive training platform',
-  keywords: ['ResearchEthics', 'research ethics', 'btverse'],
-  authors: [{ name: 'ResearchEthics' }],
+  keywords: ['ZenithScholar', 'zenith scholar', 'btverse'],
+  authors: [{ name: 'ZenithScholar' }],
   creator: 'BiotecUniverse',
   publisher: 'botecuniverse.org',
   robots: {
@@ -37,13 +43,13 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: process.env.NEXT_PUBLIC_APP_URL,
-    title: 'ResearchEthics Platform - Learn Research Skills',
+    title: 'ZenithScholar Platform - Learn Research Skills',
     description: 'Your trusted marketplace for digital accounts, social media services, and virtual contacts.',
-    siteName: 'ResearchEthics',
+    siteName: 'ZenithScholar',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ResearchEthics Platform - Learn Research Skills',
+    title: 'ZenithScholar Platform - Learn Research Skills',
     description: 'Your trusted marketplace for digital accounts, social media services, and virtual contacts.',
   },
 }
@@ -71,7 +77,7 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-      <body className={`${inter.variable} ${poppins.variable} ${inter.className} ${poppins.className} antialiased`}>
+      <body className={`${inter.variable} ${poppins.variable} ${inter.className} ${poppins.className} ${montserrat.variable} ${montserrat.className} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>
             <AuthProvider>

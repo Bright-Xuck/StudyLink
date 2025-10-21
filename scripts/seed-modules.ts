@@ -900,13 +900,13 @@ A **research design** is the logical structure connecting research questions to 
           "Apprenez des stratégies efficaces pour rechercher dans les bases de données académiques et les bibliothèques.",
         type: "reading" as const,
         content: `## **Introduction**
-Research ethics are not just a set of rules to follow; they are the **moral compass** that guides the entire research process. Ethical conduct ensures that the pursuit of knowledge does not come at the cost of human dignity or scientific truth. Lapses in ethics can harm individuals, erode public trust in science, and invalidate research findings. This module covers the **non-negotiable principles** that every researcher must uphold.
+Zenith scholar are not just a set of rules to follow; they are the **moral compass** that guides the entire research process. Ethical conduct ensures that the pursuit of knowledge does not come at the cost of human dignity or scientific truth. Lapses in ethics can harm individuals, erode public trust in science, and invalidate research findings. This module covers the **non-negotiable principles** that every researcher must uphold.
 
 ---
 
 ## **Topic 1: Importance of Ethics in Research**
 
-The importance of research ethics rests on three fundamental pillars:
+The importance of zenith scholar rests on three fundamental pillars:
 
 ### **1. Protecting Human Participants**
 The primary ethical obligation is to protect research participants from **physical, psychological, social,** and **economic harm**.  
@@ -1797,10 +1797,10 @@ This course maps a path from the philosophy of knowledge to practical research s
     isPublished: true,
   },
   {
-    title: "Plagiarism & Research Ethics",
+    title: "Plagiarism & Zenith Scholar",
     titleFr: "Plagiat et éthique de la recherche",
     description:
-      "Understand research ethics, avoid plagiarism, and conduct research with integrity.",
+      "Understand zenith scholar, avoid plagiarism, and conduct research with integrity.",
     descriptionFr:
       "Comprenez l'éthique de la recherche, évitez le plagiat et menez des recherches avec intégrité.",
     slug: "plagiarism-research-ethics",
@@ -1808,13 +1808,13 @@ This course maps a path from the philosophy of knowledge to practical research s
       "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800",
     isFree: true,
     price: 0,
-    content: "# Plagiarism & Research Ethics\n\nConduct research ethically...",
+    content: "# Plagiarism & Zenith Scholar\n\nConduct research ethically...",
     contentFr:
       "# Plagiat et éthique de la recherche\n\nMenez des recherches éthiquement...",
     duration: "2 weeks",
     level: "beginner" as const,
     objectives: [
-      "Understand research ethics principles",
+      "Understand zenith scholar principles",
       "Avoid plagiarism",
       "Cite sources properly",
       "Navigate ethical dilemmas",
