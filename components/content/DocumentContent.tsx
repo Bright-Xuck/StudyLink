@@ -7,9 +7,13 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Document, Page, pdfjs } from 'react-pdf';
-//import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-//import 'react-pdf/dist/esm/Page/TextLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+const pdfOptions = {
+  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  cMapPacked: true,
+  standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
+};
 
 // Add this new component before VideoContent
 export default function DocumentContent({
@@ -149,7 +153,11 @@ export default function DocumentContent({
             <div className="flex justify-center">
               <Document
                 file={url}
+                options={pdfOptions}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) => {
+                  console.error('PDF Load Error:', error);
+                }}
                 loading={
                   <div className="flex items-center justify-center py-20">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />
