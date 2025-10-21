@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import { getQuizById, submitQuizAttempt } from '@/lib/actions/quiz.actions';
 import MCQQuestion from './MCQQuestion';
 import ShortAnswerQuestion from './ShortAnswerQuestion';
-import QuizResults from './QuizResults';
+import QuizResults from "./QuizResults";
 import { Button } from '@/components/ui/button';
 import { Loader2, X, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 
