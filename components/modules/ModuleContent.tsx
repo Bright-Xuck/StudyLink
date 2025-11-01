@@ -17,12 +17,6 @@ import DocumentContent from "../content/DocumentContent";
 import QuizContainer from "../quiz-questions/QuizContainer";
 import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
 import { toast } from "sonner";
-<<<<<<< Updated upstream
-=======
-import QuizContainer from "../quiz/quizcontainer";
-import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
-import { toast } from "sonner";
->>>>>>> Stashed changes
 
 interface Lesson {
   _id: string; // MongoDB ID
