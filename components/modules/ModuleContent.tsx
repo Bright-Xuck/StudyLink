@@ -13,6 +13,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 import PaginatedContent from "../content/PaginatedContent";
 import VideoContent from "../content/VideoContent";
 import DocumentContent from "../content/DocumentContent";
+<<<<<<< Updated upstream
+=======
+import QuizContainer from "../quiz/quizcontainer";
+import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
+import { toast } from "sonner";
+>>>>>>> Stashed changes
 
 interface Lesson {
   title: string;
