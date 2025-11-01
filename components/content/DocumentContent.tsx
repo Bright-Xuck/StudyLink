@@ -18,6 +18,7 @@ const pdfOptions = {
 // Add this new component before VideoContent
 export default function DocumentContent({
   url,
+  courseId,
   moduleId,
   lessonOrder,
   lessonCompleted,
@@ -26,6 +27,7 @@ export default function DocumentContent({
   onNextLessonAction,
 }: {
   url: string;
+  courseId: string;
   moduleId: string;
   lessonOrder: number;
   lessonCompleted: boolean;
@@ -51,7 +53,7 @@ export default function DocumentContent({
       setTimeSpent((prev) => {
         const newTime = prev + 1;
         if (newTime % 5 === 0) {
-          updateLessonTime(moduleId, lessonOrder, 5).catch(console.error);
+          updateLessonTime(courseId, moduleId, lessonOrder, 5).catch(console.error);
         }
         return newTime;
       });
@@ -62,12 +64,12 @@ export default function DocumentContent({
         clearInterval(timeIntervalRef.current);
       }
       if (timeSpent % 5 !== 0) {
-        updateLessonTime(moduleId, lessonOrder, timeSpent % 5).catch(
+        updateLessonTime(courseId, moduleId, lessonOrder, timeSpent % 5).catch(
           console.error
         );
       }
     };
-  }, [moduleId, lessonOrder, timeSpent]);
+  }, [courseId, moduleId, lessonOrder, timeSpent]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -91,7 +93,7 @@ export default function DocumentContent({
   const hasViewedEnough = numPages > 0 && pagesViewed.size >= Math.ceil(numPages * 0.7);
 
   const handleCompleteLesson = async () => {
-    const result = await markLessonComplete(moduleId, lessonOrder, timeSpent);
+    const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
     if (result.success && "message" in result) {
       toast.success(result.message);
       onCompleteAction();

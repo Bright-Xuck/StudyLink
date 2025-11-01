@@ -47,10 +47,13 @@ interface QuizAttempt {
 
 interface QuizContainerProps {
   quizId: string;
+  courseId: string;
+  moduleId: string;
+  lessonOrder: number,
   onClose: () => void;
 }
 
-export default function QuizContainer({ quizId, onClose }: QuizContainerProps) {
+export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder, onClose }: QuizContainerProps) {
   const t = useTranslations('quiz');
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(true);
@@ -60,7 +63,7 @@ export default function QuizContainer({ quizId, onClose }: QuizContainerProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [results, setResults] = useState<QuizAttempt | null>(null);
-  const [startTime] = useState(Date.now());
+  //const [startTime] = useState(Date.now());
 
   // Fetch quiz function
   const fetchQuiz = useCallback(async () => {
@@ -128,7 +131,7 @@ export default function QuizContainer({ quizId, onClose }: QuizContainerProps) {
       setError(null);
 
       // Calculate time spent
-      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+      //const timeSpent = Math.floor((Date.now() - startTime) / 1000);
 
       // Convert answers to array format
       const answersArray = Object.entries(userAnswers).map(([questionId, answer]) => ({
@@ -136,11 +139,22 @@ export default function QuizContainer({ quizId, onClose }: QuizContainerProps) {
         answer,
       }));
 
-      const response = await submitQuizAttempt({
-        quizId: quiz._id,
-        answers: answersArray,
-        timeSpent,
-      });
+      const response = await submitQuizAttempt(
+        courseId,
+        moduleId,
+        {
+          quizId: quiz._id,
+          lessonOrder,  
+          score: 0,     
+          totalQuestions: quiz.questions.length,
+          passed: false,
+          answers: answersArray.map(a => ({
+            questionId: a.questionId,
+            answer: a.answer,
+            //isCorrect: false
+          }))
+        }
+      );
 
       if (!response.success || !response.attempt) {
         throw new Error(response.error || t('submitError'));

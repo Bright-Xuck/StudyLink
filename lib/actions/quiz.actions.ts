@@ -9,7 +9,7 @@ import {
 } from "@/lib/models/Quiz";
 import Module from "@/lib/models/Module";
 import { getCurrentUser } from "@/lib/utils/jwt";
-import { recordQuizAttempt } from "@/lib/actions/progress.actions";
+import { recordQuizAttempt as recordProgressQuizAttempt } from "@/lib/actions/progress.actions";
 import { getLocale } from "next-intl/server";
 import mongoose from "mongoose";
 
@@ -81,7 +81,7 @@ export async function createQuiz(data: {
 }
 
 /**
- * Get quiz by ID (for students - hides correct answers)
+ * Get quiz by ID
  */
 export async function getQuizById(quizId: string) {
   const locale = await getLocale();
@@ -202,13 +202,51 @@ export async function getModuleQuizzes(moduleId: string) {
 }
 
 /**
+ * Get all quizzes for a course (NEW!)
+ */
+export async function getCourseQuizzes(courseId: string) {
+  try {
+    await connectDB();
+
+    // Get all modules in the course
+    const modules = await Module.find({
+      courseId: new mongoose.Types.ObjectId(courseId),
+      isPublished: true,
+    }).lean();
+
+    const moduleIds = modules.map((m) => m._id);
+
+    // Get all quizzes for those modules
+    const quizzes = await Quiz.find({
+      moduleId: { $in: moduleIds },
+      isPublished: true,
+    })
+      .populate("moduleId")
+      .sort({ createdAt: 1 })
+      .lean();
+
+    return JSON.parse(JSON.stringify(quizzes));
+  } catch (error) {
+    console.error("Get course quizzes error:", error);
+    return [];
+  }
+}
+
+/**
  * Submit quiz attempt
  */
-export async function submitQuizAttempt(data: {
-  quizId: string;
-  answers: { questionId: string; answer: string }[];
-  timeSpent?: number;
-}) {
+export async function submitQuizAttempt(
+  courseId: string,
+  moduleId: string,
+  quizData: {
+    quizId: string;
+    lessonOrder?: number;
+    score?: number;
+    totalQuestions: number;
+    passed?: boolean;
+    answers: { questionId: string; answer: string }[];
+  }
+) {
   const locale = await getLocale();
 
   try {
@@ -222,9 +260,8 @@ export async function submitQuizAttempt(data: {
 
     await connectDB();
 
-    // Get quiz with correct answers
-    const quiz = await Quiz.findById(data.quizId).lean();
-
+    // Get quiz
+    const quiz = await Quiz.findById(quizData.quizId).lean();
     if (!quiz) {
       return {
         success: false,
@@ -232,11 +269,20 @@ export async function submitQuizAttempt(data: {
       };
     }
 
+    // Get module to find course
+    const courseModule = await Module.findById(quiz.moduleId).lean();
+    if (!courseModule) {
+      return {
+        success: false,
+        error: locale === "fr" ? "Module introuvable" : "Module not found",
+      };
+    }
+
     // Check if user can attempt
-    const existingAttempts = await QuizAttempt.find({
-      quizId: new mongoose.Types.ObjectId(data.quizId),
+    const existingAttempts = await QuizAttempt.countDocuments({
+      quizId: new mongoose.Types.ObjectId(quizData.quizId),
       userId: tokenPayload.userId,
-    }).countDocuments();
+    });
 
     if (quiz.maxAttempts && existingAttempts >= quiz.maxAttempts) {
       return {
@@ -249,53 +295,28 @@ export async function submitQuizAttempt(data: {
     }
 
     // Grade the quiz
-    let totalScore = 0;
-    let totalPoints = 0;
     const gradedAnswers: IAttemptAnswer[] = [];
+    let totalScore = 0;
+    const totalPoints = quiz.questions.reduce((sum, q) => sum + q.points, 0);
 
     for (const question of quiz.questions) {
-      const userAnswer = data.answers.find(
+      const userAnswer = quizData.answers.find(
         (a) => a.questionId === question._id?.toString()
       );
 
-      totalPoints += question.points;
+      const isCorrect = userAnswer
+        ? userAnswer.answer.trim().toLowerCase() ===
+          question.correctAnswer.trim().toLowerCase()
+        : false;
 
-      let isCorrect = false;
-      let pointsAwarded = 0;
-
-      if (userAnswer) {
-        // Normalize answers for comparison (trim, lowercase)
-        const normalizedUserAnswer = userAnswer.answer.trim().toLowerCase();
-        const normalizedCorrectAnswer = question.correctAnswer
-          .trim()
-          .toLowerCase();
-
-        if (question.type === "mcq" || question.type === "true-false") {
-          // Exact match for MCQ and True/False
-          isCorrect = normalizedUserAnswer === normalizedCorrectAnswer;
-        } else if (question.type === "short-answer") {
-          // Flexible matching for short answers
-          isCorrect =
-            normalizedUserAnswer === normalizedCorrectAnswer ||
-            normalizedUserAnswer.includes(normalizedCorrectAnswer) ||
-            normalizedCorrectAnswer.includes(normalizedUserAnswer);
-        }
-
-        if (isCorrect) {
-          pointsAwarded = question.points;
-          totalScore += pointsAwarded;
-        }
-      }
+      const pointsAwarded = isCorrect ? question.points : 0;
+      totalScore += pointsAwarded;
 
       gradedAnswers.push({
         questionId: question._id?.toString() || "",
-        questionText:
-          locale === "fr" ? question.questionTextFr : question.questionText,
+        questionText: question.questionText,
         userAnswer: userAnswer?.answer || "",
-        correctAnswer:
-          locale === "fr" && question.correctAnswerFr
-            ? question.correctAnswerFr
-            : question.correctAnswer,
+        correctAnswer: question.correctAnswer,
         isCorrect,
         pointsAwarded,
         pointsPossible: question.points,
@@ -305,9 +326,9 @@ export async function submitQuizAttempt(data: {
     const percentage = Math.round((totalScore / totalPoints) * 100);
     const passed = percentage >= quiz.passingScore;
 
-    // Create quiz attempt
+    // Save attempt
     const attempt = await QuizAttempt.create({
-      quizId: quiz._id,
+      quizId: new mongoose.Types.ObjectId(quizData.quizId),
       userId: tokenPayload.userId,
       moduleId: quiz.moduleId,
       score: totalScore,
@@ -315,23 +336,27 @@ export async function submitQuizAttempt(data: {
       percentage,
       passed,
       answers: gradedAnswers,
-      timeSpent: data.timeSpent,
       attemptNumber: existingAttempts + 1,
       completedAt: new Date(),
     });
 
-    // Record quiz attempt in progress tracking
-    await recordQuizAttempt(quiz.moduleId.toString(), {
-      quizId: data.quizId,
-      score: totalScore,
-      totalQuestions: quiz.questions.length,
-      passed,
-      answers: gradedAnswers.map((a) => ({
-        questionId: a.questionId,
-        selectedAnswer: a.userAnswer,
-        isCorrect: a.isCorrect,
-      })),
-    });
+    // Record in progress tracking (course-level)
+    await recordProgressQuizAttempt(
+      courseId,
+      moduleId,
+      {
+        quizId: quiz._id.toString(),
+        lessonOrder: quizData.lessonOrder, // Use from quizData
+        score: totalScore,
+        totalQuestions: quiz.questions.length,
+        passed,
+        answers: gradedAnswers.map((a) => ({
+          questionId: a.questionId,
+          selectedAnswer: a.userAnswer,
+          isCorrect: a.isCorrect,
+        })),
+      }
+    );
 
     return {
       success: true,
@@ -340,16 +365,9 @@ export async function submitQuizAttempt(data: {
           ? "Félicitations! Vous avez réussi le quiz."
           : "Congratulations! You passed the quiz."
         : locale === "fr"
-        ? `Score: ${percentage}%. Score requis: ${quiz.passingScore}%`
-        : `Score: ${percentage}%. Required: ${quiz.passingScore}%`,
+        ? "Quiz terminé. Continuez à pratiquer!"
+        : "Quiz completed. Keep practicing!",
       attempt: JSON.parse(JSON.stringify(attempt)),
-      passed,
-      canRetry: quiz.maxAttempts
-        ? existingAttempts + 1 < quiz.maxAttempts
-        : true,
-      attemptsRemaining: quiz.maxAttempts
-        ? quiz.maxAttempts - (existingAttempts + 1)
-        : null,
     };
   } catch (error) {
     console.error("Submit quiz attempt error:", error);
@@ -361,61 +379,9 @@ export async function submitQuizAttempt(data: {
 }
 
 /**
- * Get quiz attempt details (for review)
+ * Get user's quiz attempts
  */
-export async function getQuizAttempt(attemptId: string) {
-  const locale = await getLocale();
-
-  try {
-    const tokenPayload = await getCurrentUser();
-    if (!tokenPayload) {
-      return {
-        success: false,
-        error: locale === "fr" ? "Non authentifié" : "Not authenticated",
-      };
-    }
-
-    await connectDB();
-
-    const attempt = await QuizAttempt.findById(attemptId)
-      .populate("quizId")
-      .lean();
-
-    if (!attempt) {
-      return {
-        success: false,
-        error: locale === "fr" ? "Tentative introuvable" : "Attempt not found",
-      };
-    }
-
-    // Verify ownership
-    if (
-      attempt.userId.toString() !== tokenPayload.userId &&
-      tokenPayload.role !== "admin"
-    ) {
-      return {
-        success: false,
-        error: locale === "fr" ? "Non autorisé" : "Unauthorized",
-      };
-    }
-
-    return {
-      success: true,
-      attempt: JSON.parse(JSON.stringify(attempt)),
-    };
-  } catch (error) {
-    console.error("Get quiz attempt error:", error);
-    return {
-      success: false,
-      error: locale === "fr" ? "Erreur de récupération" : "Retrieval error",
-    };
-  }
-}
-
-/**
- * Get user's quiz history for a module
- */
-export async function getUserQuizHistory(moduleId: string) {
+export async function getUserQuizAttempts(quizId: string) {
   try {
     const tokenPayload = await getCurrentUser();
     if (!tokenPayload) return [];
@@ -423,168 +389,69 @@ export async function getUserQuizHistory(moduleId: string) {
     await connectDB();
 
     const attempts = await QuizAttempt.find({
+      quizId: new mongoose.Types.ObjectId(quizId),
       userId: tokenPayload.userId,
-      moduleId: new mongoose.Types.ObjectId(moduleId),
     })
-      .populate("quizId")
-      .sort({ completedAt: -1 })
+      .sort({ attemptNumber: -1 })
       .lean();
 
     return JSON.parse(JSON.stringify(attempts));
   } catch (error) {
-    console.error("Get quiz history error:", error);
+    console.error("Get user quiz attempts error:", error);
     return [];
   }
 }
 
 /**
- * Get user's best quiz scores for a module
+ * Get quiz attempt by ID
  */
-export async function getUserBestScores(moduleId: string) {
+export async function getQuizAttemptById(attemptId: string) {
   try {
     const tokenPayload = await getCurrentUser();
-    if (!tokenPayload) return [];
+    if (!tokenPayload) return null;
 
     await connectDB();
 
-    // Aggregate to get best score per quiz
-    const bestScores = await QuizAttempt.aggregate([
-      {
-        $match: {
-          userId: new mongoose.Types.ObjectId(tokenPayload.userId),
-          moduleId: new mongoose.Types.ObjectId(moduleId),
-        },
-      },
-      {
-        $sort: { percentage: -1 },
-      },
-      {
-        $group: {
-          _id: "$quizId",
-          bestAttempt: { $first: "$$ROOT" },
-        },
-      },
-      {
-        $replaceRoot: { newRoot: "$bestAttempt" },
-      },
-    ]);
+    const attempt = await QuizAttempt.findOne({
+      _id: attemptId,
+      userId: tokenPayload.userId,
+    })
+      .populate("quizId")
+      .lean();
 
-    return JSON.parse(JSON.stringify(bestScores));
+    return attempt ? JSON.parse(JSON.stringify(attempt)) : null;
   } catch (error) {
-    console.error("Get best scores error:", error);
-    return [];
+    console.error("Get quiz attempt error:", error);
+    return null;
   }
 }
 
 /**
- * Update quiz (admin only)
+ * Get user's best quiz score
  */
-export async function updateQuiz(
-  quizId: string,
-  data: {
-    title?: string;
-    titleFr?: string;
-    description?: string;
-    descriptionFr?: string;
-    questions?: IQuestion[];
-    passingScore?: number;
-    timeLimit?: number;
-    maxAttempts?: number;
-    isPublished?: boolean;
-  }
-) {
-  const locale = await getLocale();
-
+export async function getUserBestQuizScore(quizId: string) {
   try {
     const tokenPayload = await getCurrentUser();
-    if (!tokenPayload || tokenPayload.role !== "admin") {
-      return {
-        success: false,
-        error: locale === "fr" ? "Non autorisé" : "Unauthorized",
-      };
-    }
+    if (!tokenPayload) return null;
 
     await connectDB();
 
-    const quiz = await Quiz.findByIdAndUpdate(
-      quizId,
-      { $set: data },
-      { new: true, runValidators: true }
-    );
-
-    if (!quiz) {
-      return {
-        success: false,
-        error: locale === "fr" ? "Quiz introuvable" : "Quiz not found",
-      };
-    }
-
-    return {
-      success: true,
-      message:
-        locale === "fr"
-          ? "Quiz mis à jour avec succès"
-          : "Quiz updated successfully",
-      quiz: JSON.parse(JSON.stringify(quiz)),
-    };
-  } catch (error) {
-    console.error("Update quiz error:", error);
-    return {
-      success: false,
-      error: locale === "fr" ? "Erreur de mise à jour" : "Update error",
-    };
-  }
-}
-
-/**
- * Delete quiz (admin only)
- */
-export async function deleteQuiz(quizId: string) {
-  const locale = await getLocale();
-
-  try {
-    const tokenPayload = await getCurrentUser();
-    if (!tokenPayload || tokenPayload.role !== "admin") {
-      return {
-        success: false,
-        error: locale === "fr" ? "Non autorisé" : "Unauthorized",
-      };
-    }
-
-    await connectDB();
-
-    const quiz = await Quiz.findByIdAndDelete(quizId);
-
-    if (!quiz) {
-      return {
-        success: false,
-        error: locale === "fr" ? "Quiz introuvable" : "Quiz not found",
-      };
-    }
-
-    // Also delete all attempts
-    await QuizAttempt.deleteMany({
+    const bestAttempt = await QuizAttempt.findOne({
       quizId: new mongoose.Types.ObjectId(quizId),
-    });
+      userId: tokenPayload.userId,
+    })
+      .sort({ percentage: -1 })
+      .lean();
 
-    return {
-      success: true,
-      message:
-        locale === "fr"
-          ? "Quiz supprimé avec succès"
-          : "Quiz deleted successfully",
-    };
+    return bestAttempt ? JSON.parse(JSON.stringify(bestAttempt)) : null;
   } catch (error) {
-    console.error("Delete quiz error:", error);
-    return {
-      success: false,
-      error: locale === "fr" ? "Erreur de suppression" : "Deletion error",
-    };
+    console.error("Get best quiz score error:", error);
+    return null;
   }
 }
 
 /**
- * Get quiz statistics (admin only)
+ * Get quiz statistics for admin
  */
 export async function getQuizStatistics(quizId: string) {
   const locale = await getLocale();
@@ -600,62 +467,135 @@ export async function getQuizStatistics(quizId: string) {
 
     await connectDB();
 
-    const stats = await QuizAttempt.aggregate([
-      {
-        $match: {
-          quizId: new mongoose.Types.ObjectId(quizId),
+    const attempts = await QuizAttempt.find({
+      quizId: new mongoose.Types.ObjectId(quizId),
+    }).lean();
+
+    if (!attempts.length) {
+      return {
+        success: true,
+        statistics: {
+          totalAttempts: 0,
+          uniqueUsers: 0,
+          averageScore: 0,
+          passRate: 0,
+          highestScore: 0,
+          lowestScore: 0,
         },
-      },
-      {
-        $group: {
-          _id: null,
-          totalAttempts: { $sum: 1 },
-          uniqueStudents: { $addToSet: "$userId" },
-          averageScore: { $avg: "$percentage" },
-          highestScore: { $max: "$percentage" },
-          lowestScore: { $min: "$percentage" },
-          passedCount: {
-            $sum: { $cond: ["$passed", 1, 0] },
-          },
-          failedCount: {
-            $sum: { $cond: ["$passed", 0, 1] },
-          },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          totalAttempts: 1,
-          uniqueStudents: { $size: "$uniqueStudents" },
-          averageScore: { $round: ["$averageScore", 2] },
-          highestScore: 1,
-          lowestScore: 1,
-          passedCount: 1,
-          failedCount: 1,
-          passRate: {
-            $round: [
-              {
-                $multiply: [
-                  { $divide: ["$passedCount", "$totalAttempts"] },
-                  100,
-                ],
-              },
-              2,
-            ],
-          },
-        },
-      },
-    ]);
+      };
+    }
+
+    const uniqueUsers = new Set(attempts.map((a) => a.userId.toString())).size;
+    const passedAttempts = attempts.filter((a) => a.passed).length;
+    const scores = attempts.map((a) => a.percentage);
+    const averageScore =
+      scores.reduce((sum, score) => sum + score, 0) / scores.length;
 
     return {
       success: true,
-      statistics: stats.length > 0 ? stats[0] : null,
+      statistics: {
+        totalAttempts: attempts.length,
+        uniqueUsers,
+        averageScore: Math.round(averageScore),
+        passRate: Math.round((passedAttempts / attempts.length) * 100),
+        highestScore: Math.max(...scores),
+        lowestScore: Math.min(...scores),
+      },
     };
   } catch (error) {
     console.error("Get quiz statistics error:", error);
     return {
       success: false,
       error: locale === "fr" ? "Erreur de statistiques" : "Statistics error",
+    };
+  }
+}
+
+/**
+ * Update quiz
+ */
+export async function updateQuiz(
+  quizId: string,
+  data: Partial<{
+    title: string;
+    titleFr: string;
+    description: string;
+    descriptionFr: string;
+    questions: IQuestion[];
+    passingScore: number;
+    timeLimit: number;
+    maxAttempts: number;
+    isPublished: boolean;
+  }>
+) {
+  const locale = await getLocale();
+
+  try {
+    const tokenPayload = await getCurrentUser();
+    if (!tokenPayload || tokenPayload.role !== "admin") {
+      return {
+        success: false,
+        error: locale === "fr" ? "Non autorisé" : "Unauthorized",
+      };
+    }
+
+    await connectDB();
+
+    const quiz = await Quiz.findByIdAndUpdate(quizId, data, { new: true });
+
+    if (!quiz) {
+      return {
+        success: false,
+        error: locale === "fr" ? "Quiz introuvable" : "Quiz not found",
+      };
+    }
+
+    return {
+      success: true,
+      message: locale === "fr" ? "Quiz mis à jour" : "Quiz updated",
+      quiz: JSON.parse(JSON.stringify(quiz)),
+    };
+  } catch (error) {
+    console.error("Update quiz error:", error);
+    return {
+      success: false,
+      error: locale === "fr" ? "Erreur de mise à jour" : "Update error",
+    };
+  }
+}
+
+/**
+ * Delete quiz
+ */
+export async function deleteQuiz(quizId: string) {
+  const locale = await getLocale();
+
+  try {
+    const tokenPayload = await getCurrentUser();
+    if (!tokenPayload || tokenPayload.role !== "admin") {
+      return {
+        success: false,
+        error: locale === "fr" ? "Non autorisé" : "Unauthorized",
+      };
+    }
+
+    await connectDB();
+
+    // Delete quiz and all attempts
+    await Promise.all([
+      Quiz.findByIdAndDelete(quizId),
+      QuizAttempt.deleteMany({ quizId: new mongoose.Types.ObjectId(quizId) }),
+    ]);
+
+    return {
+      success: true,
+      message: locale === "fr" ? "Quiz supprimé" : "Quiz deleted",
+    };
+  } catch (error) {
+    console.error("Delete quiz error:", error);
+    return {
+      success: false,
+      error: locale === "fr" ? "Erreur de suppression" : "Deletion error",
     };
   }
 }

@@ -217,7 +217,7 @@ export async function getAuthenticatedUser() {
       phone: user.phone,
       department: user.department,
       role: user.role,
-      purchasedModules: user.purchasedModules.map((id) => id.toString()),
+      purchasedModules: user.purchasedCourses.map((id) => id.toString()),
     };
   } catch (error) {
     console.error("Get authenticated user error:", error);

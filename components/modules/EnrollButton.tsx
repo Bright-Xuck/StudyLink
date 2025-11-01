@@ -1,109 +1,108 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
-import { CheckCircle, Lock, Loader2 } from 'lucide-react';
-import { enrollFreeModule } from '@/lib/actions/enrollment.actions';
+import { CheckCircle, ShoppingCart } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { enrollFreeCourse } from '@/lib/actions/enrollment.actions';
+import { toast } from 'sonner';
+import { Link } from '@/i18n/navigation';
 
 interface EnrollButtonProps {
-  moduleId: string;
-  moduleSlug: string;
+  courseId: string;
   isFree: boolean;
+  price: number;
   hasAccess: boolean;
-  isAuthenticated: boolean;
+  slug: string;
+  fullWidth?: boolean;
 }
 
 export default function EnrollButton({
-  moduleId,
-  moduleSlug,
+  courseId,
   isFree,
+  price,
   hasAccess,
-  isAuthenticated,
+  slug,
+  fullWidth = false,
 }: EnrollButtonProps) {
+  const t = useTranslations('CourseDetailPage');
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const t = useTranslations('enrollment');
+  const [isEnrolling, setIsEnrolling] = useState(false);
 
   const handleEnroll = async () => {
-    // Redirect to login if not authenticated
-    if (!isAuthenticated) {
-      router.push(`/login?redirect=/modules/${moduleId}`);
-      return;
-    }
-
-    // If already has access, scroll to content
-    if (hasAccess) {
-      const contentSection = document.getElementById('module-content');
-      contentSection?.scrollIntoView({ behavior: 'smooth' });
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      if (isFree) {
-        // For free modules, enroll directly
-        const response = await enrollFreeModule(moduleId);
+    if (isFree) {
+      // Enroll in free course
+      setIsEnrolling(true);
+      try {
+        const result = await enrollFreeCourse(courseId);
         
-        if (response.success) {
-          router.refresh(); // Refresh to show access
+        if (result.success) {
+          toast.success(result.message);
+          router.refresh();
         } else {
-          console.error(response.error);
+          toast.error(result.error || 'Enrollment failed');
         }
-      } else {
-        // For paid modules, redirect to checkout
-        router.push(`/payment/checkout?module=${moduleSlug}`);
+      } catch (error) {
+        console.error('Enrollment error:', error);
+        toast.error('An error occurred');
+      } finally {
+        setIsEnrolling(false);
       }
-    } catch (error) {
-      console.error('Enrollment error:', error);
-    } finally {
-      setIsLoading(false);
+    } else {
+      // Redirect to payment page
+      router.push(`/checkout/${courseId}`);
     }
   };
 
-  // Already enrolled
+  // If user already has access
   if (hasAccess) {
     return (
-      <Button size="lg" className="w-full" variant="secondary" disabled>
-        <CheckCircle className="mr-2 h-5 w-5" />
-        {t('alreadyEnrolled')}
-      </Button>
+      <Link href={`/courses/${slug}/learn`}>
+        <Button 
+          size="lg" 
+          className={`gap-2 ${fullWidth ? 'w-full' : ''}`}
+        >
+          <CheckCircle className="w-5 h-5" />
+          {t('buttons.continueLearning')}
+        </Button>
+      </Link>
     );
   }
 
-  // Free module
+  // Free course enrollment
   if (isFree) {
     return (
-      <Button size="lg" className="w-full" onClick={handleEnroll} disabled={isLoading}>
-        {isLoading ? (
+      <Button
+        size="lg"
+        onClick={handleEnroll}
+        disabled={isEnrolling}
+        className={`gap-2 ${fullWidth ? 'w-full' : ''}`}
+      >
+        {isEnrolling ? (
           <>
-            <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-            {t('enrolling')}
+            <span className="animate-spin">⏳</span>
+            {t('buttons.enrolling')}
           </>
         ) : (
-          t('enrollFree')
+          <>
+            <CheckCircle className="w-5 h-5" />
+            {t('buttons.enrollFree')}
+          </>
         )}
       </Button>
     );
   }
 
-  // Paid module
+  // Paid course - go to payment
   return (
-    <Button size="lg" className="w-full" onClick={handleEnroll} disabled={isLoading}>
-      {isLoading ? (
-        <>
-          <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-          {t('loading')}
-        </>
-      ) : (
-        <>
-          <Lock className="mr-2 h-5 w-5" />
-          {t('buyNow')}
-        </>
-      )}
+    <Button
+      size="lg"
+      onClick={handleEnroll}
+      className={`gap-2 ${fullWidth ? 'w-full' : ''}`}
+    >
+      <ShoppingCart className="w-5 h-5" />
+      {t('buttons.enrollNow')} - {price.toLocaleString()} XAF
     </Button>
   );
-
 }

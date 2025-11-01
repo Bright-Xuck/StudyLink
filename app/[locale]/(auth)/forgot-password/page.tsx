@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { requestPasswordReset } from '@/lib/actions/auth.actions';
-import { GraduationCap, Loader2, Mail, ArrowLeft } from 'lucide-react';
+import { Loader2, Mail, ArrowLeft } from 'lucide-react';
 import { Link } from "@/i18n/navigation";
 
 export default function ForgotPasswordPage() {
@@ -43,96 +43,90 @@ export default function ForgotPasswordPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-muted/30 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        {/* Header */}
-        <div className="text-center">
-          <Link href={`/`} className="inline-flex items-center justify-center space-x-2 mb-6">
-            <GraduationCap className="h-12 w-12 text-primary" />
-            <span className="text-2xl font-bold text-foreground">ZenithScholar</span>
-          </Link>
-          <h2 className="text-3xl font-bold text-foreground">
-            {tp('forgotTitle')}
-          </h2>
-          <p className="mt-2 text-sm text-muted-foreground">
-            {tp('forgotSubtitle')}
-          </p>
-        </div>
+    <div className="w-full max-w-md space-y-8 py-8">
+      {/* Header */}
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-foreground">
+          {tp('forgotTitle')}
+        </h2>
+        <p className="mt-2 text-sm text-muted-foreground">
+          {tp('forgotSubtitle')}
+        </p>
+      </div>
 
-        {/* Form or Success Message */}
-        <div className="bg-card p-8 rounded-xl shadow-sm border border-border">
-          {isSuccess ? (
-            <div className="text-center space-y-4">
-              <div className="bg-accent/20 p-4 rounded-full w-16 h-16 mx-auto flex items-center justify-center">
-                <Mail className="h-8 w-8 text-accent-foreground" />
+      {/* Form or Success Message */}
+      <div className="bg-card/50 backdrop-blur-sm p-8 rounded-xl shadow-lg border border-border/50">
+        {isSuccess ? (
+          <div className="text-center space-y-4">
+            <div className="bg-primary/10 p-4 rounded-full w-16 h-16 mx-auto flex items-center justify-center">
+              <Mail className="h-8 w-8 text-primary" />
+            </div>
+            <h3 className="text-xl font-semibold text-foreground">
+              {tp('emailSent')}
+            </h3>
+            <p className="text-muted-foreground">
+              {tp('emailSentMessage')}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {tp('checkSpam')}
+            </p>
+            <Link
+              href={`/login`}
+              className="inline-flex items-center gap-2 text-primary hover:underline mt-4"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              {tp('backToLogin')}
+            </Link>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {error && (
+              <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg text-sm">
+                {error}
               </div>
-              <h3 className="text-xl font-semibold text-foreground">
-                {tp('emailSent')}
-              </h3>
-              <p className="text-muted-foreground">
-                {tp('emailSentMessage')}
-              </p>
-              <p className="text-sm text-muted-foreground">
-                {tp('checkSpam')}
-              </p>
+            )}
+
+            <div>
+              <Label htmlFor="email">{t('email')}</Label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="nkengbeza123@gmail.com"
+                className="mt-1"
+              />
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full"
+              size="lg"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  {tp('sending')}
+                </>
+              ) : (
+                tp('sendResetLink')
+              )}
+            </Button>
+
+            <div className="text-center">
               <Link
                 href={`/login`}
-                className="inline-flex items-center gap-2 text-primary hover:underline"
+                className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
               >
                 <ArrowLeft className="h-4 w-4" />
                 {tp('backToLogin')}
               </Link>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {error && (
-                <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded-lg text-sm">
-                  {error}
-                </div>
-              )}
-
-              <div>
-                <Label htmlFor="email">{t('email')}</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="nkengbeza123@gmail.com"
-                  className="mt-1"
-                />
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                size="lg"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {tp('sending')}
-                  </>
-                ) : (
-                  tp('sendResetLink')
-                )}
-              </Button>
-
-              <div className="text-center">
-                <Link
-                  href={`/login`}
-                  className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"
-                >
-                  <ArrowLeft className="h-4 w-4" />
-                  {tp('backToLogin')}
-                </Link>
-              </div>
-            </form>
-          )}
-        </div>
+          </form>
+        )}
       </div>
     </div>
   );

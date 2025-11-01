@@ -27,21 +27,34 @@ interface Lesson {
   duration: number;
   order: number;
   isPreview: boolean;
+  hasQuiz?: boolean; // NEW - indicates if lesson has a quiz
 }
 
 interface LessonProgress {
+  moduleId: string;
   lessonOrder: number;
   completed: boolean;
   completedAt?: string;
   timeSpent: number;
+  quizPassed?: boolean; // NEW - track if quiz passed
+}
+
+interface ModuleProgress {
+  moduleId: string;
+  completedLessons: number;
+  totalLessons: number;
+  progressPercentage: number;
+  completed: boolean;
 }
 
 interface ModuleContentProps {
   lessons: Lesson[];
   moduleId: string;
-  userId: string; // Add userId for quiz
+  courseId: string; // NEW - Required for quiz progress tracking
+  userId: string;
   progress?: {
     lessonsProgress: LessonProgress[];
+    modulesProgress?: ModuleProgress[];
     progressPercentage: number;
   } | null;
 }
@@ -49,6 +62,7 @@ interface ModuleContentProps {
 export default function ModuleContent({
   lessons,
   moduleId,
+  courseId,
   progress,
 }: ModuleContentProps) {
   const t = useTranslations("module");
@@ -57,6 +71,7 @@ export default function ModuleContent({
   const [localProgress] = useState(progress);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizId, setQuizId] = useState<string | null>(null);
+  const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [loadingQuiz, setLoadingQuiz] = useState(false);
 
   const getIcon = (type: string) => {
@@ -91,7 +106,13 @@ export default function ModuleContent({
 
   const isLessonCompleted = (lessonOrder: number) => {
     return localProgress?.lessonsProgress.some(
-      (lp) => lp.lessonOrder === lessonOrder && lp.completed
+      (lp) => lp.moduleId === moduleId && lp.lessonOrder === lessonOrder && lp.completed
+    );
+  };
+
+  const isQuizPassed = (lessonOrder: number) => {
+    return localProgress?.lessonsProgress.some(
+      (lp) => lp.moduleId === moduleId && lp.lessonOrder === lessonOrder && lp.quizPassed
     );
   };
 
@@ -110,7 +131,7 @@ export default function ModuleContent({
 
   const handleTakeQuiz = async (lesson: Lesson) => {
     setLoadingQuiz(true);
-    //setSelectedLessonForQuiz(lesson);
+    setCurrentLesson(lesson);
 
     try {
       // Fetch quiz for this lesson
@@ -119,7 +140,7 @@ export default function ModuleContent({
       if (!quiz) {
         toast.error(t("noQuizForLesson"));
         setLoadingQuiz(false);
-        //setSelectedLessonForQuiz(null);
+        setCurrentLesson(null);
         return;
       }
 
@@ -128,7 +149,7 @@ export default function ModuleContent({
     } catch (error) {
       console.error("Error loading quiz:", error);
       toast.error(t("quizLoadError"));
-      //setSelectedLessonForQuiz(null);
+      setCurrentLesson(null);
     } finally {
       setLoadingQuiz(false);
     }
@@ -136,7 +157,7 @@ export default function ModuleContent({
 
   const handleCloseQuiz = () => {
     setShowQuiz(false);
-    //setSelectedLessonForQuiz(null);
+    setCurrentLesson(null);
     setQuizId(null);
     // Refresh to update any quiz-related progress
     router.refresh();
@@ -183,12 +204,20 @@ export default function ModuleContent({
               <h2 className="text-2xl font-bold text-foreground">
                 {t("lesson")} {selectedLesson.order}: {selectedLesson.title}
               </h2>
-              {isLessonCompleted(selectedLesson.order) && (
-                <div className="flex items-center gap-2 text-accent mt-2">
-                  <CheckCircle className="h-4 w-4" />
-                  <span className="text-sm">{t("completed")}</span>
-                </div>
-              )}
+              <div className="flex items-center gap-3 mt-2">
+                {isLessonCompleted(selectedLesson.order) && (
+                  <div className="flex items-center gap-2 text-green-600">
+                    <CheckCircle className="h-4 w-4" />
+                    <span className="text-sm">{t("completed")}</span>
+                  </div>
+                )}
+                {isQuizPassed(selectedLesson.order) && (
+                  <div className="flex items-center gap-2 text-primary">
+                    <CheckCircle className="h-4 w-4" />
+                    <span className="text-sm">{t("quizPassed")}</span>
+                  </div>
+                )}
+              </div>
             </div>
             <div className="flex gap-3">
               <button
@@ -199,29 +228,32 @@ export default function ModuleContent({
               </button>
               
               {/* Quiz Button for Current Lesson */}
-              <button
-                onClick={() => handleTakeQuiz(selectedLesson)}
-                disabled={loadingQuiz}
-                className="bg-primary text-primary-foreground hover:opacity-90 px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loadingQuiz ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {t("loading")}
-                  </>
-                ) : (
-                  <>
-                    <FileText className="h-4 w-4" />
-                    {t("takeQuiz")}
-                  </>
-                )}
-              </button>
+              {selectedLesson.hasQuiz !== false && (
+                <button
+                  onClick={() => handleTakeQuiz(selectedLesson)}
+                  disabled={loadingQuiz}
+                  className="bg-primary text-primary-foreground hover:opacity-90 px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {loadingQuiz ? (
+                    <>
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                      {t("loading")}
+                    </>
+                  ) : (
+                    <>
+                      <FileText className="h-4 w-4" />
+                      {isQuizPassed(selectedLesson.order) ? t("retakeQuiz") : t("takeQuiz")}
+                    </>
+                  )}
+                </button>
+              )}
             </div>
           </div>
 
           {selectedLesson.type === "video" ? (
             <VideoContent
               url={selectedLesson.content}
+              courseId={courseId}
               moduleId={moduleId}
               lessonOrder={selectedLesson.order}
               lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
@@ -232,6 +264,7 @@ export default function ModuleContent({
           ) : selectedLesson.type === "document" ? (
             <DocumentContent
               url={selectedLesson.content}
+              courseId={courseId}
               moduleId={moduleId}
               lessonOrder={selectedLesson.order}
               lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
@@ -243,6 +276,7 @@ export default function ModuleContent({
             <PaginatedContent
               content={selectedLesson.content}
               wordsPerPage={250}
+              courseId={courseId}
               moduleId={moduleId}
               lessonOrder={selectedLesson.order}
               lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
@@ -277,8 +311,9 @@ export default function ModuleContent({
               </div>
               <p className="text-sm text-muted-foreground mt-2">
                 {
-                  localProgress.lessonsProgress.filter((lp) => lp.completed)
-                    .length
+                  localProgress.lessonsProgress.filter(
+                    (lp) => lp.moduleId === moduleId && lp.completed
+                  ).length
                 }{" "}
                 {t("of")} {lessons.length} {t("lessonsCompleted")}
               </p>
@@ -294,6 +329,9 @@ export default function ModuleContent({
             <div className="space-y-6">
               {lessons.map((lesson, index) => {
                 const completed = isLessonCompleted(lesson.order);
+                const quizPassed = isQuizPassed(lesson.order);
+                const hasQuiz = lesson.hasQuiz !== false; // Assume has quiz unless explicitly false
+                
                 return (
                   <div
                     key={index}
@@ -315,6 +353,9 @@ export default function ModuleContent({
                             {t("lesson")} {lesson.order}: {lesson.title}
                           </h3>
                           {completed && (
+                            <CheckCircle className="h-5 w-5 text-green-600" />
+                          )}
+                          {quizPassed && (
                             <CheckCircle className="h-5 w-5 text-primary" />
                           )}
                         </div>
@@ -331,8 +372,18 @@ export default function ModuleContent({
                             </span>
                           )}
                           {completed && (
-                            <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                            <span className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 px-2 py-0.5 rounded-full font-medium">
                               {t("completed")}
+                            </span>
+                          )}
+                          {quizPassed && (
+                            <span className="text-xs bg-primary/20 text-primary px-2 py-0.5 rounded-full font-medium">
+                              {t("quizPassed")}
+                            </span>
+                          )}
+                          {hasQuiz && !quizPassed && (
+                            <span className="text-xs bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-2 py-0.5 rounded-full font-medium">
+                              {t("hasQuiz")}
                             </span>
                           )}
                         </div>
@@ -347,25 +398,32 @@ export default function ModuleContent({
                             }}
                             className="bg-primary text-primary-foreground px-4 py-1.5 rounded-lg hover:opacity-90 transition-opacity text-sm font-medium"
                           >
-                            {t("startLesson")}
+                            {completed ? t("reviewLesson") : t("startLesson")}
                           </button>
                           
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              handleTakeQuiz(lesson);
-                            }}
-                            disabled={loadingQuiz}
-                            className="bg-primary/10 text-primary px-4 py-1.5 rounded-lg hover:bg-primary/20 transition-colors text-sm font-medium flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed"
-                          >
-                            {loadingQuiz ? (
-                              <Loader2 className="h-3.5 w-3.5 animate-spin" />
-                            ) : (
-                              <FileText className="h-3.5 w-3.5" />
-                            )}
-                            {t("quiz")}
-                          </button>
+                          {/* Show quiz button if lesson has a quiz */}
+                          {hasQuiz && (
+                            <button
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                handleTakeQuiz(lesson);
+                              }}
+                              disabled={loadingQuiz}
+                              className={`px-4 py-1.5 rounded-lg transition-colors text-sm font-medium flex items-center gap-1 disabled:opacity-50 disabled:cursor-not-allowed ${
+                                quizPassed
+                                  ? "bg-primary/20 text-primary hover:bg-primary/30"
+                                  : "bg-primary/10 text-primary hover:bg-primary/20"
+                              }`}
+                            >
+                              {loadingQuiz ? (
+                                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                              ) : (
+                                <FileText className="h-3.5 w-3.5" />
+                              )}
+                              {quizPassed ? t("retakeQuiz") : t("takeQuiz")}
+                            </button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -383,9 +441,12 @@ export default function ModuleContent({
       )}
 
       {/* Quiz Modal */}
-      {showQuiz && quizId && (
+      {showQuiz && quizId && currentLesson && (
         <QuizContainer
           quizId={quizId}
+          courseId={courseId}
+          moduleId={moduleId}
+          lessonOrder={currentLesson.order}
           onClose={handleCloseQuiz}
         />
       )}

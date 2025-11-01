@@ -10,12 +10,14 @@
     "dashboard": "Dashboard",
     "logout": "Logout"
   },
+
   "hero": {
     "title": "Where Research Excellence Begins",
     "subtitle": "Master research methodology, ethics, and academic writing with our comprehensive training platform",
     "cta": "Get Started",
     "ctaSecondary": "Browse Courses"
   },
+  
   "features": {
     "title": "Why Choose ZenithScholar Platform",
     "experts": {
@@ -35,14 +37,69 @@
       "description": "Earn recognized certificates upon course completion"
     }
   },
+  
   "courses": {
-    "title": "Our Research Training Modules",
-    "subtitle": "Comprehensive courses designed to enhance your research skills",
-    "free": "Free",
-    "paid": "Premium",
-    "enroll": "Enroll Now",
-    "learnMore": "Learn More"
+    "title": "Featured Courses",
+    "subtitle": "Explore our comprehensive research training courses designed to enhance your academic skills",
+    "free": "FREE",
+    "paid": "PAID",
+    "modules": "modules",
+    "viewCourse": "View Course",
+    "viewAll": "View All Courses",
+    "learnMore": "Learn More",
+    "updatedAt": "Updated"
   },
+  
+  "cta": {
+    "title": "Ready to Start Your Research Journey?",
+    "description": "Join thousands of researchers who have enhanced their skills with our comprehensive training platform.",
+    "button": "Get Started for Free"
+  },
+  
+  "testimonials": {
+    "title": "What Our Students Say",
+    "subtitle": "Join thousands of satisfied students who have transformed their careers with Zenith Scholar",
+    "testimonials": {
+      "testimonial1": {
+        "content": "The courses at Zenith Scholar completely transformed my career. The practical approach and real-world projects helped me land my dream job as a software developer."
+      },
+      "testimonial2": {
+        "content": "As a working professional, the flexible learning schedule was perfect for me. The instructors are experts in their fields and always available to help."
+      },
+      "testimonial3": {
+        "content": "The quality of education here rivals top universities. I started my own business using the digital marketing strategies I learned in the course."
+      }
+    },
+    "stats": {
+      "students": "Students Enrolled",
+      "satisfaction": "Satisfaction Rate",
+      "courses": "Courses Available",
+      "instructors": "Expert Instructors"
+    }
+  },
+  
+  "popularModules": {
+    "title": "Popular Learning Modules",
+    "subtitle": "Explore our most sought-after modules that students love",
+    "trending": "Trending Now",
+    "free": "Free",
+    "premium": "Premium",
+    "lessons": "lessons",
+    "viewModule": "Explore",
+    "viewAllModules": "View All Modules",
+    "modules": {
+      "react": {
+        "description": "Master React fundamentals with hands-on projects and build modern web applications"
+      },
+      "python": {
+        "description": "Learn data analysis using Python, Pandas, and visualization libraries for real-world insights"
+      },
+      "marketing": {
+        "description": "Develop comprehensive digital marketing strategies that drive business growth and engagement"
+      }
+    }
+  },
+  
   "footer": {
     "about": "About Us",
     "privacy": "Privacy Policy",
@@ -64,6 +121,7 @@
     "foundedBy": "Founded by",
     "bioticUniverse": "BiotecUniverse"
   },
+  
   "auth": {
     "loginTitle": "Login to Your Account",
     "registerTitle": "Create Your Account",
@@ -81,6 +139,7 @@
     "signUp": "Sign Up",
     "signIn": "Sign In"
   },
+  
   "password": {
     "forgotTitle": "Forgot Password?",
     "forgotSubtitle": "Enter your email to receive a reset link",
@@ -101,6 +160,7 @@
     "passwordMin": "Password must be at least 6 characters",
     "passwordMismatch": "Passwords do not match"
   },
+  
   "dashboard": {
     "welcome": "Welcome back",
     "myModules": "My Modules",
@@ -113,14 +173,29 @@
     "timeSpent": "Time Spent",
     "continueLearning": "Continue Learning",
     "continueLesson": "Continue Lesson",
-    "browseAll": "Browse All",
     "noModulesYet": "No modules yet",
     "noModulesMessage": "Start your learning journey by enrolling in a module",
+    "totalCourses": "Total Courses",
+    "completedCourses": "Completed Courses",
+    "inProgress": "In Progress",
+    "lessonsCompleted": "Lessons Completed",
+    "modulesCompleted": "Modules Completed",
+    "quizzesPassed": "Quizzes Passed",
+    "viewAllProgress": "View All Progress",
+    "complete": "complete",
+    "continueCourse": "Continue Course",
+    "lessons": "lessons",
+    "modules": "modules",
+    "myCourses": "My Courses",
+    "browseAll": "Browse All Courses",
+    "noCoursesYet": "No courses yet",
+    "noCoursesMessage": "You haven't enrolled in any courses yet. Start your learning journey today!",
     "exploreCourses": "Explore Courses",
-    "free": "Free",
-    "premium": "Premium",
-    "complete": "complete"
+    "free": "FREE",
+    "premium": "PREMIUM",
+    "startLearning": "Start Learning"
   },
+  
   "Legal": {
     "home": "Home",
     "legal": "Legal",
@@ -148,6 +223,7 @@
     "disclaimerDescription": "Important legal disclaimers and limitations",
     "complianceDescription": "Our commitment to adhering to legal and regulatory standards"
   },
+  
   "legal": {
     "pageTitle": "Legal Documents",
     "pageSubtitle": "Important information about your rights, our privacy practices, and terms of use",
@@ -185,30 +261,12 @@
       "description": "Regulatory compliance"
     }
   },
-  "CoursesPage": {
-    "header": {
-      "title": "Our Training Modules",
-      "description": "Explore our complete catalog of research modules"
-    },
-    "freeModules": {
-      "title": "Free Modules",
-      "description": "Start learning at no cost",
-      "countLabel": "modules"
-    },
-    "premiumModules": {
-      "title": "Premium Modules",
-      "description": "Advanced and specialized content",
-      "countLabel": "modules"
-    },
-    "emptyState": {
-      "title": "No modules available",
-      "description": "Check back soon for new modules"
-    }
-  },
+  
   "module": {
-    "free": "Free",
-    "premium": "Premium",
+    "free": "FREE",
+    "premium": "PREMIUM",
     "objectives": "objectives",
+    "lessons": "lessons",
     "accessGranted": "Access granted",
     "learningObjectives": "Learning Objectives",
     "contentLocked": "Content Locked",
@@ -249,8 +307,20 @@
     "quiz": "Quiz",
     "loading": "Loading...",
     "noQuizForLesson": "No quiz available for this lesson yet.",
-    "quizLoadError": "Failed to load quiz. Please try again."
+    "quizLoadError": "Failed to load quiz. Please try again.",
+    "backToCourse": "Back to Course",
+    "enrollInCourse": "Enroll in Course to Access",
+    "enrollInCourseDescription": "This module is part of a course. Please enroll in the full course to access all modules and lessons.",
+    "viewCourse": "View Course",
+    "viewFullCourse": "View Full Course",
+    "moduleInfo": "Module Information",
+    "startLesson": "Start Lesson",
+    "reviewLesson": "Review Lesson",
+    "retakeQuiz": "Retake Quiz",
+    "quizPassed": "Quiz Passed",
+    "hasQuiz": "Has Quiz"
   },
+  
   "enrollment": {
     "alreadyEnrolled": "Already Enrolled",
     "enrollFree": "Enroll for Free",
@@ -259,6 +329,7 @@
     "loading": "Loading...",
     "error": "There was an issue processing your enrollment. Please try again."
   },
+  
   "about": {
     "title": "About Us",
     "header": "Welcome to blah blah blah",
@@ -276,6 +347,7 @@
     "student": "Students",
     "studentstitle": "What Our Students Have to Say"
   },
+  
   "aboutReviews": {
     "review1": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
     "location1": "From Buea, Cameroon",
@@ -286,6 +358,7 @@
     "review4": "Click edit button to change this text. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo",
     "location4": "From Buea, Cameroon"
   },
+  
   "contactUs": {
     "title": "Need Help?",
     "header": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.",
@@ -295,6 +368,7 @@
     "message": "Send Us a Message",
     "messageUsOnWhatsApp": "Message Us on WhatsApp"
   },
+  
   "contactfaq": {
     "title": "Frequently asked questions",
     "question1": "How Does CamChop Work",
@@ -306,6 +380,7 @@
     "question4": "What is a group order and how can I create one?",
     "answer4": "A group order allows multiple people to add items into an order at the same time. Once a group order is created through a DoorDash"
   },
+  
   "payment": {
     "checkout": {
       "title": "Checkout",
@@ -315,6 +390,7 @@
       "securePaymentDescription": "All transactions are encrypted and processed securely through Fapshi payment gateway.",
       "orderSummary": "Order Summary",
       "modulePrice": "Module Price",
+      "coursePrice": "Course Price",
       "fees": "Processing Fees",
       "included": "Included",
       "total": "Total",
@@ -352,7 +428,7 @@
       "step3": "Approve the payment and get instant access to the module"
     }
   },
-
+  
   "quiz": {
     "errorNoOptions": "Error: This multiple choice question has no options.",
     "point": "point",
@@ -431,5 +507,58 @@
     "startQuiz": "Start Quiz",
     "maxAttemptsReached": "Maximum Attempts Reached",
     "maxAttemptsReachedMessage": "You have used all your attempts for this quiz. Please review the module content and try again later if retries are enabled."
+  },
+  
+  "CoursesPage": {
+    "header": {
+      "title": "All Courses",
+      "description": "Browse our comprehensive collection of research training courses"
+    },
+    "freeCourses": {
+      "title": "Free Courses",
+      "description": "Start learning with our free courses",
+      "countLabel": "courses"
+    },
+    "premiumCourses": {
+      "title": "Premium Courses",
+      "description": "Unlock advanced training with our premium courses",
+      "countLabel": "courses"
+    },
+    "emptyState": {
+      "title": "No Courses Available",
+      "description": "Check back soon for new courses"
+    }
+  },
+  
+  "CourseDetailPage": {
+    "free": "FREE",
+    "modules": "modules",
+    "enrolled": "enrolled",
+    "objectives": {
+      "title": "What You'll Learn"
+    },
+    "courseContent": {
+      "title": "Course Content",
+      "modulesCount": "modules in this course",
+      "noModules": "No modules available yet"
+    },
+    "pricing": {
+      "oneTimePayment": "One-time payment",
+      "lifetimeAccess": "Lifetime access",
+      "freeAccess": "100% Free Forever"
+    },
+    "includes": {
+      "title": "This course includes:",
+      "modules": "modules",
+      "lifetimeAccess": "Lifetime access",
+      "certificate": "Certificate of completion",
+      "quizzes": "Quizzes and assessments"
+    },
+    "buttons": {
+      "enrollFree": "Enroll For Free",
+      "enrollNow": "Enroll Now",
+      "continueLearning": "Continue Learning",
+      "enrolling": "Enrolling..."
+    }
   }
 }

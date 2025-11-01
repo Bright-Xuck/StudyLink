@@ -6,24 +6,24 @@ export interface ILesson {
   titleFr: string;
   description: string;
   descriptionFr: string;
-  type: 'video' | 'reading' | 'document' | 'quiz';
+  type: "video" | "reading" | "document";
   content: string; // Video URL, document URL, or HTML content
   contentFr?: string; // For bilingual content
   duration: number; // in minutes
   order: number;
   isPreview: boolean; // Can be viewed without enrollment
+  hasQuiz: boolean; // Every lesson will have a quiz
 }
 
 export interface IModule extends Document {
   _id: string;
+  courseId: mongoose.Types.ObjectId; // Reference to parent course
   title: string;
   titleFr: string;
   description: string;
   descriptionFr: string;
   slug: string;
   imageUrl: string;
-  isFree: boolean;
-  price?: number;
   content: string;
   contentFr: string;
   duration: string; // e.g., "4 weeks"
@@ -58,7 +58,7 @@ const LessonSchema = new mongoose.Schema<ILesson>({
   },
   type: {
     type: String,
-    enum: ["video", "reading", "document", "quiz"],
+    enum: ["video", "reading", "document"],
     required: true,
   },
   content: {
@@ -81,10 +81,19 @@ const LessonSchema = new mongoose.Schema<ILesson>({
     type: Boolean,
     default: false,
   },
+  hasQuiz: {
+    type: Boolean,
+    default: true, // Every lesson has a quiz
+  },
 });
 
 const ModuleSchema = new mongoose.Schema<IModule>(
   {
+    courseId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Course",
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -112,14 +121,6 @@ const ModuleSchema = new mongoose.Schema<IModule>(
     imageUrl: {
       type: String,
       required: true,
-    },
-    isFree: {
-      type: Boolean,
-      default: false,
-    },
-    price: {
-      type: Number,
-      default: 0,
     },
     content: {
       type: String,
@@ -163,10 +164,9 @@ const ModuleSchema = new mongoose.Schema<IModule>(
   }
 );
 
-// Index for faster queries
-//ModuleSchema.index({ slug: 1 });
-ModuleSchema.index({ order: 1 });
-ModuleSchema.index({ isFree: 1 });
+// Indexes for faster queries
+ModuleSchema.index({ courseId: 1, order: 1 });
+ModuleSchema.index({ isPublished: 1 });
 
 const Module: Model<IModule> =
   mongoose.models.Module || mongoose.model<IModule>("Module", ModuleSchema);
