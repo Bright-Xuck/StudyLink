@@ -3,6 +3,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-montserrat);
+  --font-subheading: var(--font-poppins);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -31,105 +34,304 @@
 
 :root {
   --radius: 0.65rem;
-  
+
   /* Base Colors */
   --background: oklch(1 0 0);
-  --foreground: oklch(0.2 0.01 264);
-  
+  --foreground: oklch(0.15 0.01 264);
+
   /* Card Colors */
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.2 0.01 264);
-  
+  --card-foreground: oklch(0.15 0.01 264);
+
   /* Popover Colors */
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.2 0.01 264);
-  
-  /* Primary - Blue from Logo (#3B82F6) */
-  --primary: oklch(0.623 0.214 259.815);
+  --popover-foreground: oklch(0.15 0.01 264);
+
+  /* Primary - Teal Blue #0D7377 */
+  --primary: oklch(0.45 0.08 195);
   --primary-foreground: oklch(0.99 0 0);
-  
-  /* Secondary - Orange from Logo (#F59E0B) */
-  --secondary: oklch(0.769 0.188 70.08);
-  --secondary-foreground: oklch(0.2 0.01 264);
-  
-  /* Muted - Subtle Gray */
-  --muted: oklch(0.965 0.002 264);
+
+  /* Secondary - Cameroon Green #1E6F40 */
+  --secondary: oklch(0.42 0.11 155);
+  --secondary-foreground: oklch(0.99 0 0);
+
+  /* Muted - Soft White #F5F5F5 */
+  --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.55 0.015 264);
-  
-  /* Accent - Success Green from Logo (#10B981) */
-  --accent: oklch(0.695 0.17 162.48);
-  --accent-foreground: oklch(0.99 0 0);
-  
-  /* Success - Green Checkmark */
-  --success: oklch(0.695 0.17 162.48);
+
+  /* Accent - Vibrant Gold #D4AF37 */
+  --accent: oklch(0.75 0.12 85);
+  --accent-foreground: oklch(0.15 0.01 264);
+
+  /* Success - Cameroon Green #1E6F40 */
+  --success: oklch(0.42 0.11 155);
   --success-foreground: oklch(0.99 0 0);
-  
-  /* Warning - Orange (same as secondary) */
-  --warning: oklch(0.769 0.188 70.08);
-  --warning-foreground: oklch(0.2 0.01 264);
-  
+
+  /* Warning - Coral #FF6B6B */
+  --warning: oklch(0.7 0.19 25);
+  --warning-foreground: oklch(0.99 0 0);
+
   /* Destructive - Red */
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.99 0 0);
-  
+
   /* Borders & Inputs */
   --border: oklch(0.92 0.004 264);
   --input: oklch(0.92 0.004 264);
-  --ring: oklch(0.623 0.214 259.815);
+  --ring: oklch(0.45 0.08 195);
 }
 
 .dark {
   /* Base Colors */
   --background: oklch(0.18 0.01 264);
   --foreground: oklch(0.98 0 0);
-  
+
   /* Card Colors */
   --card: oklch(0.22 0.01 264);
   --card-foreground: oklch(0.98 0 0);
-  
+
   /* Popover Colors */
   --popover: oklch(0.22 0.01 264);
   --popover-foreground: oklch(0.98 0 0);
-  
-  /* Primary - Brighter Blue for Dark Mode */
-  --primary: oklch(0.65 0.24 264);
+
+  /* Primary - Brighter Teal for Dark Mode */
+  --primary: oklch(0.55 0.12 195);
   --primary-foreground: oklch(0.99 0 0);
-  
-  /* Secondary - Orange */
-  --secondary: oklch(0.78 0.19 70);
+
+  /* Secondary - Brighter Cameroon Green */
+  --secondary: oklch(0.52 0.14 155);
   --secondary-foreground: oklch(0.99 0 0);
-  
+
   /* Muted */
   --muted: oklch(0.28 0.01 264);
   --muted-foreground: oklch(0.7 0.015 264);
-  
-  /* Accent - Green */
-  --accent: oklch(0.72 0.18 162);
-  --accent-foreground: oklch(0.99 0 0);
-  
-  /* Success - Green */
-  --success: oklch(0.72 0.18 162);
+
+  /* Accent - Vibrant Gold */
+  --accent: oklch(0.78 0.13 85);
+  --accent-foreground: oklch(0.15 0.01 264);
+
+  /* Success - Brighter Green */
+  --success: oklch(0.52 0.14 155);
   --success-foreground: oklch(0.99 0 0);
-  
-  /* Warning - Orange */
-  --warning: oklch(0.78 0.19 70);
+
+  /* Warning - Coral */
+  --warning: oklch(0.72 0.2 25);
   --warning-foreground: oklch(0.99 0 0);
-  
+
   /* Destructive */
   --destructive: oklch(0.65 0.24 27);
   --destructive-foreground: oklch(0.99 0 0);
-  
+
   /* Borders & Inputs */
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.65 0.24 264);
+  --ring: oklch(0.55 0.12 195);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+    font-family: var(--font-inter);
+  }
+
+  /* Zenith Scholar Typography System */
+  h1 {
+    font-family: var(--font-montserrat);
+    @apply text-5xl font-extrabold tracking-tight;
+  }
+
+  h2 {
+    font-family: var(--font-montserrat);
+    @apply text-4xl font-extrabold tracking-tight;
+  }
+
+  h3 {
+    font-family: var(--font-poppins);
+    @apply text-3xl font-semibold;
+  }
+
+  h4 {
+    font-family: var(--font-poppins);
+    @apply text-2xl font-semibold;
+  }
+
+  h5 {
+    font-family: var(--font-poppins);
+    @apply text-xl font-semibold;
+  }
+
+  h6 {
+    font-family: var(--font-poppins);
+    @apply text-lg font-semibold;
+  }
+
+  p {
+    font-family: var(--font-inter);
+    @apply text-base leading-relaxed;
+  }
+
+  a {
+    font-family: var(--font-inter);
+    @apply text-base;
+  }
+
+  /* Utility classes for brand fonts */
+  .font-display {
+    font-family: var(--font-montserrat);
+    @apply font-extrabold;
+  }
+
+  .font-subheading {
+    font-family: var(--font-poppins);
+    @apply font-semibold;
+  }
+
+  .font-body {
+    font-family: var(--font-inter);
+  }
+
+  /* Module card headers */
+  .module-title {
+    font-family: var(--font-poppins);
+    @apply text-xl font-semibold;
+  }
+
+  /* Button text */
+  button {
+    font-family: var(--font-poppins);
+    @apply font-medium;
+  }
+
+  /* Certificate text */
+  .certificate-text {
+    font-family: var(--font-montserrat);
+    @apply font-bold;
+  }
+}
+
+/* Additional brand-specific utilities */
+@layer utilities {
+  /* Text gradient - Teal to Gold */
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent;
+  }
+
+  /* Hero background gradient - Full brand palette */
+  .hero-gradient {
+    background: linear-gradient(
+      135deg,
+      oklch(0.45 0.08 195) 0%,
+      oklch(0.42 0.11 155) 50%,
+      oklch(0.75 0.12 85) 100%
+    );
+  }
+
+  /* Alternative hero gradient - Subtle overlay */
+  .hero-gradient-subtle {
+    background: linear-gradient(
+      to bottom right,
+      oklch(0.45 0.08 195 / 0.95),
+      oklch(0.42 0.11 155 / 0.9)
+    );
+  }
+
+  /* Hero gradient with mesh effect */
+  .hero-gradient-mesh {
+    background: radial-gradient(
+        at 0% 0%,
+        oklch(0.45 0.08 195 / 0.3) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 0%,
+        oklch(0.75 0.12 85 / 0.2) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 100% 100%,
+        oklch(0.42 0.11 155 / 0.3) 0px,
+        transparent 50%
+      ),
+      radial-gradient(
+        at 0% 100%,
+        oklch(0.45 0.08 195 / 0.2) 0px,
+        transparent 50%
+      ),
+      var(--background);
+  }
+
+  /* Animated hero gradient */
+  .hero-gradient-animated {
+    background: linear-gradient(
+      -45deg,
+      oklch(0.45 0.08 195),
+      oklch(0.42 0.11 155),
+      oklch(0.75 0.12 85),
+      oklch(0.42 0.11 155)
+    );
+    background-size: 400% 400%;
+    animation: gradient-shift 15s ease infinite;
+  }
+
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  /* Border gradient */
+  .border-gradient {
+    border-image: linear-gradient(to right, var(--primary), var(--accent)) 1;
+  }
+
+  /* Card gradient border */
+  .card-gradient-border {
+    @apply relative overflow-hidden;
+  }
+
+  .card-gradient-border::before {
+    content: "";
+    @apply absolute inset-0 rounded-lg p-[2px] -z-10;
+    background: linear-gradient(
+      135deg,
+      var(--primary),
+      var(--secondary),
+      var(--accent)
+    );
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Brand shadow */
+  .shadow-brand {
+    box-shadow: 0 10px 40px -10px oklch(0.45 0.08 195 / 0.2);
+  }
+
+  /* Gold glow effect */
+  .shadow-gold {
+    box-shadow: 0 0 30px oklch(0.75 0.12 85 / 0.3);
+  }
+
+  /* Hover lift effect */
+  .hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-1;
+  }
+
+  /* CTA button gradient */
+  .btn-gradient {
+    @apply bg-gradient-to-r from-warning to-accent text-white font-semibold;
+    @apply hover:shadow-lg hover:scale-105 transition-all duration-300;
   }
 }

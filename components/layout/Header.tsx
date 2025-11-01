@@ -2,12 +2,13 @@
 
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname } from 'next/navigation';
-import { GraduationCap, Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from "next-themes";
 import { useAuth } from '@/lib/contexts/AuthProvider';
 import { logoutUser as signOut } from '@/lib/actions/auth.actions';
 import Link from "next/link";
+import Image from "next/image";
 
 const LOCALES = [
   {
@@ -63,9 +64,16 @@ export default function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href={`/`} className="flex items-center space-x-2">
-            <GraduationCap className="h-8 w-8 text-primary" />
+            <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+              <Image
+                src={"/logo.png"}
+                width={100}
+                height={100}
+                alt="ZenithScholar"
+              />
+            </div>
             <span className="text-xl font-bold text-foreground">
-              ResearchEthics
+              ZenithScholar
             </span>
           </Link>
 

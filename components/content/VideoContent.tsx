@@ -10,6 +10,7 @@ import ReactPlayer from "react-player";
 
 interface VideoContentProps {
   url: string;
+  courseId: string;
   moduleId: string;
   lessonOrder: number;
   lessonCompleted: boolean;
@@ -21,6 +22,7 @@ interface VideoContentProps {
 export default function VideoContent({
   url,
   moduleId,
+  courseId,
   lessonOrder,
   lessonCompleted,
   onComplete,
@@ -41,7 +43,7 @@ export default function VideoContent({
       setTimeSpent((prev) => {
         const newTime = prev + 1;
         if (newTime % 5 === 0) {
-          updateLessonTime(moduleId, lessonOrder, 5).catch(console.error);
+          updateLessonTime(courseId, moduleId, lessonOrder, 5).catch(console.error);
         }
         return newTime;
       });
@@ -52,15 +54,15 @@ export default function VideoContent({
         clearInterval(timeIntervalRef.current);
       }
       if (timeSpent % 5 !== 0) {
-        updateLessonTime(moduleId, lessonOrder, timeSpent % 5).catch(
+        updateLessonTime(courseId, moduleId, lessonOrder, timeSpent % 5).catch(
           console.error
         );
       }
     };
-  }, [moduleId, lessonOrder, timeSpent]);
+  }, [courseId, moduleId, lessonOrder, timeSpent]);
 
   const handleCompleteLesson = async () => {
-    const result = await markLessonComplete(moduleId, lessonOrder, timeSpent);
+    const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
     if (result.success && "message" in result) {
       toast.success(result.message);
       onComplete();

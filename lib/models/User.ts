@@ -7,13 +7,13 @@ export interface IUser extends Document {
   email: string;
   password: string;
   phone?: string;
-  department?: string;
+  department?: string; // User's department for personalized course recommendations
   role: "student" | "admin";
   isEmailVerified: boolean;
   emailVerificationToken?: string;
   resetPasswordToken?: string;
   resetPasswordExpires?: Date;
-  purchasedModules: mongoose.Types.ObjectId[];
+  purchasedCourses: mongoose.Types.ObjectId[]; // Changed from purchasedModules
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -47,6 +47,36 @@ const UserSchema = new mongoose.Schema<IUser>(
     department: {
       type: String,
       trim: true,
+      enum: [
+        // Faculty of Science
+        "Computer Science",
+        "Mathematics",
+        "Physics",
+        "Chemistry",
+        "Microbiology",
+        "Biochemistry",
+        "Geology",
+        // Faculty of Social & Management Sciences
+        "Economics",
+        "Management",
+        "Sociology",
+        "Psychology",
+        // Faculty of Arts
+        "English",
+        "French",
+        "Linguistics",
+        // Faculty of Education
+        "Curriculum Studies",
+        "Educational Psychology",
+        // Faculty of Health Sciences
+        "Nursing",
+        "Public Health",
+        // Faculty of Engineering
+        "Civil Engineering",
+        "Electrical Engineering",
+        // Other
+        "Other",
+      ],
     },
     role: {
       type: String,
@@ -69,10 +99,10 @@ const UserSchema = new mongoose.Schema<IUser>(
       type: Date,
       select: false,
     },
-    purchasedModules: [
+    purchasedCourses: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Module",
+        ref: "Course", // Changed from Module
       },
     ],
   },
@@ -102,14 +132,14 @@ UserSchema.methods.comparePassword = async function (
   try {
     return await bcrypt.compare(candidatePassword, this.password);
   } catch (error) {
-    console.error(error)
+    console.error(error);
     return false;
   }
 };
 
 // Indexes for faster queries
-//UserSchema.index({ email: 1 });
 UserSchema.index({ role: 1 });
+UserSchema.index({ department: 1 });
 
 const User: Model<IUser> =
   mongoose.models.User || mongoose.model<IUser>("User", UserSchema);

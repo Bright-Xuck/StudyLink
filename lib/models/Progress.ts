@@ -1,15 +1,29 @@
 import mongoose, { Document, Model } from "mongoose";
 
 export interface ILessonProgress {
+  moduleId: string;
   lessonOrder: number;
   completed: boolean;
   completedAt?: Date;
   timeSpent: number; // in minutes
   lastAccessedAt: Date;
+  quizPassed: boolean; // Track if lesson quiz passed
+  quizScore?: number;
+}
+
+export interface IModuleProgress {
+  moduleId: mongoose.Types.ObjectId;
+  completedLessons: number;
+  totalLessons: number;
+  progressPercentage: number;
+  completed: boolean;
+  completedAt?: Date;
 }
 
 export interface IQuizAttempt {
   quizId: string;
+  moduleId: string;
+  lessonOrder?: number; // If it's a lesson quiz
   score: number;
   totalQuestions: number;
   passed: boolean;
@@ -23,20 +37,25 @@ export interface IQuizAttempt {
 
 export interface IProgress extends Document {
   userId: mongoose.Types.ObjectId;
-  moduleId: mongoose.Types.ObjectId;
+  courseId: mongoose.Types.ObjectId; // Track at course level
 
-  // Lesson tracking
+  // Module tracking
+  modulesProgress: IModuleProgress[];
+  totalModules: number;
+  completedModules: number;
+
+  // Lesson tracking across all modules
   lessonsProgress: ILessonProgress[];
   totalLessons: number;
   completedLessons: number;
 
-  // Overall progress
-  progressPercentage: number;
+  // Overall course progress
+  courseProgressPercentage: number;
 
-  // Quiz tracking
+  // Quiz tracking across all modules/lessons
   quizAttempts: IQuizAttempt[];
-  bestQuizScore: number;
-  quizPassed: boolean;
+  totalQuizzesPassed: number;
+  totalQuizzesRequired: number;
 
   // Certificate
   certificateIssued: boolean;
@@ -53,6 +72,10 @@ export interface IProgress extends Document {
 }
 
 const LessonProgressSchema = new mongoose.Schema<ILessonProgress>({
+  moduleId: {
+    type: String,
+    required: true,
+  },
   lessonOrder: {
     type: Number,
     required: true,
@@ -72,12 +95,53 @@ const LessonProgressSchema = new mongoose.Schema<ILessonProgress>({
     type: Date,
     default: Date.now,
   },
+  quizPassed: {
+    type: Boolean,
+    default: false,
+  },
+  quizScore: {
+    type: Number,
+  },
+});
+
+const ModuleProgressSchema = new mongoose.Schema<IModuleProgress>({
+  moduleId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Module",
+    required: true,
+  },
+  completedLessons: {
+    type: Number,
+    default: 0,
+  },
+  totalLessons: {
+    type: Number,
+    required: true,
+  },
+  progressPercentage: {
+    type: Number,
+    default: 0,
+  },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  completedAt: {
+    type: Date,
+  },
 });
 
 const QuizAttemptSchema = new mongoose.Schema<IQuizAttempt>({
   quizId: {
     type: String,
     required: true,
+  },
+  moduleId: {
+    type: String,
+    required: true,
+  },
+  lessonOrder: {
+    type: Number,
   },
   score: {
     type: Number,
@@ -111,10 +175,20 @@ const ProgressSchema = new mongoose.Schema<IProgress>(
       ref: "User",
       required: true,
     },
-    moduleId: {
+    courseId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Module",
+      ref: "Course", // Changed from moduleId
       required: true,
+    },
+    modulesProgress: [ModuleProgressSchema],
+    totalModules: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    completedModules: {
+      type: Number,
+      default: 0,
     },
     lessonsProgress: [LessonProgressSchema],
     totalLessons: {
@@ -126,20 +200,20 @@ const ProgressSchema = new mongoose.Schema<IProgress>(
       type: Number,
       default: 0,
     },
-    progressPercentage: {
+    courseProgressPercentage: {
       type: Number,
       default: 0,
       min: 0,
       max: 100,
     },
     quizAttempts: [QuizAttemptSchema],
-    bestQuizScore: {
+    totalQuizzesPassed: {
       type: Number,
       default: 0,
     },
-    quizPassed: {
-      type: Boolean,
-      default: false,
+    totalQuizzesRequired: {
+      type: Number,
+      default: 0,
     },
     certificateIssued: {
       type: Boolean,
@@ -169,24 +243,39 @@ const ProgressSchema = new mongoose.Schema<IProgress>(
 );
 
 // Compound index for efficient queries
-ProgressSchema.index({ userId: 1, moduleId: 1 }, { unique: true });
+ProgressSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 
 // Method to update progress percentage
 ProgressSchema.methods.updateProgress = async function () {
-  // Calculate completed lessons
+  // Calculate completed lessons across all modules
   this.completedLessons = this.lessonsProgress.filter(
-    (lesson: ILessonProgress) => lesson.completed
+    (lesson: ILessonProgress) => lesson.completed && lesson.quizPassed
   ).length;
 
-  // Calculate progress percentage
+  // Calculate completed modules
+  this.completedModules = this.modulesProgress.filter(
+    (module: IModuleProgress) => module.completed
+  ).length;
+
+  // Calculate overall course progress
   if (this.totalLessons > 0) {
-    this.progressPercentage = Math.round(
+    this.courseProgressPercentage = Math.round(
       (this.completedLessons / this.totalLessons) * 100
     );
   }
 
-  // Check if module is fully completed
-  if (this.progressPercentage === 100 && this.quizPassed && !this.completedAt) {
+  // Count passed quizzes
+  this.totalQuizzesPassed = this.quizAttempts.filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (attempt: any) => attempt.passed
+  ).length;
+
+  // Check if course is fully completed (all lessons + quizzes)
+  if (
+    this.courseProgressPercentage === 100 &&
+    this.totalQuizzesPassed >= this.totalQuizzesRequired &&
+    !this.completedAt
+  ) {
     this.completedAt = new Date();
   }
 

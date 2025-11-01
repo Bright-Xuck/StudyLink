@@ -1,6 +1,6 @@
 import { redirect, notFound } from "next/navigation";
 import { getAuthenticatedUser } from "@/lib/actions/auth.actions";
-import { getModuleBySlug } from "@/lib/actions/module.actions";
+import { getCourseBySlug } from "@/lib/actions/course.actions";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import { Lock, CreditCard, Shield } from "lucide-react";
@@ -12,33 +12,33 @@ type CheckoutPageProps = {
 
 export default async function CheckoutPage({ searchParams }: CheckoutPageProps) {
   const params = await searchParams;
-  const moduleSlug = params.module as string;
+  const slug = params.course as string;
 
-  if (!moduleSlug) {
+  if (!slug) {
     return notFound();
   }
 
   const user = await getAuthenticatedUser();
 
   if (!user) {
-    redirect(`/login?redirect=/payment/checkout?module=${moduleSlug}`);
+    redirect(`/login?redirect=/payment/checkout?module=${slug}`);
   }
 
   const t = await getTranslations("payment");
-  const courseModule = await getModuleBySlug(moduleSlug);
+  const course = await getCourseBySlug(slug);
 
-  if (!courseModule) {
+  if (!course) {
     return notFound();
   }
 
   // Check if module is free
-  if (courseModule.isFree) {
-    redirect(`/modules/${moduleSlug}`);
+  if (course.isFree) {
+    redirect(`/courses/${slug}`);
   }
 
   // Check if already purchased
-  if (user.purchasedModules.includes(courseModule._id)) {
-    redirect(`/modules/${moduleSlug}`);
+  if (user.purchasedModules.includes(course._id)) {
+    redirect(`/courses/${slug}`);
   }
 
   return (
@@ -63,9 +63,9 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
                   {t("checkout.paymentDetails")}
                 </h2>
                 <CheckoutForm
-                  moduleId={courseModule._id}
-                  moduleSlug={courseModule.slug}
-                  amount={courseModule.price || 0}
+                  courseId={course._id}
+                  courseSlug={course.slug}
+                  amount={course.price || 0}
                 />
               </div>
 
@@ -96,17 +96,17 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
                 <div className="mb-6">
                   <div className="relative h-40 rounded-lg overflow-hidden mb-4">
                     <Image
-                      src={courseModule.imageUrl}
-                      alt={courseModule.title}
+                      src={course.imageUrl}
+                      alt={course.title}
                       fill
                       className="object-cover"
                     />
                   </div>
                   <h4 className="font-semibold text-foreground mb-2">
-                    {courseModule.title}
+                    {course.title}
                   </h4>
                   <p className="text-sm text-muted-foreground line-clamp-2">
-                    {courseModule.description}
+                    {course.description}
                   </p>
                 </div>
 
@@ -114,13 +114,13 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
                 <div className="space-y-3 py-4 border-t border-b border-border">
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">
-                      {t("checkout.modulePrice")}
+                      {t("checkout.coursePrice")}
                     </span>
                     <span className="font-medium text-foreground">
                       {new Intl.NumberFormat("fr-CM", {
                         style: "currency",
                         currency: "XAF",
-                      }).format(courseModule.price || 0)}
+                      }).format(course.price || 0)}
                     </span>
                   </div>
                   <div className="flex items-center justify-between">
@@ -143,7 +143,7 @@ export default async function CheckoutPage({ searchParams }: CheckoutPageProps) 
                       {new Intl.NumberFormat("fr-CM", {
                         style: "currency",
                         currency: "XAF",
-                      }).format(courseModule.price || 0)}
+                      }).format(course.price || 0)}
                     </span>
                   </div>
                   <p className="text-sm text-muted-foreground">

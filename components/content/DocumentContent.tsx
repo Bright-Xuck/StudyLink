@@ -7,13 +7,18 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Document, Page, pdfjs } from 'react-pdf';
-//import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
-//import 'react-pdf/dist/esm/Page/TextLayer.css';
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+
+const pdfOptions = {
+  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  cMapPacked: true,
+  standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
+};
 
 // Add this new component before VideoContent
 export default function DocumentContent({
   url,
+  courseId,
   moduleId,
   lessonOrder,
   lessonCompleted,
@@ -22,6 +27,7 @@ export default function DocumentContent({
   onNextLessonAction,
 }: {
   url: string;
+  courseId: string;
   moduleId: string;
   lessonOrder: number;
   lessonCompleted: boolean;
@@ -47,7 +53,7 @@ export default function DocumentContent({
       setTimeSpent((prev) => {
         const newTime = prev + 1;
         if (newTime % 5 === 0) {
-          updateLessonTime(moduleId, lessonOrder, 5).catch(console.error);
+          updateLessonTime(courseId, moduleId, lessonOrder, 5).catch(console.error);
         }
         return newTime;
       });
@@ -58,12 +64,12 @@ export default function DocumentContent({
         clearInterval(timeIntervalRef.current);
       }
       if (timeSpent % 5 !== 0) {
-        updateLessonTime(moduleId, lessonOrder, timeSpent % 5).catch(
+        updateLessonTime(courseId, moduleId, lessonOrder, timeSpent % 5).catch(
           console.error
         );
       }
     };
-  }, [moduleId, lessonOrder, timeSpent]);
+  }, [courseId, moduleId, lessonOrder, timeSpent]);
 
   const onDocumentLoadSuccess = ({ numPages }: { numPages: number }) => {
     setNumPages(numPages);
@@ -87,7 +93,7 @@ export default function DocumentContent({
   const hasViewedEnough = numPages > 0 && pagesViewed.size >= Math.ceil(numPages * 0.7);
 
   const handleCompleteLesson = async () => {
-    const result = await markLessonComplete(moduleId, lessonOrder, timeSpent);
+    const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
     if (result.success && "message" in result) {
       toast.success(result.message);
       onCompleteAction();
@@ -149,7 +155,11 @@ export default function DocumentContent({
             <div className="flex justify-center">
               <Document
                 file={url}
+                options={pdfOptions}
                 onLoadSuccess={onDocumentLoadSuccess}
+                onLoadError={(error) => {
+                  console.error('PDF Load Error:', error);
+                }}
                 loading={
                   <div className="flex items-center justify-center py-20">
                     <Loader2 className="h-8 w-8 animate-spin text-primary" />

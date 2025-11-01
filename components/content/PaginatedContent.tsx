@@ -22,6 +22,7 @@ export default function PaginatedContent({
   content,
   wordsPerPage = 250,
   moduleId,
+  courseId,
   lessonOrder,
   lessonCompleted,
   onCompleteAction,
@@ -31,6 +32,7 @@ export default function PaginatedContent({
   content: string;
   wordsPerPage?: number;
   moduleId: string;
+  courseId: string;
   lessonOrder: number;
   lessonCompleted: boolean;
   onCompleteAction: () => void;
@@ -57,7 +59,7 @@ export default function PaginatedContent({
         const newTime = prev + 1;
         // Update backend every 5 minutes
         if (newTime % 5 === 0) {
-          updateLessonTime(moduleId, lessonOrder, 5).catch(console.error);
+          updateLessonTime(courseId, moduleId, lessonOrder, 5).catch(console.error);
         }
         return newTime;
       });
@@ -69,12 +71,12 @@ export default function PaginatedContent({
       }
       // Save remaining time on unmount
       if (timeSpent % 5 !== 0) {
-        updateLessonTime(moduleId, lessonOrder, timeSpent % 5).catch(
+        updateLessonTime(courseId, moduleId, lessonOrder, timeSpent % 5).catch(
           console.error
         );
       }
     };
-  }, [moduleId, lessonOrder, timeSpent]);
+  }, [courseId, moduleId, lessonOrder, timeSpent]);
 
   const pages = useMemo(() => {
     const correctedContent = content
@@ -125,7 +127,7 @@ export default function PaginatedContent({
   };
 
   const handleCompleteLesson = async () => {
-    const result = await markLessonComplete(moduleId, lessonOrder, timeSpent);
+    const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
     if (result.success && "message" in result) {
       toast.success(result.message);
       onCompleteAction();

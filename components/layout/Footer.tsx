@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { GraduationCap, Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
+import { Mail, Phone, MapPin, ExternalLink } from 'lucide-react';
 import { Link } from "@/i18n/navigation";
 import Image from "next/image";
 
@@ -15,9 +15,16 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <GraduationCap className="h-8 w-8 text-primary" />
+              <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
+                <Image
+                  src={"/logo-name.png"}
+                  width={100}
+                  height={100}
+                  alt="ZenithScholar"
+                />
+             </div>
               <span className="text-xl font-bold text-foreground">
-                ResearchEthics
+                ZenithScholar
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">

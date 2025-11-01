@@ -7,20 +7,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Smartphone, Loader2, CheckCircle, XCircle } from "lucide-react";
-import { initiateModulePayment, checkPaymentStatus } from "@/lib/actions/payment.actions";
+import { initiateCoursePayment, checkPaymentStatus } from "@/lib/actions/payment.actions";
 import { toast } from "sonner";
 
 interface CheckoutFormProps {
-  moduleId: string;
-  moduleSlug: string;
+  courseId: string;
+  courseSlug: string;
   amount: number;
 }
 
 type PaymentStatus = "idle" | "initiating" | "pending" | "checking" | "success" | "failed";
 
 export default function CheckoutForm({
-  moduleId,
-  moduleSlug,
+  courseId,
+  courseSlug,
   amount,
 }: CheckoutFormProps) {
   const t = useTranslations("payment");
@@ -47,7 +47,7 @@ export default function CheckoutForm({
           
           // Redirect to module page after 2 seconds
           setTimeout(() => {
-            router.push(`/modules/${moduleSlug}`);
+            router.push(`/courses/${courseSlug}`);
           }, 2000);
         } else if (result.data.status === "failed" || result.data.status === "expired") {
           clearInterval(checkInterval);
@@ -86,7 +86,7 @@ export default function CheckoutForm({
     setStatus("initiating");
 
     // Initiate payment
-    const result = await initiateModulePayment(moduleId, phone, medium);
+    const result = await initiateCoursePayment(courseId, phone, medium);
 
     console.log("initiateModulePayment result:", result);
 
@@ -115,7 +115,7 @@ export default function CheckoutForm({
         setStatus("success");
         toast.success(result.message);
         setTimeout(() => {
-          router.push(`/modules/${moduleSlug}`);
+          router.push(`/courses/${courseSlug}`);
         }, 2000);
       } else if (result.data.status === "failed" || result.data.status === "expired") {
         setStatus("failed");

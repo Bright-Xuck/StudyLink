@@ -2,7 +2,7 @@ import mongoose, { Document, Model } from "mongoose";
 
 export interface IPayment extends Document {
   userId: mongoose.Types.ObjectId;
-  moduleId: mongoose.Types.ObjectId;
+  courseId: mongoose.Types.ObjectId; // Changed from moduleId
 
   // Payment details
   amount: number;
@@ -38,9 +38,9 @@ const PaymentSchema = new mongoose.Schema<IPayment>(
       ref: "User",
       required: true,
     },
-    moduleId: {
+    courseId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Module",
+      ref: "Course", // Changed from Module
       required: true,
     },
     amount: {
@@ -103,9 +103,8 @@ const PaymentSchema = new mongoose.Schema<IPayment>(
 
 // Indexes for faster queries
 PaymentSchema.index({ userId: 1, status: 1 });
-//PaymentSchema.index({ transactionId: 1 });
-//PaymentSchema.index({ externalId: 1 });
 PaymentSchema.index({ status: 1, initiatedAt: -1 });
+PaymentSchema.index({ courseId: 1 });
 
 const Payment: Model<IPayment> =
   mongoose.models.Payment || mongoose.model<IPayment>("Payment", PaymentSchema);

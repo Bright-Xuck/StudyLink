@@ -3,7 +3,7 @@
 import { connectDB } from "@/lib/db";
 import Payment from "@/lib/models/Payment";
 import User from "@/lib/models/User";
-import Module from "@/lib/models/Module";
+import Course from "@/lib/models/Course";
 import { getCurrentUser } from "@/lib/utils/jwt";
 import { fapshiClient } from "@/lib/utils/fapshi";
 import { getLocale } from "next-intl/server";
@@ -11,10 +11,10 @@ import mongoose from "mongoose";
 import crypto from "crypto";
 
 /**
- * Initiate a direct payment for a module
+ * Initiate a direct payment for a course
  */
-export async function initiateModulePayment(
-  moduleId: string,
+export async function initiateCoursePayment(
+  courseId: string,
   phone: string,
   medium: "mobile money" | "orange money" = "mobile money"
 ) {
@@ -32,10 +32,10 @@ export async function initiateModulePayment(
 
     await connectDB();
 
-    // Get user and module
-    const [user, courseModule] = await Promise.all([
+    // Get user and course
+    const [user, course] = await Promise.all([
       User.findById(tokenPayload.userId),
-      Module.findById(moduleId),
+      Course.findById(courseId).populate("modules"),
     ]);
 
     if (!user) {
@@ -45,29 +45,28 @@ export async function initiateModulePayment(
       };
     }
 
-    if (!courseModule) {
+    if (!course) {
       return {
         success: false,
-        error: locale === "fr" ? "Module introuvable" : "Module not found",
+        error: locale === "fr" ? "Cours introuvable" : "Course not found",
       };
     }
 
-    // Check if module is free
-    if (courseModule.isFree) {
+    // Check if course is free
+    if (course.isFree) {
       return {
         success: false,
-        error:
-          locale === "fr" ? "Ce module est gratuit" : "This module is free",
+        error: locale === "fr" ? "Ce cours est gratuit" : "This course is free",
       };
     }
 
     // Check if already purchased
-    const objectIdModuleId = new mongoose.Types.ObjectId(moduleId);
-    if (user.purchasedModules.some((id) => id.equals(objectIdModuleId))) {
+    const objectIdCourseId = new mongoose.Types.ObjectId(courseId);
+    if (user.purchasedCourses.some((id) => id.equals(objectIdCourseId))) {
       return {
         success: false,
         error:
-          locale === "fr" ? "Module déjà acheté" : "Module already purchased",
+          locale === "fr" ? "Cours déjà acheté" : "Course already purchased",
       };
     }
 
@@ -83,20 +82,20 @@ export async function initiateModulePayment(
     }
 
     // Generate unique external ID
-    const externalId = `MODULE_${moduleId}_${Date.now()}_${crypto
+    const externalId = `COURSE_${courseId}_${Date.now()}_${crypto
       .randomBytes(4)
       .toString("hex")}`;
 
     // Initiate payment with Fapshi
     const fapshiResponse = await fapshiClient.directPay({
-      amount: courseModule.price || 0,
+      amount: course.price || 0,
       phone,
       medium,
       name: user.name,
       email: user.email,
       userId: (user._id as mongoose.Types.ObjectId).toString(),
       externalId,
-      message: `Purchase: ${courseModule.title}`,
+      message: `Course Purchase: ${course.title}`,
     });
 
     console.log("Fapshi response:", fapshiResponse);
@@ -115,9 +114,9 @@ export async function initiateModulePayment(
     // Save payment record
     const payment = await Payment.create({
       userId: user._id,
-      moduleId: objectIdModuleId,
-      amount: courseModule.price,
-      currency: "XAF",
+      courseId: objectIdCourseId,
+      amount: course.price,
+      currency: course.currency || "XAF",
       transactionId: fapshiResponse.transId,
       externalId,
       phone,
@@ -138,6 +137,8 @@ export async function initiateModulePayment(
         externalId: payment.externalId,
         amount: payment.amount,
         status: payment.status,
+        courseName: course.title,
+        moduleCount: course.modules.length,
       },
     };
   } catch (error) {
@@ -170,7 +171,9 @@ export async function checkPaymentStatus(transactionId: string) {
     await connectDB();
 
     // Get payment record
-    const payment = await Payment.findOne({ transactionId });
+    const payment = await Payment.findOne({ transactionId }).populate(
+      "courseId"
+    );
 
     if (!payment) {
       return {
@@ -198,7 +201,7 @@ export async function checkPaymentStatus(transactionId: string) {
     // Check status with Fapshi
     const fapshiResponse = await fapshiClient.getPaymentStatus(transactionId);
 
-    console.log("RESFAP", fapshiResponse)
+    console.log("RESFAP", fapshiResponse);
 
     if (!fapshiResponse.success) {
       return {
@@ -219,14 +222,21 @@ export async function checkPaymentStatus(transactionId: string) {
     if (fapshiStatus === "successful") {
       payment.completedAt = new Date();
 
-      // Add module to user's purchased modules
+      // Add course to user's purchased courses
       const user = await User.findById(payment.userId);
       if (
         user &&
-        !user.purchasedModules.some((id) => id.equals(payment.moduleId))
+        !user.purchasedCourses.some((id) => id.equals(payment.courseId))
       ) {
-        user.purchasedModules.push(payment.moduleId);
+        user.purchasedCourses.push(payment.courseId);
         await user.save();
+      }
+
+      // Increment course enrollment count
+      const course = await Course.findById(payment.courseId);
+      if (course) {
+        course.enrolledCount = (course.enrolledCount || 0) + 1;
+        await course.save();
       }
 
       await payment.save();
@@ -235,8 +245,8 @@ export async function checkPaymentStatus(transactionId: string) {
         success: true,
         message:
           locale === "fr"
-            ? "Paiement confirmé! Vous pouvez maintenant accéder au module."
-            : "Payment confirmed! You can now access the module.",
+            ? "Paiement confirmé! Vous pouvez maintenant accéder au cours et tous ses modules."
+            : "Payment confirmed! You can now access the course and all its modules.",
         data: {
           status: "successful",
           completedAt: payment.completedAt,
@@ -303,7 +313,7 @@ export async function getUserPayments() {
     const payments = await Payment.find({
       userId: tokenPayload.userId,
     })
-      .populate("moduleId")
+      .populate("courseId")
       .sort({ initiatedAt: -1 })
       .lean();
 
@@ -328,12 +338,53 @@ export async function getPaymentByTransactionId(transactionId: string) {
       transactionId,
       userId: tokenPayload.userId,
     })
-      .populate("moduleId")
+      .populate("courseId")
       .lean();
 
     return payment ? JSON.parse(JSON.stringify(payment)) : null;
   } catch (error) {
     console.error("Get payment error:", error);
+    return null;
+  }
+}
+
+/**
+ * Get payment statistics for user
+ */
+export async function getUserPaymentStats() {
+  try {
+    const tokenPayload = await getCurrentUser();
+    if (!tokenPayload) return null;
+
+    await connectDB();
+
+    const payments = await Payment.find({
+      userId: tokenPayload.userId,
+    }).lean();
+
+    const stats = {
+      totalSpent: 0,
+      successfulPayments: 0,
+      pendingPayments: 0,
+      failedPayments: 0,
+      coursesPurchased: 0,
+    };
+
+    payments.forEach((payment) => {
+      if (payment.status === "successful") {
+        stats.totalSpent += payment.amount;
+        stats.successfulPayments++;
+        stats.coursesPurchased++;
+      } else if (payment.status === "pending") {
+        stats.pendingPayments++;
+      } else if (payment.status === "failed") {
+        stats.failedPayments++;
+      }
+    });
+
+    return stats;
+  } catch (error) {
+    console.error("Get payment stats error:", error);
     return null;
   }
 }

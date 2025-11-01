@@ -1,14 +1,14 @@
-import ModuleCard from '@/components/modules/ModuleCard';
-import { getAllModules } from '@/lib/actions/module.actions';
+import CourseCard from '@/components/modules/CourseCard';
+import { getAllCourses } from '@/lib/actions/course.actions';
 import { BookOpen } from 'lucide-react';
 import { getTranslations } from "next-intl/server";
 
 export default async function CoursesPage() {
   const t = await getTranslations('CoursesPage');
-  const modules = await getAllModules();
+  const courses = await getAllCourses();
 
-  const freeModules = modules.filter(m => m.isFree);
-  const paidModules = modules.filter(m => !m.isFree);
+  const freeCourses = courses.filter(c => c.isFree);
+  const paidCourses = courses.filter(c => !c.isFree);
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -40,68 +40,78 @@ export default async function CoursesPage() {
       </section>
 
       <div className="container mx-auto px-4 py-12">
-        {/* Free Modules Section */}
-        {freeModules.length > 0 && (
+        {/* Free Courses Section */}
+        {freeCourses.length > 0 && (
           <section className="mb-16">
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-foreground mb-2">
-                  {t('freeModules.title')}
+                  {t('freeCourses.title')}
                 </h2>
                 <p className="text-muted-foreground">
-                  {t('freeModules.description')}
+                  {t('freeCourses.description')}
                 </p>
               </div>
               <span className="bg-accent text-accent-foreground px-4 py-2 rounded-full font-semibold">
-                {freeModules.length} {t('freeModules.countLabel')}
+                {freeCourses.length} {t('freeCourses.countLabel')}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {freeModules.map((module) => (
-                <ModuleCard
-                  key={module._id}
-                  id={module._id}
-                  title={module.title}
-                  description={module.description}
-                  imageUrl={module.imageUrl}
-                  isFree={module.isFree}
-                  price={module.price}
-                  slug={module.slug}
+              {freeCourses.map((course) => (
+                <CourseCard
+                  key={course._id}
+                  id={course._id}
+                  title={course.title}
+                  description={course.description}
+                  imageUrl={course.imageUrl}
+                  department={course.department}
+                  faculty={course.faculty || ""}
+                  isFree={course.isFree}
+                  price={course.price || 0}
+                  duration={course.duration}
+                  level={course.level}
+                  slug={course.slug}
+                  moduleCount={course.moduleCount}
                 />
               ))}
             </div>
           </section>
         )}
 
-        {/* Premium Modules Section */}
-        {paidModules.length > 0 && (
+        {/* Premium Courses Section */}
+        {paidCourses.length > 0 && (
           <section>
             <div className="flex items-center justify-between mb-8">
               <div>
                 <h2 className="text-3xl font-bold text-foreground mb-2">
-                  {t('premiumModules.title')}
+                  {t('premiumCourses.title')}
                 </h2>
                 <p className="text-muted-foreground">
-                  {t('premiumModules.description')}
+                  {t('premiumCourses.description')}
                 </p>
               </div>
               <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold">
-                {paidModules.length} {t('premiumModules.countLabel')}
+                {paidCourses.length} {t('premiumCourses.countLabel')}
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {paidModules.map((module) => (
-                <ModuleCard
-                  key={module._id}
-                  id={module._id}
-                  title={module.title}
-                  description={module.description}
-                  imageUrl={module.imageUrl}
-                  isFree={module.isFree}
-                  price={module.price}
-                  slug={module.slug}
+              {paidCourses.map((course) => (
+                <CourseCard
+                  key={course._id}
+                  id={course._id}
+                  title={course.title}
+                  description={course.description}
+                  imageUrl={course.imageUrl}
+                  department={course.department}
+                  faculty={course.faculty || ""}
+                  isFree={course.isFree}
+                  price={course.price || 0}
+                  duration={course.duration}
+                  level={course.level}
+                  slug={course.slug}
+                  moduleCount={course.moduleCount}
                 />
               ))}
             </div>
@@ -109,7 +119,7 @@ export default async function CoursesPage() {
         )}
 
         {/* Empty State */}
-        {modules.length === 0 && (
+        {courses.length === 0 && (
           <div className="text-center py-16">
             <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-2xl font-bold text-foreground mb-2">
