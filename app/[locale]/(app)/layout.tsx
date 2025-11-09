@@ -9,7 +9,7 @@ export default function LegalLayout({ children }: LegalLayoutProps) {
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <section className="flex-1 bg-muted/30">
+      <section className="flex-1 bg-muted/30 mt-auto">
         {children}
       </section>
       <Footer />

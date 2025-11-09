@@ -130,6 +130,8 @@ export async function markLessonComplete(
   lessonOrder: number,
   timeSpent: number = 0
 ) {
+
+  
   const locale = await getLocale();
 
   try {

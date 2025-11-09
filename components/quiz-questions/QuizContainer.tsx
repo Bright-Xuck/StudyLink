@@ -235,7 +235,7 @@ export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder,
 
   return (
     <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-card rounded-xl shadow-2xl max-w-3xl w-full my-8 border border-border">
+      <div className="bg-card rounded-xl shadow-2xl max-w-3xl w-full my-8 border border-border absolute top-0 mx-auto">
         {/* Header */}
         <div className="bg-primary text-primary-foreground p-6 rounded-t-xl">
           <div className="flex justify-between items-start mb-3">

@@ -560,5 +560,16 @@
       "continueLearning": "Continue Learning",
       "enrolling": "Enrolling..."
     }
+  },
+  "congratulations": {
+    "congratulations": "Congratulations!",
+    "courseCompleted": "You have successfully completed the course.",
+    "description": "Outstanding achievement! You've mastered all the course materials and demonstrated exceptional dedication. Your certificate of completion is ready to download.",
+    "complete": "complete",
+    "grade": "grade",
+    "excellence": "excellence",
+    "downloadCertificate": "downloadCertificate",
+    "backToDashboard": "Back to Dashboard",
+    "shareAchievement": "Share your achievement"
   }
 }
