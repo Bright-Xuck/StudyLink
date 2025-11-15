@@ -32,19 +32,40 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
   if (!courseModule) {
     return notFound();
   }
+  // Extract the actual courseId string (prefer _id when populated)
+  let courseId = '';
+  if (courseModule.courseId) {
+    // If populated document or object with _id, use that
+    if ((courseModule.courseId as any)._id) {
+      courseId = (courseModule.courseId as any)._id.toString();
+    } else if (typeof courseModule.courseId === 'string') {
+      courseId = courseModule.courseId;
+    } else if (typeof (courseModule.courseId as any).toString === 'function') {
+      // Fallback to toString() (works for ObjectId)
+      courseId = (courseModule.courseId as any).toString();
+    } else {
+      courseId = '';
+    }
+  }
 
+  // Extract moduleId as string
+  const moduleId = courseModule._id?.toString() || '';
+
+ 
   // Check if user has access to this module (via parent course)
   const hasAccess = await checkModuleAccess(courseModule._id);
 
   // Get course progress (module progress is tracked at course level now)
+  // CHANGED: Use extracted courseId instead of courseModule.courseId
   let progress = null;
-  if (hasAccess && user && courseModule.courseId) {
-    progress = await getCourseProgress(courseModule.courseId);
+  if (hasAccess && user && courseId) {
+    progress = await getCourseProgress(courseId);
   }
 
   // Find this module's progress within course progress
+  // CHANGED: Use extracted moduleId for comparison
   const moduleProgress = progress?.modulesProgress?.find(
-    (mp: { moduleId: string }) => mp.moduleId.toString() === courseModule._id
+    (mp: { moduleId: string }) => mp.moduleId.toString() === moduleId
   );
 
   const showSidebar = !lessonParam;
@@ -152,9 +173,9 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
               {hasAccess ? (
                 <ModuleContent 
                   lessons={JSON.parse(JSON.stringify(courseModule.lessons || []))} 
-                  moduleId={courseModule._id}
-                  courseId={courseModule.courseId}
-                  userId={user?.id || "anonymous"}
+                  moduleId={moduleId}
+                  courseId={courseId}
+                  userId={user?.id.toString() || "anonymous"}
                   progress={progress}
                 />
               ) : (

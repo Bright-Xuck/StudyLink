@@ -93,21 +93,24 @@ export default function DocumentContent({
   const hasViewedEnough = numPages > 0 && pagesViewed.size >= Math.ceil(numPages * 0.7);
 
   const handleCompleteLesson = async () => {
-    const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
-    if (result.success && "message" in result) {
-      toast.success(result.message);
-      onCompleteAction();
-    } else if ("error" in result) {
-      if (
-        result.error === "Not authenticated" ||
-        result.error === "Non authentifié"
-      ) {
-        toast.error(t("pleaseLoginToComplete"));
-        router.push(`/login`);
-      }
-      toast.error(result.error);
+  
+  const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
+  
+  
+  if (result.success && "message" in result) {
+    toast.success(result.message);
+    onCompleteAction();
+  } else if ("error" in result) {
+    if (
+      result.error === "Not authenticated" ||
+      result.error === "Non authentifié"
+    ) {
+      toast.error(t("pleaseLoginToComplete"));
+      router.push(`/login`);
     }
-  };
+    toast.error(result.error);
+  }
+};
 
   const handleDownload = () => {
     const link = document.createElement('a');

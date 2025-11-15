@@ -46,6 +46,7 @@ export async function initializeCourseProgress(courseId: string) {
     });
 
     if (existingProgress) {
+      
       return {
         success: true,
         progress: JSON.parse(JSON.stringify(existingProgress)),
@@ -130,8 +131,6 @@ export async function markLessonComplete(
   lessonOrder: number,
   timeSpent: number = 0
 ) {
-
-  
   const locale = await getLocale();
 
   try {
@@ -146,42 +145,70 @@ export async function markLessonComplete(
     await connectDB();
 
     // Find or create progress
-    let progress = (await Progress.findOne({
+    let progress = await Progress.findOne({
       userId: tokenPayload.userId,
       courseId: new mongoose.Types.ObjectId(courseId),
-    })) as IProgress | null;
+    });
+
 
     if (!progress) {
-      // Initialize progress first
+      
       const initResult = await initializeCourseProgress(courseId);
       if (!initResult.success) {
         return initResult;
       }
-      progress = (await Progress.findOne({
+      progress = await Progress.findOne({
         userId: tokenPayload.userId,
         courseId: new mongoose.Types.ObjectId(courseId),
-      })) as IProgress | null;
+      });
     }
 
     if (!progress) {
+      console.log("ERROR: Progress still not found after init");
       return {
         success: false,
-        error:
-          locale === "fr" ? "Progression introuvable" : "Progress not found",
+        error: locale === "fr" ? "Progression introuvable" : "Progress not found",
       };
     }
 
-    // Find the lesson in progress
-    const lessonProgress = progress.lessonsProgress.find(
-      (lp) => lp.moduleId === moduleId && lp.lessonOrder === lessonOrder
-    );
+    console.log("Progress ID:", progress._id);
+    console.log("Total lessons in progress:", progress.lessonsProgress.length);
+    console.log("Looking for - moduleId:", moduleId, "lessonOrder:", lessonOrder);
+    
+    // Log all lessons in progress for comparison
+    console.log("All lessons in progress:");
+    progress.lessonsProgress.forEach((lp, index) => {
+      console.log(`  [${index}] moduleId: "${lp.moduleId}" (type: ${typeof lp.moduleId}), lessonOrder: ${lp.lessonOrder}, completed: ${lp.completed}`);
+    });
+
+    // Find the lesson - with detailed logging
+    const lessonProgress = progress.lessonsProgress.find((lp) => {
+      const moduleMatch = lp.moduleId.toString() === moduleId.toString();
+      const orderMatch = lp.lessonOrder === lessonOrder;
+      console.log(`Comparing lesson: moduleId match: ${moduleMatch}, order match: ${orderMatch}`);
+      return moduleMatch && orderMatch;
+    });
 
     if (!lessonProgress) {
+      console.log("ERROR: Lesson not found in progress");
+      console.log("Searched for:", { 
+        moduleId: moduleId.toString(), 
+        moduleIdType: typeof moduleId,
+        lessonOrder,
+        lessonOrderType: typeof lessonOrder
+      });
+      
       return {
         success: false,
         error: locale === "fr" ? "Leçon introuvable" : "Lesson not found",
       };
     }
+
+    console.log("Lesson found! Current state:", {
+      completed: lessonProgress.completed,
+      timeSpent: lessonProgress.timeSpent,
+      quizPassed: lessonProgress.quizPassed
+    });
 
     // Update lesson progress
     lessonProgress.completed = true;
@@ -189,8 +216,23 @@ export async function markLessonComplete(
     lessonProgress.timeSpent += timeSpent;
     lessonProgress.lastAccessedAt = new Date();
 
-    // Update overall progress
-    await progress.updateProgress();
+    console.log("Updated lesson state:", {
+      completed: lessonProgress.completed,
+      timeSpent: lessonProgress.timeSpent
+    });
+
+    // Check if updateProgress method exists
+    if (typeof progress.updateProgress !== 'function') {
+      console.log("ERROR: updateProgress method not found!");
+      console.log("Available methods:", Object.getOwnPropertyNames(Object.getPrototypeOf(progress)));
+      // Fallback to just saving
+      await progress.save();
+      console.log("Progress saved without updateProgress method");
+    } else {
+      console.log("Calling updateProgress method...");
+      await progress.updateProgress();
+      console.log("updateProgress completed successfully");
+    }
 
     return {
       success: true,
@@ -198,7 +240,8 @@ export async function markLessonComplete(
       progress: JSON.parse(JSON.stringify(progress)),
     };
   } catch (error) {
-    console.error("Mark lesson complete error:", error);
+    console.error("=== ERROR IN MARK LESSON COMPLETE ===");
+    console.error("Error:", error);
     return {
       success: false,
       error: locale === "fr" ? "Erreur de mise à jour" : "Update error",

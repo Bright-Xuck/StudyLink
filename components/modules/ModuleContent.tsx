@@ -127,6 +127,8 @@ export default function ModuleContent({
   const handleLessonComplete = () => {
     // Refresh to get updated progress
     router.refresh();
+
+     
   };
 
   const handleTakeQuiz = async (lesson: Lesson) => {

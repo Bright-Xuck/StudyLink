@@ -5,6 +5,15 @@ import Module from "@/lib/models/Module";
 import Course from "@/lib/models/Course";
 import { getLocale } from "next-intl/server";
 
+// Helper to safely extract an id string from a populated field or ObjectId
+function extractId(field: any): string | undefined {
+  if (!field) return undefined;
+  if (typeof field === "string") return field;
+  if (field._id) return field._id.toString();
+  if (typeof field.toString === "function") return field.toString();
+  return undefined;
+}
+
 /**
  * Get all modules (across all courses)
  */
@@ -21,7 +30,7 @@ export async function getAllModules() {
     // Transform data based on locale
     return modules.map((courseModule) => ({
       _id: courseModule._id.toString(),
-      courseId: courseModule.courseId?.toString(),
+      courseId: extractId(courseModule.courseId),
       title: locale === "fr" ? courseModule.titleFr : courseModule.title,
       description:
         locale === "fr" ? courseModule.descriptionFr : courseModule.description,
@@ -54,12 +63,12 @@ export async function getModuleBySlug(slug: string) {
       return null;
     }
 
-    // Get course info
-    const course = await Course.findById(courseModule.courseId).lean();
+  // Get course info (use extracted id when populated)
+  const course = await Course.findById(extractId(courseModule.courseId)).lean();
 
     return {
       _id: courseModule._id.toString(),
-      courseId: courseModule.courseId?.toString(),
+      courseId: extractId(courseModule.courseId),
       courseName: course
         ? locale === "fr"
           ? course.titleFr
@@ -152,7 +161,7 @@ export async function getFeaturedModules(limit: number = 6) {
 
     return modules.map((courseModule) => ({
       _id: courseModule._id.toString(),
-      courseId: courseModule.courseId?.toString(),
+      courseId: extractId(courseModule.courseId),
       title: locale === "fr" ? courseModule.titleFr : courseModule.title,
       description:
         locale === "fr" ? courseModule.descriptionFr : courseModule.description,
@@ -184,11 +193,11 @@ export async function getModuleById(moduleId: string) {
       return null;
     }
 
-    const course = await Course.findById(courseModule.courseId).lean();
+  const course = await Course.findById(extractId(courseModule.courseId)).lean();
 
     return {
       _id: courseModule._id.toString(),
-      courseId: courseModule.courseId?.toString(),
+      courseId: extractId(courseModule.courseId),
       courseName: course
         ? locale === "fr"
           ? course.titleFr

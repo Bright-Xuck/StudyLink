@@ -246,31 +246,60 @@ const ProgressSchema = new mongoose.Schema<IProgress>(
 ProgressSchema.index({ userId: 1, courseId: 1 }, { unique: true });
 
 // Method to update progress percentage
+// Method to update progress percentage
 ProgressSchema.methods.updateProgress = async function () {
   // Calculate completed lessons across all modules
+  // A lesson is considered complete if it's marked as completed
+  // (regardless of quiz status - quiz is optional/separate)
   this.completedLessons = this.lessonsProgress.filter(
-    (lesson: ILessonProgress) => lesson.completed && lesson.quizPassed
+    (lesson: ILessonProgress) => lesson.completed
   ).length;
+
+  // Update module-level progress
+  for (const moduleProgress of this.modulesProgress) {
+    const moduleId = moduleProgress.moduleId.toString();
+    
+    // Count completed lessons in this module
+    const completedInModule = this.lessonsProgress.filter(
+      (lp: ILessonProgress) => 
+        lp.moduleId.toString() === moduleId && lp.completed
+    ).length;
+    
+    moduleProgress.completedLessons = completedInModule;
+    
+    // Calculate module progress percentage
+    if (moduleProgress.totalLessons > 0) {
+      moduleProgress.progressPercentage = Math.round(
+        (completedInModule / moduleProgress.totalLessons) * 100
+      );
+    }
+    
+    // Mark module as completed if all lessons are done
+    if (completedInModule === moduleProgress.totalLessons && !moduleProgress.completed) {
+      moduleProgress.completed = true;
+      moduleProgress.completedAt = new Date();
+    }
+  }
 
   // Calculate completed modules
   this.completedModules = this.modulesProgress.filter(
     (module: IModuleProgress) => module.completed
   ).length;
 
-  // Calculate overall course progress
+  // Calculate overall course progress based on completed lessons
   if (this.totalLessons > 0) {
     this.courseProgressPercentage = Math.round(
       (this.completedLessons / this.totalLessons) * 100
     );
   }
 
-  // Count passed quizzes
+  // Count passed quizzes (separate tracking)
   this.totalQuizzesPassed = this.quizAttempts.filter(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (attempt: any) => attempt.passed
   ).length;
 
-  // Check if course is fully completed (all lessons + quizzes)
+  // Check if course is fully completed
+  // Course is complete when all lessons are done AND all required quizzes are passed
   if (
     this.courseProgressPercentage === 100 &&
     this.totalQuizzesPassed >= this.totalQuizzesRequired &&
