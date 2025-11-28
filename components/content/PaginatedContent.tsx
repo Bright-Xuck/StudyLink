@@ -28,6 +28,10 @@ export default function PaginatedContent({
   onCompleteAction,
   hasNextLesson,
   onNextLessonAction,
+  onContentComplete,
+  quizPassedForLesson,
+  quizReadyForLesson,
+  onTakeQuiz,
 }: {
   content: string;
   wordsPerPage?: number;
@@ -38,6 +42,10 @@ export default function PaginatedContent({
   onCompleteAction: () => void;
   hasNextLesson: boolean;
   onNextLessonAction: () => void;
+  onContentComplete: (lessonOrder: number) => void;
+  quizPassedForLesson: number | null;
+  quizReadyForLesson?: number | null;
+  onTakeQuiz?: () => void;
 }) {
   const [currentPage, setCurrentPage] = useState(0);
   const [timeSpent, setTimeSpent] = useState(0);
@@ -112,6 +120,13 @@ export default function PaginatedContent({
   const totalPages = pages.length;
   const isLastPage = currentPage === totalPages - 1;
 
+  // Auto-trigger quiz when all pages are read
+  useEffect(() => {
+    if (isLastPage && quizPassedForLesson !== lessonOrder) {
+      onContentComplete(lessonOrder);
+    }
+  }, [isLastPage, lessonOrder, quizPassedForLesson, onContentComplete]);
+
   const goToNextPage = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(currentPage + 1);
@@ -166,15 +181,6 @@ export default function PaginatedContent({
             {t("timeSpent")}: {timeSpent} {t("minutes")}
           </span>
         </div>
-        {!lessonCompleted && isLastPage && (
-          <button
-            onClick={handleCompleteLesson}
-            className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-          >
-            <CheckCircle className="h-4 w-4" />
-            {t("markComplete")}
-          </button>
-        )}
       </div>
 
       {/* Content Display */}
@@ -307,18 +313,46 @@ export default function PaginatedContent({
           {t("page")} {currentPage + 1} {t("of")} {totalPages}
         </div>
 
-        <button
-          onClick={handleNextAction}
-          disabled={isLastPage && !hasNextLesson}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-            isLastPage && !hasNextLesson
-              ? "bg-muted text-muted-foreground cursor-not-allowed"
-              : "bg-primary text-primary-foreground hover:opacity-90"
-          }`}
-        >
-          {isLastPage && hasNextLesson ? t("nextLesson") : t("next")}
-          <ChevronRight size={20} />
-        </button>
+        {/* If on last page and quiz is ready (but not yet passed), show Take Quiz. If passed, show Continue. Otherwise show Next. */}
+        {isLastPage ? (
+          quizReadyForLesson === lessonOrder && quizPassedForLesson !== lessonOrder ? (
+            <button
+              onClick={onTakeQuiz}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-accent text-accent-foreground hover:opacity-90`}
+            >
+              {t("takeQuiz")}
+            </button>
+          ) : hasNextLesson && quizPassedForLesson === lessonOrder ? (
+            <button
+              onClick={handleNextAction}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-primary text-primary-foreground hover:opacity-90`}
+            >
+              {t("continueToNextLesson")}
+              <ChevronRight size={20} />
+            </button>
+          ) : (
+            <button
+              onClick={handleNextAction}
+              disabled={isLastPage && !hasNextLesson && quizPassedForLesson !== lessonOrder}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                isLastPage && !hasNextLesson && quizPassedForLesson !== lessonOrder
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-primary text-primary-foreground hover:opacity-90"
+              }`}
+            >
+              {t("next")}
+              <ChevronRight size={20} />
+            </button>
+          )
+        ) : (
+          <button
+            onClick={handleNextAction}
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors bg-primary text-primary-foreground hover:opacity-90`}
+          >
+            {t("next")}
+            <ChevronRight size={20} />
+          </button>
+        )}
       </div>
 
       {/* Progress Bar */}

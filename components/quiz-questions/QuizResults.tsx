@@ -43,9 +43,10 @@ interface QuizResultsProps {
   results: Results;
   quiz: Quiz;
   onClose: () => void;
+  onQuizPassed?: () => void;
 }
 
-export default function QuizResults({ results, quiz, onClose }: QuizResultsProps) {
+export default function QuizResults({ results, quiz, onClose, onQuizPassed }: QuizResultsProps) {
   const t = useTranslations('quiz');
   const { score, totalPoints, percentage, passed, answers } = results;
 
@@ -257,8 +258,13 @@ export default function QuizResults({ results, quiz, onClose }: QuizResultsProps
 
         {/* Footer Actions */}
         <div className="p-6 bg-muted rounded-b-xl border-t border-border">
-          <div className="flex justify-center">
-            <Button onClick={onClose} size="lg">
+          <div className="flex justify-center gap-4">
+            {passed && onQuizPassed && (
+              <Button onClick={onQuizPassed} size="lg" className="bg-accent text-accent-foreground hover:opacity-90">
+                {t('continueToNextLesson')}
+              </Button>
+            )}
+            <Button onClick={onClose} size="lg" variant="outline">
               {t('closeAndReturn')}
             </Button>
           </div>

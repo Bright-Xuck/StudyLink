@@ -17,6 +17,10 @@ interface VideoContentProps {
   onComplete: () => void;
   hasNextLesson: boolean;
   onNextLesson: () => void;
+  onContentComplete: (lessonOrder: number) => void;
+  quizPassedForLesson: number | null;
+  quizReadyForLesson?: number | null;
+  onTakeQuiz?: () => void;
 }
 
 export default function VideoContent({
@@ -28,6 +32,8 @@ export default function VideoContent({
   onComplete,
   hasNextLesson,
   onNextLesson,
+  onContentComplete,
+  quizPassedForLesson,
 }: VideoContentProps) {
   const [timeSpent, setTimeSpent] = useState(0);
   const [hasWatched, setHasWatched] = useState(false);
@@ -88,6 +94,8 @@ export default function VideoContent({
     // Mark as watched if user has watched at least 80% of the video
     if (progressState.played > 0.8 && !hasWatched) {
       setHasWatched(true);
+      // Auto-trigger quiz flow when video is complete enough
+      onContentComplete(lessonOrder);
     }
   };
 
@@ -101,15 +109,6 @@ export default function VideoContent({
             {t("timeSpent")}: {timeSpent} {t("minutes")}
           </span>
         </div>
-        {!lessonCompleted && hasWatched && (
-          <button
-            onClick={handleCompleteLesson}
-            className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-          >
-            <CheckCircle className="h-4 w-4" />
-            {t("markComplete")}
-          </button>
-        )}
       </div>
 
       {/* Video Player */}
@@ -141,18 +140,29 @@ export default function VideoContent({
         </div>
       )}
 
-      {/* Navigation */}
-      {hasNextLesson && (
-        <div className="flex justify-end">
+      {/* Navigation / Take Quiz */}
+      <div className="flex justify-end">
+        {/* If quiz passed for this lesson, show Continue to Next Lesson */}
+        {hasNextLesson && quizPassedForLesson === lessonOrder && (
           <button
             onClick={onNextLesson}
             className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-primary text-primary-foreground hover:opacity-90 transition-colors"
           >
-            {t("nextLesson")}
+            {t("continueToNextLesson")}
             <ChevronRight size={20} />
           </button>
-        </div>
-      )}
+        )}
+
+        {/* If content complete and quiz is ready but not passed, show Take Quiz */}
+        {quizReadyForLesson === lessonOrder && quizPassedForLesson !== lessonOrder && (
+          <button
+            onClick={onTakeQuiz}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-accent text-accent-foreground hover:opacity-90 transition-colors"
+          >
+            {t("takeQuiz")}
+          </button>
+        )}
+      </div>
     </div>
   );
 }

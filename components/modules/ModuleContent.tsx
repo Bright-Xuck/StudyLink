@@ -16,6 +16,7 @@ import VideoContent from "../content/VideoContent";
 import DocumentContent from "../content/DocumentContent";
 import QuizContainer from "../quiz-questions/QuizContainer";
 import { getQuizByLessonId } from "@/lib/actions/quiz.actions";
+import { markLessonComplete } from "@/lib/actions/progress.actions";
 import { toast } from "sonner";
 
 interface Lesson {
@@ -73,6 +74,8 @@ export default function ModuleContent({
   const [quizId, setQuizId] = useState<string | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
   const [loadingQuiz, setLoadingQuiz] = useState(false);
+  const [quizReadyForLesson, setQuizReadyForLesson] = useState<number | null>(null);
+  const [quizPassedForLesson, setQuizPassedForLesson] = useState<number | null>(null);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -127,8 +130,48 @@ export default function ModuleContent({
   const handleLessonComplete = () => {
     // Refresh to get updated progress
     router.refresh();
+  };
 
-     
+  // Handle content completion - triggers quiz modal to auto-open
+  const handleContentComplete = async (lessonOrder: number) => {
+    // Avoid re-processing if we've already marked this lesson as ready
+    if (quizReadyForLesson === lessonOrder || quizPassedForLesson === lessonOrder) return;
+
+    setCurrentLesson(lessons.find((l) => l.order === lessonOrder) || null);
+
+    // Check if lesson has a quiz
+    const lesson = lessons.find((l) => l.order === lessonOrder);
+    if (!lesson || lesson.hasQuiz === false) {
+      // No quiz for this lesson, mark as complete immediately
+      await markLessonComplete(courseId, moduleId, lessonOrder, 0);
+      handleLessonComplete();
+      return;
+    }
+
+    // Prefetch quiz and mark lesson as ready for quiz, but DO NOT auto-open the modal.
+    setLoadingQuiz(true);
+    try {
+      const quiz = await getQuizByLessonId(lesson._id);
+      if (!quiz) {
+        toast.error(t("noQuizForLesson"));
+        setLoadingQuiz(false);
+        return;
+      }
+      setQuizId(quiz._id);
+      // Mark lesson as ready for quiz — UI will show a "Take Quiz" button instead of auto-opening
+      setQuizReadyForLesson(lessonOrder);
+      // intentionally do NOT call setShowQuiz(true) here
+    } catch (error) {
+      console.error("Error loading quiz:", error);
+      toast.error(t("quizLoadError"));
+    } finally {
+      setLoadingQuiz(false);
+    }
+  };
+
+  // Handle quiz passed - enables "Continue to Next Lesson" button
+  const handleQuizPassed = (lessonOrder: number) => {
+    setQuizPassedForLesson(lessonOrder);
   };
 
   const handleTakeQuiz = async (lesson: Lesson) => {
@@ -161,6 +204,8 @@ export default function ModuleContent({
     setShowQuiz(false);
     setCurrentLesson(null);
     setQuizId(null);
+    // NOTE: do NOT clear quizReadyForLesson here — keep the lesson marked as "ready" so the user
+    // can retry the quiz manually without the modal auto-opening repeatedly.
     // Refresh to update any quiz-related progress
     router.refresh();
   };
@@ -181,8 +226,15 @@ export default function ModuleContent({
     return currentIndex < lessons.length - 1;
   };
 
-  const nextLesson = () => {
+  const nextLesson = async () => {
     if (!selectedLesson) return;
+
+    // Auto-mark current lesson as complete before moving to next
+    try {
+      await markLessonComplete(courseId, moduleId, selectedLesson.order, 0);
+    } catch (error) {
+      console.error("Error marking lesson complete:", error);
+    }
 
     const currentIndex = lessons.findIndex(
       (l) => l.order === selectedLesson.order
@@ -190,6 +242,9 @@ export default function ModuleContent({
     const nextLessonItem = lessons[currentIndex + 1];
 
     if (nextLessonItem) {
+      // Reset quiz state for new lesson
+      setQuizPassedForLesson(null);
+      setQuizReadyForLesson(null);
       handleLesson(nextLessonItem);
     }
   };
@@ -262,6 +317,10 @@ export default function ModuleContent({
               onComplete={handleLessonComplete}
               hasNextLesson={hasNextLesson()}
               onNextLesson={nextLesson}
+              onContentComplete={handleContentComplete}
+              quizPassedForLesson={quizPassedForLesson}
+              quizReadyForLesson={quizReadyForLesson}
+              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
             />
           ) : selectedLesson.type === "document" ? (
             <DocumentContent
@@ -273,6 +332,10 @@ export default function ModuleContent({
               onCompleteAction={handleLessonComplete}
               hasNextLesson={hasNextLesson()}
               onNextLessonAction={nextLesson}
+              onContentComplete={handleContentComplete}
+              quizPassedForLesson={quizPassedForLesson}
+              quizReadyForLesson={quizReadyForLesson}
+              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
             />
           ) : selectedLesson.type === "reading" ? (
             <PaginatedContent
@@ -285,6 +348,10 @@ export default function ModuleContent({
               onCompleteAction={handleLessonComplete}
               hasNextLesson={hasNextLesson()}
               onNextLessonAction={nextLesson}
+              onContentComplete={handleContentComplete}
+              quizPassedForLesson={quizPassedForLesson}
+              quizReadyForLesson={quizReadyForLesson}
+              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
             />
           ) : (
             <div>
@@ -450,6 +517,7 @@ export default function ModuleContent({
           moduleId={moduleId}
           lessonOrder={currentLesson.order}
           onClose={handleCloseQuiz}
+          onQuizPassed={() => handleQuizPassed(currentLesson.order)}
         />
       )}
     </div>

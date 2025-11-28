@@ -25,6 +25,10 @@ export default function DocumentContent({
   onCompleteAction,
   hasNextLesson,
   onNextLessonAction,
+  onContentComplete,
+  quizPassedForLesson,
+  quizReadyForLesson,
+  onTakeQuiz,
 }: {
   url: string;
   courseId: string;
@@ -34,6 +38,10 @@ export default function DocumentContent({
   onCompleteAction: () => void;
   hasNextLesson: boolean;
   onNextLessonAction: () => void;
+  onContentComplete: (lessonOrder: number) => void;
+  quizPassedForLesson: number | null;
+  quizReadyForLesson?: number | null;
+  onTakeQuiz?: () => void;
 }) {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -92,6 +100,13 @@ export default function DocumentContent({
   // Check if user has viewed at least 70% of pages
   const hasViewedEnough = numPages > 0 && pagesViewed.size >= Math.ceil(numPages * 0.7);
 
+  // Auto-trigger quiz when document is viewed enough
+  useEffect(() => {
+    if (hasViewedEnough && quizPassedForLesson !== lessonOrder) {
+      onContentComplete(lessonOrder);
+    }
+  }, [hasViewedEnough, lessonOrder, quizPassedForLesson, onContentComplete]);
+
   const handleCompleteLesson = async () => {
   
   const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
@@ -139,15 +154,6 @@ export default function DocumentContent({
             <Download className="h-4 w-4" />
             {t("download")}
           </button>
-          {!lessonCompleted && hasViewedEnough && (
-            <button
-              onClick={handleCompleteLesson}
-              className="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-            >
-              <CheckCircle className="h-4 w-4" />
-              {t("markComplete")}
-            </button>
-          )}
         </div>
       </div>
 
@@ -211,6 +217,15 @@ export default function DocumentContent({
             </div>
           )}
 
+          {/* Quiz Required Indicator */}
+          {hasViewedEnough && quizPassedForLesson !== lessonOrder && (
+            <div className="mb-6 p-4 bg-accent/10 border border-accent rounded-lg">
+              <p className="text-sm text-accent-foreground">
+                {t("completeQuizToContinue")}
+              </p>
+            </div>
+          )}
+
           {/* Navigation Controls */}
           <div className="flex items-center justify-between border-t border-border pt-6">
             <button
@@ -230,18 +245,30 @@ export default function DocumentContent({
               {t("page")} {currentPage} {t("of")} {numPages}
             </div>
 
-            <button
-              onClick={currentPage === numPages && hasNextLesson ? onNextLessonAction : goToNextPage}
-              disabled={currentPage === numPages && !hasNextLesson}
-              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                currentPage === numPages && !hasNextLesson
-                  ? "bg-muted text-muted-foreground cursor-not-allowed"
-                  : "bg-primary text-primary-foreground hover:opacity-90"
-              }`}
-            >
-              {currentPage === numPages && hasNextLesson ? t("nextLesson") : t("next")}
-              <ChevronRight size={20} />
-            </button>
+            <div className="flex items-center gap-2">
+              {/* If on last page and quiz ready, show Take Quiz button instead of a disabled next */}
+              {currentPage === numPages && quizReadyForLesson === lessonOrder && quizPassedForLesson !== lessonOrder ? (
+                <button
+                  onClick={onTakeQuiz}
+                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-accent text-accent-foreground hover:opacity-90"
+                >
+                  {t("takeQuiz")}
+                </button>
+              ) : (
+                <button
+                  onClick={goToNextPage}
+                  disabled={currentPage === numPages}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                    currentPage === numPages
+                      ? "bg-muted text-muted-foreground cursor-not-allowed"
+                      : "bg-primary text-primary-foreground hover:opacity-90"
+                  }`}
+                >
+                  {t("next")}
+                  <ChevronRight size={20} />
+                </button>
+              )}
+            </div>
           </div>
         </>
       ) : (
@@ -264,24 +291,22 @@ export default function DocumentContent({
               <Download className="h-5 w-5" />
               {t("downloadDocument")}
             </button>
-            {hasNextLesson && (
+            {hasNextLesson && quizPassedForLesson === lessonOrder && (
               <button
                 onClick={onNextLessonAction}
                 className="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
               >
-                {t("nextLesson")}
+                {t("continueToNextLesson")}
                 <ChevronRight size={20} />
               </button>
             )}
           </div>
-          {!lessonCompleted && (
-            <button
-              onClick={handleCompleteLesson}
-              className="mt-4 text-primary hover:underline flex items-center gap-2 mx-auto"
-            >
-              <CheckCircle className="h-4 w-4" />
-              {t("markComplete")}
-            </button>
+          {hasViewedEnough && quizPassedForLesson !== lessonOrder && (
+            <div className="mt-4 p-4 bg-accent/10 border border-accent rounded-lg">
+              <p className="text-sm text-accent-foreground">
+                {t("completeQuizToContinue")}
+              </p>
+            </div>
           )}
         </div>
       )}

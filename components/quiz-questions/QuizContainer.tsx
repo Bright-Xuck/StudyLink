@@ -49,11 +49,12 @@ interface QuizContainerProps {
   quizId: string;
   courseId: string;
   moduleId: string;
-  lessonOrder: number,
+  lessonOrder: number;
   onClose: () => void;
+  onQuizPassed?: (lessonOrder: number) => void;
 }
 
-export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder, onClose }: QuizContainerProps) {
+export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder, onClose, onQuizPassed }: QuizContainerProps) {
   const t = useTranslations('quiz');
   const [quiz, setQuiz] = useState<Quiz | null>(null);
   const [loading, setLoading] = useState(true);
@@ -223,7 +224,7 @@ export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder,
 
   // Show results if submitted
   if (isSubmitted && results) {
-    return <QuizResults results={results} quiz={quiz} onClose={onClose} />;
+    return <QuizResults results={results} quiz={quiz} onClose={onClose} onQuizPassed={() => onQuizPassed?.(lessonOrder)} />;
   }
 
   // Main quiz interface
