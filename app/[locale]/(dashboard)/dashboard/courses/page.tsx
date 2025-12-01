@@ -3,7 +3,6 @@ import { getAuthenticatedUser } from "@/lib/actions/auth.actions";
 import { getUserEnrolledModules } from "@/lib/actions/enrollment.actions";
 import { getAllUserProgress } from "@/lib/actions/progress.actions";
 import { getTranslations } from "next-intl/server";
-import { getLocale } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
 import { BookOpen, Clock, Award, TrendingUp, Play, CheckCircle } from "lucide-react";
@@ -45,7 +44,6 @@ export default async function MyCoursesPage() {
   }
 
   const t = await getTranslations("myCourses");
-  const locale = await getLocale();
   const [enrolledModules, allProgress] = await Promise.all([
     getUserEnrolledModules(),
     getAllUserProgress(),
@@ -56,7 +54,7 @@ export default async function MyCoursesPage() {
     (p: ProgressData) => p.completedAt
   );
   const inProgressCourses = (allProgress as ProgressData[]).filter(
-    (p: ProgressData) => !p.completedAt && p.progressPercentage > 0
+    (p: ProgressData) => !p.completedAt
   );
   const notStartedCourses = (enrolledModules as ModuleData[]).filter(
     (course: ModuleData) =>
@@ -66,6 +64,9 @@ export default async function MyCoursesPage() {
           (p.courseId as unknown as string) === course._id
       )
   );
+
+  // Check if user has any courses (from either enrolledModules or allProgress)
+  const hasAnyCourses = enrolledModules.length > 0 || allProgress.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -124,7 +125,7 @@ export default async function MyCoursesPage() {
         </div>
 
         {/* Empty State */}
-        {enrolledModules.length === 0 ? (
+        {!hasAnyCourses ? (
           <div className="bg-card border border-border rounded-xl p-12 text-center">
             <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-foreground mb-2">

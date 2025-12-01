@@ -196,7 +196,11 @@
     "exploreCourses": "Explorer les Cours",
     "free": "GRATUIT",
     "premium": "PREMIUM",
-    "startLearning": "Commencer à Apprendre"
+    "startLearning": "Commencer à Apprendre",
+    "learningProgress": "Progression de l'Apprentissage",
+    "noActiveProgress": "Aucun cours actif en cours",
+    "showingTop": "Affichage des",
+    "activeCourses": "cours actifs"
   },
 
   "certificates": {

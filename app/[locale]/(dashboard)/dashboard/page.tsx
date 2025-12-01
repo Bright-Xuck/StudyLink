@@ -5,6 +5,7 @@ import { getUserStats, getAllUserProgress } from "@/lib/actions/progress.actions
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import Image from "next/image";
+import ProgressChart from "@/components/dashboard/ProgressChart";
 import {
   BookOpen,
   Clock,
@@ -194,6 +195,13 @@ export default async function DashboardPage() {
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Progress Chart */}
+        {allProgress && allProgress.length > 0 && (
+          <div className="mb-8">
+            <ProgressChart progressData={allProgress as ProgressData[]} />
           </div>
         )}
 

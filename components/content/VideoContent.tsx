@@ -25,6 +25,7 @@ export default function VideoContent({
   onWatchedChange,
 }: VideoContentProps) {
   const [timeSpent, setTimeSpent] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hasWatched, setHasWatched] = useState(false);
   const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const playerRef = useRef<React.ElementRef<typeof ReactPlayer> | null>(null);

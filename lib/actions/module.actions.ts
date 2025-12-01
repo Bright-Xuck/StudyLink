@@ -6,6 +6,7 @@ import Course from "@/lib/models/Course";
 import { getLocale } from "next-intl/server";
 
 // Helper to safely extract an id string from a populated field or ObjectId
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function extractId(field: any): string | undefined {
   if (!field) return undefined;
   if (typeof field === "string") return field;

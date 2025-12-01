@@ -3,10 +3,10 @@ import { downloadCertificate } from "@/lib/actions/certificate.actions";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const result = await downloadCertificate(params.id);
+    const result = await downloadCertificate((await params).id);
 
     if (!result.success || !result.html) {
       return NextResponse.json(
@@ -19,7 +19,7 @@ export async function GET(
     return new NextResponse(result.html, {
       headers: {
         "Content-Type": "text/html",
-        "Content-Disposition": `attachment; filename="certificate-${result.certificate?.certificateNumber || params.id}.html"`,
+        "Content-Disposition": `attachment; filename="certificate-${result.certificate?.certificateNumber || (await params).id}.html"`,
       },
     });
   } catch (error) {

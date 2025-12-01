@@ -196,7 +196,11 @@
     "exploreCourses": "Explore Courses",
     "free": "FREE",
     "premium": "PREMIUM",
-    "startLearning": "Start Learning"
+    "startLearning": "Start Learning",
+    "learningProgress": "Learning Progress",
+    "noActiveProgress": "No active courses in progress",
+    "showingTop": "Showing top",
+    "activeCourses": "active courses"
   },
 
   "certificates": {

@@ -295,6 +295,7 @@ ProgressSchema.methods.updateProgress = async function () {
 
   // Count passed quizzes (separate tracking)
   this.totalQuizzesPassed = this.quizAttempts.filter(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     (attempt: any) => attempt.passed
   ).length;
 
