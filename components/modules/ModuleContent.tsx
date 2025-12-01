@@ -76,6 +76,7 @@ export default function ModuleContent({
   const [loadingQuiz, setLoadingQuiz] = useState(false);
   const [quizReadyForLesson, setQuizReadyForLesson] = useState<number | null>(null);
   const [quizPassedForLesson, setQuizPassedForLesson] = useState<number | null>(null);
+  const [contentCompleted, setContentCompleted] = useState(false);
 
   const getIcon = (type: string) => {
     switch (type) {
@@ -226,6 +227,19 @@ export default function ModuleContent({
     return currentIndex < lessons.length - 1;
   };
 
+  const handleMarkComplete = async () => {
+    if (!selectedLesson) return;
+
+    try {
+      await markLessonComplete(courseId, moduleId, selectedLesson.order, 0);
+      toast.success(t("lessonMarkedComplete"));
+      router.refresh();
+    } catch (error) {
+      console.error("Error marking lesson complete:", error);
+      toast.error(t("errorMarkingComplete"));
+    }
+  };
+
   const nextLesson = async () => {
     if (!selectedLesson) return;
 
@@ -242,9 +256,10 @@ export default function ModuleContent({
     const nextLessonItem = lessons[currentIndex + 1];
 
     if (nextLessonItem) {
-      // Reset quiz state for new lesson
+      // Reset quiz and content state for new lesson
       setQuizPassedForLesson(null);
       setQuizReadyForLesson(null);
+      setContentCompleted(false);
       handleLesson(nextLessonItem);
     }
   };
@@ -256,108 +271,134 @@ export default function ModuleContent({
     >
       {selectedLesson ? (
         <>
-          <div className="flex flex-col justify-center items-start w-full gap-4 mb-8">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold text-foreground">
-                {t("lesson")} {selectedLesson.order}: {selectedLesson.title}
-              </h2>
-              <div className="flex items-center gap-3 mt-2">
-                {isLessonCompleted(selectedLesson.order) && (
-                  <div className="flex items-center gap-2 text-green-600">
-                    <CheckCircle className="h-4 w-4" />
-                    <span className="text-sm">{t("completed")}</span>
-                  </div>
-                )}
-                {isQuizPassed(selectedLesson.order) && (
-                  <div className="flex items-center gap-2 text-primary">
-                    <CheckCircle className="h-4 w-4" />
-                    <span className="text-sm">{t("quizPassed")}</span>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <button
-                onClick={() => router.back()}
-                className="bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-lg transition-colors"
-              >
-                {t("backToModules")}
-              </button>
-              
-              {/* Quiz Button for Current Lesson */}
-              {selectedLesson.hasQuiz !== false && (
-                <button
-                  onClick={() => handleTakeQuiz(selectedLesson)}
-                  disabled={loadingQuiz}
-                  className="bg-primary text-primary-foreground hover:opacity-90 px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  {loadingQuiz ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin" />
-                      {t("loading")}
-                    </>
-                  ) : (
-                    <>
-                      <FileText className="h-4 w-4" />
-                      {isQuizPassed(selectedLesson.order) ? t("retakeQuiz") : t("takeQuiz")}
-                    </>
-                  )}
-                </button>
+          {/* Lesson Header */}
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold text-foreground mb-2">
+              {t("lesson")} {selectedLesson.order}: {selectedLesson.title}
+            </h2>
+            <p className="text-muted-foreground mb-3">{selectedLesson.description}</p>
+            <div className="flex items-center gap-3">
+              {isLessonCompleted(selectedLesson.order) && (
+                <div className="flex items-center gap-2 text-accent-foreground bg-accent/20 px-3 py-1 rounded-full">
+                  <CheckCircle className="h-4 w-4" />
+                  <span className="text-sm font-medium">{t("completed")}</span>
+                </div>
+              )}
+              {isQuizPassed(selectedLesson.order) && (
+                <div className="flex items-center gap-2 text-primary bg-primary/10 px-3 py-1 rounded-full">
+                  <CheckCircle className="h-4 w-4" />
+                  <span className="text-sm font-medium">{t("quizPassed")}</span>
+                </div>
               )}
             </div>
           </div>
 
-          {selectedLesson.type === "video" ? (
-            <VideoContent
-              url={selectedLesson.content}
-              courseId={courseId}
-              moduleId={moduleId}
-              lessonOrder={selectedLesson.order}
-              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-              onComplete={handleLessonComplete}
-              hasNextLesson={hasNextLesson()}
-              onNextLesson={nextLesson}
-              onContentComplete={handleContentComplete}
-              quizPassedForLesson={quizPassedForLesson}
-              quizReadyForLesson={quizReadyForLesson}
-              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
-            />
-          ) : selectedLesson.type === "document" ? (
-            <DocumentContent
-              url={selectedLesson.content}
-              courseId={courseId}
-              moduleId={moduleId}
-              lessonOrder={selectedLesson.order}
-              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-              onCompleteAction={handleLessonComplete}
-              hasNextLesson={hasNextLesson()}
-              onNextLessonAction={nextLesson}
-              onContentComplete={handleContentComplete}
-              quizPassedForLesson={quizPassedForLesson}
-              quizReadyForLesson={quizReadyForLesson}
-              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
-            />
-          ) : selectedLesson.type === "reading" ? (
-            <PaginatedContent
-              content={selectedLesson.content}
-              wordsPerPage={250}
-              courseId={courseId}
-              moduleId={moduleId}
-              lessonOrder={selectedLesson.order}
-              lessonCompleted={!!isLessonCompleted(selectedLesson.order)}
-              onCompleteAction={handleLessonComplete}
-              hasNextLesson={hasNextLesson()}
-              onNextLessonAction={nextLesson}
-              onContentComplete={handleContentComplete}
-              quizPassedForLesson={quizPassedForLesson}
-              quizReadyForLesson={quizReadyForLesson}
-              onTakeQuiz={() => handleTakeQuiz(selectedLesson)}
-            />
-          ) : (
-            <div>
-              {selectedLesson.content}
+          {/* Content Container */}
+          <div className="mb-6">
+            {selectedLesson.type === "video" ? (
+              <VideoContent
+                url={selectedLesson.content}
+                courseId={courseId}
+                moduleId={moduleId}
+                lessonOrder={selectedLesson.order}
+                onContentCompleteAction={handleContentComplete}
+                onWatchedChange={(watched) => setContentCompleted(watched)}
+              />
+            ) : selectedLesson.type === "document" ? (
+              <DocumentContent
+                url={selectedLesson.content}
+                courseId={courseId}
+                moduleId={moduleId}
+                lessonOrder={selectedLesson.order}
+                onContentCompleteAction={handleContentComplete}
+                onViewedChangeAction={(viewed) => setContentCompleted(viewed)}
+              />
+            ) : selectedLesson.type === "reading" ? (
+              <PaginatedContent
+                content={selectedLesson.content}
+                wordsPerPage={250}
+                courseId={courseId}
+                moduleId={moduleId}
+                lessonOrder={selectedLesson.order}
+                onContentCompleteAction={handleContentComplete}
+                onReadChangeAction={(isLastPage) => setContentCompleted(isLastPage)}
+              />
+            ) : (
+              <div className="p-8 bg-muted rounded-lg">
+                {selectedLesson.content}
+              </div>
+            )}
+          </div>
+
+          {/* Centralized Navigation Bar - Fixed at bottom */}
+          <div className="sticky bottom-0 bg-card border-t-2 border-primary/20 rounded-lg p-4 shadow-lg">
+            <div className="flex items-center justify-between gap-4 flex-wrap">
+              {/* Left: Back button */}
+              <button
+                onClick={() => router.back()}
+                className="bg-muted hover:bg-muted/80 text-foreground px-4 py-2 rounded-lg transition-colors font-medium"
+              >
+                {t("backToModules")}
+              </button>
+
+              {/* Right: Action buttons */}
+              <div className="flex items-center gap-3 flex-wrap">
+                {/* Mark as Complete - Show when content completed but no quiz */}
+                {contentCompleted && selectedLesson.hasQuiz === false && !isLessonCompleted(selectedLesson.order) && (
+                  <button
+                    onClick={handleMarkComplete}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    {t("markComplete")}
+                  </button>
+                )}
+
+                {/* Take Quiz - Show when content completed, has quiz, and quiz not passed */}
+                {selectedLesson.hasQuiz !== false && quizReadyForLesson === selectedLesson.order && quizPassedForLesson !== selectedLesson.order && (
+                  <button
+                    onClick={() => handleTakeQuiz(selectedLesson)}
+                    disabled={loadingQuiz}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2 disabled:opacity-50"
+                  >
+                    {loadingQuiz ? (
+                      <>
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                        {t("loading")}
+                      </>
+                    ) : (
+                      <>
+                        <FileText className="h-4 w-4" />
+                        {t("takeQuiz")}
+                      </>
+                    )}
+                  </button>
+                )}
+
+                {/* Next Lesson - Show when lesson completed or quiz passed */}
+                {hasNextLesson() && (isLessonCompleted(selectedLesson.order) || quizPassedForLesson === selectedLesson.order) && (
+                  <button
+                    onClick={nextLesson}
+                    className="bg-primary hover:opacity-90 text-primary-foreground px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2"
+                  >
+                    {t("nextLesson")}
+                    <Play className="h-4 w-4" />
+                  </button>
+                )}
+
+                {/* Complete Module - Show on last lesson when completed */}
+                {!hasNextLesson() && (isLessonCompleted(selectedLesson.order) || quizPassedForLesson === selectedLesson.order) && (
+                  <button
+                    onClick={() => router.back()}
+                    className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
+                  >
+                    <CheckCircle className="h-4 w-4" />
+                    {t("completeModule")}
+                  </button>
+                )}
+              </div>
             </div>
-          )}
+          </div>
         </>
       ) : (
         <>
@@ -422,7 +463,7 @@ export default function ModuleContent({
                             {t("lesson")} {lesson.order}: {lesson.title}
                           </h3>
                           {completed && (
-                            <CheckCircle className="h-5 w-5 text-green-600" />
+                            <CheckCircle className="h-5 w-5 text-accent" />
                           )}
                           {quizPassed && (
                             <CheckCircle className="h-5 w-5 text-primary" />
@@ -441,7 +482,7 @@ export default function ModuleContent({
                             </span>
                           )}
                           {completed && (
-                            <span className="text-xs bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-100 px-2 py-0.5 rounded-full font-medium">
+                            <span className="text-xs bg-accent/20 text-accent-foreground px-2 py-0.5 rounded-full font-medium">
                               {t("completed")}
                             </span>
                           )}
@@ -451,7 +492,7 @@ export default function ModuleContent({
                             </span>
                           )}
                           {hasQuiz && !quizPassed && (
-                            <span className="text-xs bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-100 px-2 py-0.5 rounded-full font-medium">
+                            <span className="text-xs bg-secondary/20 text-secondary-foreground px-2 py-0.5 rounded-full font-medium">
                               {t("hasQuiz")}
                             </span>
                           )}

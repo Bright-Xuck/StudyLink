@@ -235,125 +235,129 @@ export default function QuizContainer({ quizId, courseId, moduleId, lessonOrder,
   const isAnswered = currentAnswer.trim() !== '';
 
   return (
-    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50 p-4 overflow-y-auto">
-      <div className="bg-card rounded-xl shadow-2xl max-w-3xl w-full my-8 border border-border absolute top-0 mx-auto">
-        {/* Header */}
-        <div className="bg-primary text-primary-foreground p-6 rounded-t-xl">
-          <div className="flex justify-between items-start mb-3">
-            <div className="flex-1">
-              <h2 className="text-2xl font-bold mb-1">{quiz.title}</h2>
-              <p className="text-primary-foreground/90 text-sm">
-                {t('questionProgress', { current: currentQuestionIndex + 1, total: quiz.questions.length })}
-              </p>
-            </div>
-            <button
-              onClick={onClose}
-              className="text-primary-foreground hover:text-primary-foreground/80 transition-colors ml-4"
-              aria-label={t('closeQuiz')}
-            >
-              <X className="h-6 w-6" />
-            </button>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full bg-primary-foreground/20 rounded-full h-2">
-            <div
-              className="bg-primary-foreground h-2 rounded-full transition-all duration-300"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Question Content */}
-        <div className="p-6 min-h-[300px]">
-          {error && (
-            <div className="mb-4 p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
-              <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
-              <p className="text-destructive text-sm">{error}</p>
-            </div>
-          )}
-
-          {currentQuestion.type === 'mcq' || currentQuestion.type === 'true-false' ? (
-            <MCQQuestion
-              question={currentQuestion}
-              selectedAnswer={currentAnswer}
-              onAnswerChange={(answer) => handleAnswerChange(currentQuestion._id, answer)}
-            />
-          ) : (
-            <ShortAnswerQuestion
-              question={currentQuestion}
-              answer={currentAnswer}
-              onAnswerChange={(answer) => handleAnswerChange(currentQuestion._id, answer)}
-            />
-          )}
-        </div>
-
-        {/* Navigation Footer */}
-        <div className="p-6 bg-muted rounded-b-xl border-t border-border">
-          <div className="flex justify-between items-center">
-            <Button
-              onClick={handlePrevious}
-              disabled={currentQuestionIndex === 0}
-              variant="outline"
-            >
-              <ChevronLeft className="h-4 w-4 mr-1" />
-              {t('previous')}
-            </Button>
-
-            <div className="text-sm text-muted-foreground">
-              {isAnswered ? (
-                <span className="text-accent-foreground font-medium">✓ {t('answered')}</span>
-              ) : (
-                <span className="text-secondary-foreground">{t('notAnswered')}</span>
-              )}
-            </div>
-
-            {isLastQuestion ? (
-              <Button
-                onClick={handleSubmit}
-                disabled={isSubmitting}
+    <div className="fixed inset-0 bg-background/80 backdrop-blur-sm z-50 overflow-y-auto">
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="bg-card rounded-xl shadow-2xl max-w-3xl w-full my-8 border border-border">
+          {/* Header */}
+          <div className="bg-primary text-primary-foreground p-4 sm:p-6 rounded-t-xl">
+            <div className="flex justify-between items-start mb-3">
+              <div className="flex-1 min-w-0">
+                <h2 className="text-xl sm:text-2xl font-bold mb-1 truncate">{quiz.title}</h2>
+                <p className="text-primary-foreground/90 text-xs sm:text-sm">
+                  {t('questionProgress', { current: currentQuestionIndex + 1, total: quiz.questions.length })}
+                </p>
+              </div>
+              <button
+                onClick={onClose}
+                className="text-primary-foreground hover:text-primary-foreground/80 transition-colors ml-4 flex-shrink-0"
+                aria-label={t('closeQuiz')}
               >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    {t('submitting')}
-                  </>
-                ) : (
-                  t('submitQuiz')
-                )}
-              </Button>
+                <X className="h-5 w-5 sm:h-6 sm:w-6" />
+              </button>
+            </div>
+
+            {/* Progress Bar */}
+            <div className="w-full bg-primary-foreground/20 rounded-full h-2">
+              <div
+                className="bg-primary-foreground h-2 rounded-full transition-all duration-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Question Content */}
+          <div className="p-4 sm:p-6">
+            {error && (
+              <div className="mb-4 p-3 sm:p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+                <AlertCircle className="h-5 w-5 text-destructive flex-shrink-0 mt-0.5" />
+                <p className="text-destructive text-sm">{error}</p>
+              </div>
+            )}
+
+            {currentQuestion.type === 'mcq' || currentQuestion.type === 'true-false' ? (
+              <MCQQuestion
+                question={currentQuestion}
+                selectedAnswer={currentAnswer}
+                onAnswerChange={(answer) => handleAnswerChange(currentQuestion._id, answer)}
+              />
             ) : (
-              <Button onClick={handleNext}>
-                {t('next')}
-                <ChevronRight className="h-4 w-4 ml-1" />
-              </Button>
+              <ShortAnswerQuestion
+                question={currentQuestion}
+                answer={currentAnswer}
+                onAnswerChange={(answer) => handleAnswerChange(currentQuestion._id, answer)}
+              />
             )}
           </div>
 
-          {/* Answer summary */}
-          <div className="mt-4 pt-4 border-t border-border">
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              {quiz.questions.map((q, idx) => {
-                const isAnswered = userAnswers[q._id] && userAnswers[q._id].trim() !== '';
-                const isCurrent = idx === currentQuestionIndex;
+          {/* Navigation Footer */}
+          <div className="p-4 sm:p-6 bg-muted rounded-b-xl border-t border-border">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
+              <Button
+                onClick={handlePrevious}
+                disabled={currentQuestionIndex === 0}
+                variant="outline"
+                className="w-full sm:w-auto"
+              >
+                <ChevronLeft className="h-4 w-4 mr-1" />
+                {t('previous')}
+              </Button>
 
-                return (
-                  <button
-                    key={q._id}
-                    onClick={() => setCurrentQuestionIndex(idx)}
-                    className={`w-8 h-8 rounded-full text-sm font-medium transition-all ${
-                      isCurrent
-                        ? 'bg-primary text-primary-foreground ring-2 ring-primary/20'
-                        : isAnswered
-                        ? 'bg-accent text-accent-foreground hover:opacity-80'
-                        : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                    }`}
-                    title={`${t('question')} ${idx + 1}${isAnswered ? ` (${t('answered')})` : ''}`}
-                  >
-                    {idx + 1}
-                  </button>
-                );
-              })}
+              <div className="text-sm text-muted-foreground order-first sm:order-none">
+                {isAnswered ? (
+                  <span className="text-accent-foreground font-medium">✓ {t('answered')}</span>
+                ) : (
+                  <span className="text-secondary-foreground">{t('notAnswered')}</span>
+                )}
+              </div>
+
+              {isLastQuestion ? (
+                <Button
+                  onClick={handleSubmit}
+                  disabled={isSubmitting}
+                  className="w-full sm:w-auto"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      {t('submitting')}
+                    </>
+                  ) : (
+                    t('submitQuiz')
+                  )}
+                </Button>
+              ) : (
+                <Button onClick={handleNext} className="w-full sm:w-auto">
+                  {t('next')}
+                  <ChevronRight className="h-4 w-4 ml-1" />
+                </Button>
+              )}
+            </div>
+
+            {/* Answer summary */}
+            <div className="mt-4 pt-4 border-t border-border">
+              <div className="flex items-center justify-center gap-2 flex-wrap">
+                {quiz.questions.map((q, idx) => {
+                  const isAnswered = userAnswers[q._id] && userAnswers[q._id].trim() !== '';
+                  const isCurrent = idx === currentQuestionIndex;
+
+                  return (
+                    <button
+                      key={q._id}
+                      onClick={() => setCurrentQuestionIndex(idx)}
+                      className={`w-8 h-8 rounded-full text-sm font-medium transition-all ${
+                        isCurrent
+                          ? 'bg-primary text-primary-foreground ring-2 ring-primary/20'
+                          : isAnswered
+                          ? 'bg-accent text-accent-foreground hover:opacity-80'
+                          : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                      }`}
+                      title={`${t('question')} ${idx + 1}${isAnswered ? ` (${t('answered')})` : ''}`}
+                    >
+                      {idx + 1}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </div>

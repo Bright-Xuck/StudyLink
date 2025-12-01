@@ -52,8 +52,8 @@ export default function Testimonials() {
         key={index}
         className={`w-4 h-4 ${
           index < rating
-            ? 'text-yellow-400 fill-yellow-400'
-            : 'text-gray-300'
+            ? 'text-accent fill-accent'
+            : 'text-muted-foreground'
         }`}
       />
     ));

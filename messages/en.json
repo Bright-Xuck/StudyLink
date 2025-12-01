@@ -8,6 +8,9 @@
     "login": "Login",
     "register": "Register",
     "dashboard": "Dashboard",
+    "myCourses": "My Courses",
+    "myCertificates": "My Certificates",
+    "admin": "Admin",
     "logout": "Logout"
   },
 
@@ -195,7 +198,48 @@
     "premium": "PREMIUM",
     "startLearning": "Start Learning"
   },
-  
+
+  "certificates": {
+    "myCertificates": "My Certificates",
+    "certificatesDescription": "View and download your earned certificates",
+    "certificateOfCompletion": "Certificate of Completion",
+    "completed": "Completed",
+    "lessons": "Lessons",
+    "quizzes": "Quizzes",
+    "verificationCode": "Verification Code",
+    "view": "View",
+    "download": "Download",
+    "downloading": "Downloading...",
+    "totalCertificates": "Total Certificates",
+    "averageScore": "Average Score",
+    "noCertificates": "No Certificates Yet",
+    "noCertificatesMessage": "Complete courses to earn certificates and showcase your achievements",
+    "browseCourses": "Browse Courses",
+    "certificateNotFound": "Certificate Not Found",
+    "finalScore": "Final Score",
+    "issueDate": "Issue Date",
+    "completionDate": "Completion Date"
+  },
+
+  "myCourses": {
+    "title": "My Courses",
+    "description": "Track your learning journey and manage your enrolled courses",
+    "totalEnrolled": "Total Enrolled",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "noCourses": "No Courses Yet",
+    "noCoursesMessage": "You haven't enrolled in any courses yet. Start learning today!",
+    "browseCourses": "Browse Courses",
+    "continueWhere": "Continue Where You Left Off",
+    "completedCourses": "Completed Courses",
+    "readyToStart": "Ready to Start",
+    "lessons": "lessons",
+    "modules": "modules",
+    "free": "FREE",
+    "premium": "PREMIUM",
+    "startNow": "Start Now"
+  },
+
   "Legal": {
     "home": "Home",
     "legal": "Legal",
@@ -285,6 +329,7 @@
     "timeSpent": "Time spent",
     "minutes": "minutes",
     "markComplete": "Mark as Complete",
+    "completeLesson": "Complete Lesson",
     "previous": "Previous",
     "next": "Next",
     "page": "Page",
@@ -561,6 +606,7 @@
       "enrolling": "Enrolling..."
     }
   },
+  
   "congratulations": {
     "congratulations": "Congratulations!",
     "courseCompleted": "You have successfully completed the course.",

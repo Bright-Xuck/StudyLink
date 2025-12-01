@@ -1,47 +1,49 @@
 "use client";
 
-import { toast } from "sonner";
-import { markLessonComplete, updateLessonTime } from "../../lib/actions/progress.actions";
-import { CheckCircle, ChevronLeft, ChevronRight, Clock, Download, FileText, Loader2 } from "lucide-react";
+import { updateLessonTime } from "../../lib/actions/progress.actions";
+import { ChevronLeft, ChevronRight, Clock, Download, FileText, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Document, Page, pdfjs } from 'react-pdf';
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+import dynamic from "next/dynamic";
+
+// Dynamically import react-pdf to avoid SSR issues with DOMMatrix
+const Document = dynamic(
+  () => import('react-pdf').then((mod) => mod.Document),
+  { ssr: false }
+);
+
+const Page = dynamic(
+  () => import('react-pdf').then((mod) => mod.Page),
+  { ssr: false }
+);
+
+// Initialize PDF.js worker
+if (typeof window !== 'undefined') {
+  import('react-pdf').then((pdfjs) => {
+    pdfjs.pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.pdfjs.version}/build/pdf.worker.min.js`;
+  });
+}
 
 const pdfOptions = {
-  cMapUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/cmaps/`,
+  cMapUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/cmaps/',
   cMapPacked: true,
-  standardFontDataUrl: `https://unpkg.com/pdfjs-dist@${pdfjs.version}/standard_fonts/`,
+  standardFontDataUrl: 'https://unpkg.com/pdfjs-dist@3.11.174/standard_fonts/',
 };
 
-// Add this new component before VideoContent
 export default function DocumentContent({
   url,
   courseId,
   moduleId,
   lessonOrder,
-  lessonCompleted,
-  onCompleteAction,
-  hasNextLesson,
-  onNextLessonAction,
-  onContentComplete,
-  quizPassedForLesson,
-  quizReadyForLesson,
-  onTakeQuiz,
+  onContentCompleteAction,
+  onViewedChangeAction,
 }: {
   url: string;
   courseId: string;
   moduleId: string;
   lessonOrder: number;
-  lessonCompleted: boolean;
-  onCompleteAction: () => void;
-  hasNextLesson: boolean;
-  onNextLessonAction: () => void;
-  onContentComplete: (lessonOrder: number) => void;
-  quizPassedForLesson: number | null;
-  quizReadyForLesson?: number | null;
-  onTakeQuiz?: () => void;
+  onContentCompleteAction: (lessonOrder: number) => void;
+  onViewedChangeAction?: (hasViewed: boolean) => void;
 }) {
   const [numPages, setNumPages] = useState<number>(0);
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -49,7 +51,6 @@ export default function DocumentContent({
   const [pagesViewed, setPagesViewed] = useState<Set<number>>(new Set([1]));
   const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const t = useTranslations("module");
-  const router = useRouter();
 
   // Get file extension
   const fileExtension = url.split('.').pop()?.toLowerCase();
@@ -102,30 +103,11 @@ export default function DocumentContent({
 
   // Auto-trigger quiz when document is viewed enough
   useEffect(() => {
-    if (hasViewedEnough && quizPassedForLesson !== lessonOrder) {
-      onContentComplete(lessonOrder);
+    if (hasViewedEnough) {
+      onViewedChangeAction?.(true);
+      onContentCompleteAction(lessonOrder);
     }
-  }, [hasViewedEnough, lessonOrder, quizPassedForLesson, onContentComplete]);
-
-  const handleCompleteLesson = async () => {
-  
-  const result = await markLessonComplete(courseId, moduleId, lessonOrder, timeSpent);
-  
-  
-  if (result.success && "message" in result) {
-    toast.success(result.message);
-    onCompleteAction();
-  } else if ("error" in result) {
-    if (
-      result.error === "Not authenticated" ||
-      result.error === "Non authentifié"
-    ) {
-      toast.error(t("pleaseLoginToComplete"));
-      router.push(`/login`);
-    }
-    toast.error(result.error);
-  }
-};
+  }, [hasViewedEnough, lessonOrder, onContentCompleteAction, onViewedChangeAction]);
 
   const handleDownload = () => {
     const link = document.createElement('a');
@@ -137,9 +119,9 @@ export default function DocumentContent({
   };
 
   return (
-    <div>
+    <div className="flex flex-col h-full max-h-[calc(100vh-400px)] overflow-y-auto">
       {/* Time Tracker & Actions */}
-      <div className="mb-4 flex items-center justify-between flex-wrap gap-4">
+      <div className="mb-4 flex items-center justify-between flex-wrap gap-4 flex-shrink-0">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Clock className="h-4 w-4" />
           <span>
@@ -159,8 +141,8 @@ export default function DocumentContent({
 
       {/* PDF Viewer */}
       {isPDF ? (
-        <>
-          <div className="bg-muted rounded-lg p-4 mb-6">
+        <div className="flex-1 overflow-y-auto">
+          <div className="bg-muted rounded-lg p-4 mb-4">
             <div className="flex justify-center">
               <Document
                 file={url}
@@ -200,7 +182,7 @@ export default function DocumentContent({
 
           {/* Progress Indicator */}
           {!hasViewedEnough && numPages > 0 && (
-            <div className="mb-6 p-4 bg-muted rounded-lg">
+            <div className="mb-4 p-4 bg-muted/50 rounded-lg">
               <p className="text-sm text-muted-foreground">
                 {t("viewPagesToComplete", {
                   viewed: pagesViewed.size,
@@ -217,17 +199,8 @@ export default function DocumentContent({
             </div>
           )}
 
-          {/* Quiz Required Indicator */}
-          {hasViewedEnough && quizPassedForLesson !== lessonOrder && (
-            <div className="mb-6 p-4 bg-accent/10 border border-accent rounded-lg">
-              <p className="text-sm text-accent-foreground">
-                {t("completeQuizToContinue")}
-              </p>
-            </div>
-          )}
-
-          {/* Navigation Controls */}
-          <div className="flex items-center justify-between border-t border-border pt-6">
+          {/* PDF Navigation Controls - Sticky at bottom */}
+          <div className="sticky bottom-0 bg-card/95 backdrop-blur-sm flex items-center justify-between border-t border-border pt-4 pb-2 flex-shrink-0">
             <button
               onClick={goToPreviousPage}
               disabled={currentPage === 1}
@@ -245,35 +218,23 @@ export default function DocumentContent({
               {t("page")} {currentPage} {t("of")} {numPages}
             </div>
 
-            <div className="flex items-center gap-2">
-              {/* If on last page and quiz ready, show Take Quiz button instead of a disabled next */}
-              {currentPage === numPages && quizReadyForLesson === lessonOrder && quizPassedForLesson !== lessonOrder ? (
-                <button
-                  onClick={onTakeQuiz}
-                  className="flex items-center gap-2 px-4 py-2 rounded-lg font-medium bg-accent text-accent-foreground hover:opacity-90"
-                >
-                  {t("takeQuiz")}
-                </button>
-              ) : (
-                <button
-                  onClick={goToNextPage}
-                  disabled={currentPage === numPages}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
-                    currentPage === numPages
-                      ? "bg-muted text-muted-foreground cursor-not-allowed"
-                      : "bg-primary text-primary-foreground hover:opacity-90"
-                  }`}
-                >
-                  {t("next")}
-                  <ChevronRight size={20} />
-                </button>
-              )}
-            </div>
+            <button
+              onClick={goToNextPage}
+              disabled={currentPage === numPages}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                currentPage === numPages
+                  ? "bg-muted text-muted-foreground cursor-not-allowed"
+                  : "bg-primary text-primary-foreground hover:opacity-90"
+              }`}
+            >
+              {t("next")}
+              <ChevronRight size={20} />
+            </button>
           </div>
-        </>
+        </div>
       ) : (
         /* Non-PDF Documents */
-        <div className="bg-muted rounded-lg p-12 text-center">
+        <div className="bg-muted rounded-lg p-12 text-center flex-1 flex flex-col items-center justify-center">
           <div className="bg-background rounded-full w-20 h-20 flex items-center justify-center mx-auto mb-6">
             <FileText className="h-10 w-10 text-primary" />
           </div>
@@ -283,31 +244,13 @@ export default function DocumentContent({
           <p className="text-muted-foreground mb-6">
             {t("documentPreviewNotAvailable")}
           </p>
-          <div className="flex items-center justify-center gap-4">
-            <button
-              onClick={handleDownload}
-              className="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-            >
-              <Download className="h-5 w-5" />
-              {t("downloadDocument")}
-            </button>
-            {hasNextLesson && quizPassedForLesson === lessonOrder && (
-              <button
-                onClick={onNextLessonAction}
-                className="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
-              >
-                {t("continueToNextLesson")}
-                <ChevronRight size={20} />
-              </button>
-            )}
-          </div>
-          {hasViewedEnough && quizPassedForLesson !== lessonOrder && (
-            <div className="mt-4 p-4 bg-accent/10 border border-accent rounded-lg">
-              <p className="text-sm text-accent-foreground">
-                {t("completeQuizToContinue")}
-              </p>
-            </div>
-          )}
+          <button
+            onClick={handleDownload}
+            className="bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:opacity-90 transition-opacity flex items-center gap-2"
+          >
+            <Download className="h-5 w-5" />
+            {t("downloadDocument")}
+          </button>
         </div>
       )}
     </div>

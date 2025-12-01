@@ -8,6 +8,9 @@
     "login": "Connexion",
     "register": "Inscription",
     "dashboard": "Tableau de bord",
+    "myCourses": "Mes Cours",
+    "myCertificates": "Mes Certificats",
+    "admin": "Admin",
     "logout": "Déconnexion"
   },
 
@@ -196,6 +199,47 @@
     "startLearning": "Commencer à Apprendre"
   },
 
+  "certificates": {
+    "myCertificates": "Mes Certificats",
+    "certificatesDescription": "Consultez et téléchargez vos certificats obtenus",
+    "certificateOfCompletion": "Certificat de Réussite",
+    "completed": "Complété",
+    "lessons": "Leçons",
+    "quizzes": "Quiz",
+    "verificationCode": "Code de Vérification",
+    "view": "Voir",
+    "download": "Télécharger",
+    "downloading": "Téléchargement...",
+    "totalCertificates": "Total de Certificats",
+    "averageScore": "Score Moyen",
+    "noCertificates": "Aucun Certificat",
+    "noCertificatesMessage": "Terminez des cours pour obtenir des certificats et mettre en valeur vos réalisations",
+    "browseCourses": "Parcourir les Cours",
+    "certificateNotFound": "Certificat Introuvable",
+    "finalScore": "Score Final",
+    "issueDate": "Date d'Émission",
+    "completionDate": "Date de Réussite"
+  },
+
+  "myCourses": {
+    "title": "Mes Cours",
+    "description": "Suivez votre parcours d'apprentissage et gérez vos cours inscrits",
+    "totalEnrolled": "Total Inscrits",
+    "inProgress": "En Cours",
+    "completed": "Terminés",
+    "noCourses": "Aucun Cours",
+    "noCoursesMessage": "Vous ne vous êtes inscrit à aucun cours pour le moment. Commencez à apprendre dès aujourd'hui !",
+    "browseCourses": "Parcourir les Cours",
+    "continueWhere": "Reprendre Là Où Vous Vous Êtes Arrêté",
+    "completedCourses": "Cours Terminés",
+    "readyToStart": "Prêt à Commencer",
+    "lessons": "leçons",
+    "modules": "modules",
+    "free": "GRATUIT",
+    "premium": "PREMIUM",
+    "startNow": "Commencer Maintenant"
+  },
+
   "Legal": {
     "home": "Accueil",
     "legal": "Juridique",
@@ -285,6 +329,7 @@
     "timeSpent": "Temps passé",
     "minutes": "minutes",
     "markComplete": "Marquer comme Terminé",
+    "completeLesson": "Terminer la Leçon",
     "previous": "Précédent",
     "next": "Suivant",
     "page": "Page",

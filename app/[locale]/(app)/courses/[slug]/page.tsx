@@ -16,14 +16,14 @@ import ModuleCard from '@/components/modules/ModuleCard';
 import EnrollButton from '@/components/modules/EnrollButton';
 
 interface CourseDetailPageProps {
-  params: {
+  params: Promise<{
     slug: string;
     locale: string;
-  };
+  }>;
 }
 
 export default async function CourseDetailPage({ params }: CourseDetailPageProps) {
-  const { slug } = params;
+  const { slug } = await params;
   const t = await getTranslations('CourseDetailPage');
 
   // Fetch course details

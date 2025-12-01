@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import { useParams, usePathname } from 'next/navigation';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Home, BookOpen, Award } from 'lucide-react';
 import { useState } from 'react';
 import { useTheme } from "next-themes";
 import { useAuth } from '@/lib/contexts/AuthProvider';
@@ -25,7 +25,7 @@ const LOCALES = [
   }
 ];
 
-export default function Header() {
+export default function DashboardNav() {
   const t = useTranslations('nav');
   const params = useParams();
   const pathname = usePathname();
@@ -50,12 +50,16 @@ export default function Header() {
 
   const handleSignOut = async () => {
     try {
-      await signOut(); // Call your signOut action
-      refreshUser(); // Refresh user state after sign-out
-      setMobileMenuOpen(false); // Close mobile menu
+      await signOut();
+      refreshUser();
+      setMobileMenuOpen(false);
     } catch (error) {
       console.error('Error signing out:', error);
     }
+  };
+
+  const isActive = (path: string) => {
+    return pathname.includes(path);
   };
 
   return (
@@ -81,31 +85,50 @@ export default function Header() {
           <div className="hidden md:flex items-center space-x-8">
             <Link
               href={`/`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className={`flex items-center gap-2 transition-colors ${
+                pathname === `/${locale}`
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
+              <Home className="h-4 w-4" />
               {t('home')}
             </Link>
             <Link
-              href={`/courses`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={`/dashboard`}
+              className={`flex items-center gap-2 transition-colors ${
+                isActive('/dashboard') && !isActive('/dashboard/courses') && !isActive('/dashboard/certificates')
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
-              {t('courses')}
+              {t('dashboard')}
             </Link>
             <Link
-              href={`/about`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={`/dashboard/courses`}
+              className={`flex items-center gap-2 transition-colors ${
+                isActive('/dashboard/courses')
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
-              {t('about')}
+              <BookOpen className="h-4 w-4" />
+              {t('myCourses')}
             </Link>
             <Link
-              href={`/contact`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              href={`/dashboard/certificates`}
+              className={`flex items-center gap-2 transition-colors ${
+                isActive('/dashboard/certificates')
+                  ? 'text-primary font-semibold'
+                  : 'text-muted-foreground hover:text-foreground'
+              }`}
             >
-              {t('contact')}
+              <Award className="h-4 w-4" />
+              {t('myCertificates')}
             </Link>
           </div>
 
-          {/* Desktop Auth Buttons */}
+          {/* Desktop Auth & Settings */}
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={toggleTheme}
@@ -124,12 +147,6 @@ export default function Header() {
               <span className="text-muted-foreground">Loading...</span>
             ) : user ? (
               <>
-                <Link
-                  href={`/dashboard`}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {t('dashboard')}
-                </Link>
                 {user.role === 'admin' && (
                   <Link
                     href={`/admin`}
@@ -145,22 +162,7 @@ export default function Header() {
                   {t('logout')}
                 </button>
               </>
-            ) : (
-              <>
-                <Link
-                  href={`/login`}
-                  className="text-muted-foreground hover:text-foreground transition-colors"
-                >
-                  {t('login')}
-                </Link>
-                <Link
-                  href={`/register`}
-                  className="bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:opacity-90 transition-opacity"
-                >
-                  {t('register')}
-                </Link>
-              </>
-            )}
+            ) : null}
           </div>
 
           {/* Mobile Menu Button */}
@@ -177,31 +179,34 @@ export default function Header() {
           <div className="md:hidden mt-4 pb-4 space-y-4">
             <Link
               href={`/`}
-              className="block text-muted-foreground hover:text-foreground transition-colors"
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
+              <Home className="h-4 w-4" />
               {t('home')}
             </Link>
             <Link
-              href={`/courses`}
+              href={`/dashboard`}
               className="block text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {t('courses')}
+              {t('dashboard')}
             </Link>
             <Link
-              href={`/about`}
-              className="block text-muted-foreground hover:text-foreground transition-colors"
+              href={`/dashboard/courses`}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {t('about')}
+              <BookOpen className="h-4 w-4" />
+              {t('myCourses')}
             </Link>
             <Link
-              href={`/contact`}
-              className="block text-muted-foreground hover:text-foreground transition-colors"
+              href={`/dashboard/certificates`}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {t('contact')}
+              <Award className="h-4 w-4" />
+              {t('myCertificates')}
             </Link>
             <div className="pt-4 border-t border-border space-y-3">
               <button
@@ -224,13 +229,6 @@ export default function Header() {
                 <span className="block text-muted-foreground">Loading...</span>
               ) : user ? (
                 <>
-                  <Link
-                    href={`/dashboard`}
-                    className="block text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('dashboard')}
-                  </Link>
                   {user.role === 'admin' && (
                     <Link
                       href={`/admin`}
@@ -247,24 +245,7 @@ export default function Header() {
                     {t('logout')}
                   </button>
                 </>
-              ) : (
-                <>
-                  <Link
-                    href={`/login`}
-                    className="block text-muted-foreground hover:text-foreground transition-colors"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('login')}
-                  </Link>
-                  <Link
-                    href={`/register`}
-                    className="block bg-primary text-primary-foreground px-6 py-2 rounded-lg hover:opacity-90 transition-opacity text-center"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {t('register')}
-                  </Link>
-                </>
-              )}
+              ) : null}
             </div>
           </div>
         )}

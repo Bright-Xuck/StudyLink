@@ -197,7 +197,7 @@ const CourseSchema = new mongoose.Schema<ICourse>(
 );
 
 // Indexes
-CourseSchema.index({ slug: 1 });
+// Note: slug already has unique: true which creates an index automatically
 CourseSchema.index({ department: 1 });
 CourseSchema.index({ isPublished: 1, order: 1 });
 CourseSchema.index({ isFree: 1 });
