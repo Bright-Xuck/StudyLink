@@ -367,7 +367,8 @@
     "reviewLesson": "Review Lesson",
     "retakeQuiz": "Retake Quiz",
     "quizPassed": "Quiz Passed",
-    "hasQuiz": "Has Quiz"
+    "hasQuiz": "Has Quiz",
+    "lessonMarkedComplete": "Lesson Completed"
   },
   
   "enrollment": {

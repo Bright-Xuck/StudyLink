@@ -69,7 +69,7 @@ export default function ModuleContent({
   const t = useTranslations("module");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [localProgress] = useState(progress);
+  const [localProgress, setLocalProgress] = useState(progress);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizId, setQuizId] = useState<string | null>(null);
   const [currentLesson, setCurrentLesson] = useState<Lesson | null>(null);
@@ -258,7 +258,7 @@ export default function ModuleContent({
       handleLesson(nextLessonItem);
       
       
-      toast.success(t("movedToNextLesson") || "Moving to next lesson");
+      toast.success(t("nextLesson"));
     }
   };
 
@@ -315,6 +315,39 @@ export default function ModuleContent({
                 lessonOrder={selectedLesson.order}
                 onContentCompleteAction={handleContentComplete}
                 onWatchedChange={(watched) => setContentCompleted(watched)}
+                onNextLesson={nextLesson}
+                onLocalMarkComplete={(order) => {
+                  // optimistic UI update for immediate feedback
+                  if (!localProgress) return;
+                  const already = localProgress.lessonsProgress.some(
+                    (lp) => lp.moduleId === moduleId && lp.lessonOrder === order && lp.completed
+                  );
+                  if (already) return;
+
+                  const newLessonsProgress = [
+                    ...localProgress.lessonsProgress,
+                    {
+                      moduleId,
+                      lessonOrder: order,
+                      completed: true,
+                      completedAt: new Date().toISOString(),
+                      timeSpent: 0,
+                    },
+                  ];
+
+                  const completedLessonsCount = newLessonsProgress.filter(
+                    (lp) => lp.moduleId === moduleId && lp.completed
+                  ).length;
+                  const progressPercentage = Math.round(
+                    (completedLessonsCount / lessons.length) * 100
+                  );
+
+                  setLocalProgress({
+                    ...localProgress,
+                    lessonsProgress: newLessonsProgress,
+                    progressPercentage,
+                  });
+                }}
               />
             ) : selectedLesson.type === "document" ? (
               <DocumentContent
