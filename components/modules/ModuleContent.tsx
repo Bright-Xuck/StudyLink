@@ -20,7 +20,7 @@ import { markLessonComplete } from "@/lib/actions/progress.actions";
 import { toast } from "sonner";
 
 interface Lesson {
-  _id: string; // MongoDB ID
+  _id: string;
   title: string;
   description: string;
   type: "video" | "reading" | "document" | "quiz";
@@ -28,7 +28,7 @@ interface Lesson {
   duration: number;
   order: number;
   isPreview: boolean;
-  hasQuiz?: boolean; // NEW - indicates if lesson has a quiz
+  hasQuiz?: boolean;
 }
 
 interface LessonProgress {
@@ -37,7 +37,7 @@ interface LessonProgress {
   completed: boolean;
   completedAt?: string;
   timeSpent: number;
-  quizPassed?: boolean; // NEW - track if quiz passed
+  quizPassed?: boolean;
 }
 
 interface ModuleProgress {
@@ -51,7 +51,7 @@ interface ModuleProgress {
 interface ModuleContentProps {
   lessons: Lesson[];
   moduleId: string;
-  courseId: string; // NEW - Required for quiz progress tracking
+  courseId: string;
   userId: string;
   progress?: {
     lessonsProgress: LessonProgress[];
@@ -129,27 +129,21 @@ export default function ModuleContent({
   };
 
   const handleLessonComplete = () => {
-    // Refresh to get updated progress
     router.refresh();
   };
 
-  // Handle content completion - triggers quiz modal to auto-open
   const handleContentComplete = async (lessonOrder: number) => {
-    // Avoid re-processing if we've already marked this lesson as ready
     if (quizReadyForLesson === lessonOrder || quizPassedForLesson === lessonOrder) return;
 
     setCurrentLesson(lessons.find((l) => l.order === lessonOrder) || null);
 
-    // Check if lesson has a quiz
     const lesson = lessons.find((l) => l.order === lessonOrder);
     if (!lesson || lesson.hasQuiz === false) {
-      // No quiz for this lesson, mark as complete immediately
       await markLessonComplete(courseId, moduleId, lessonOrder, 0);
       handleLessonComplete();
       return;
     }
 
-    // Prefetch quiz and mark lesson as ready for quiz, but DO NOT auto-open the modal.
     setLoadingQuiz(true);
     try {
       const quiz = await getQuizByLessonId(lesson._id);
@@ -159,9 +153,7 @@ export default function ModuleContent({
         return;
       }
       setQuizId(quiz._id);
-      // Mark lesson as ready for quiz — UI will show a "Take Quiz" button instead of auto-opening
       setQuizReadyForLesson(lessonOrder);
-      // intentionally do NOT call setShowQuiz(true) here
     } catch (error) {
       console.error("Error loading quiz:", error);
       toast.error(t("quizLoadError"));
@@ -170,17 +162,11 @@ export default function ModuleContent({
     }
   };
 
-  // Handle quiz passed - enables "Continue to Next Lesson" button
-  const handleQuizPassed = (lessonOrder: number) => {
-    setQuizPassedForLesson(lessonOrder);
-  };
-
   const handleTakeQuiz = async (lesson: Lesson) => {
     setLoadingQuiz(true);
     setCurrentLesson(lesson);
 
     try {
-      // Fetch quiz for this lesson
       const quiz = await getQuizByLessonId(lesson._id);
 
       if (!quiz) {
@@ -205,9 +191,6 @@ export default function ModuleContent({
     setShowQuiz(false);
     setCurrentLesson(null);
     setQuizId(null);
-    // NOTE: do NOT clear quizReadyForLesson here — keep the lesson marked as "ready" so the user
-    // can retry the quiz manually without the modal auto-opening repeatedly.
-    // Refresh to update any quiz-related progress
     router.refresh();
   };
 
@@ -240,14 +223,22 @@ export default function ModuleContent({
     }
   };
 
+  // UPDATED: Improved nextLesson function with better handling
   const nextLesson = async () => {
     if (!selectedLesson) return;
 
-    // Auto-mark current lesson as complete before moving to next
     try {
-      await markLessonComplete(courseId, moduleId, selectedLesson.order, 0);
+      // Check if lesson was just marked as quiz-passed or already completed
+      const isQuizPassTrigger = quizPassedForLesson === selectedLesson.order;
+      const alreadyCompleted = isLessonCompleted(selectedLesson.order);
+
+      // Only mark complete if needed
+      if (!alreadyCompleted || isQuizPassTrigger) {
+        await markLessonComplete(courseId, moduleId, selectedLesson.order, 0);
+      }
     } catch (error) {
       console.error("Error marking lesson complete:", error);
+      // Continue to next lesson even if marking fails
     }
 
     const currentIndex = lessons.findIndex(
@@ -256,12 +247,33 @@ export default function ModuleContent({
     const nextLessonItem = lessons[currentIndex + 1];
 
     if (nextLessonItem) {
-      // Reset quiz and content state for new lesson
+      // Reset all state for the new lesson
       setQuizPassedForLesson(null);
       setQuizReadyForLesson(null);
       setContentCompleted(false);
+      setCurrentLesson(null);
+      setQuizId(null);
+      
+     
       handleLesson(nextLessonItem);
+      
+      
+      toast.success(t("movedToNextLesson") || "Moving to next lesson");
     }
+  };
+
+  // NEW: Combined handler for Quiz Pass and Auto-Advance
+  const handleQuizPassAndAdvance = async () => {
+    if (!currentLesson) return;
+
+   
+    setShowQuiz(false);
+    
+    setQuizPassedForLesson(currentLesson.order);
+
+    toast.success(t("quizPassedSuccess") || "Quiz passed! Moving to next lesson...");
+
+    await nextLesson();
   };
 
   return (
@@ -440,7 +452,7 @@ export default function ModuleContent({
               {lessons.map((lesson, index) => {
                 const completed = isLessonCompleted(lesson.order);
                 const quizPassed = isQuizPassed(lesson.order);
-                const hasQuiz = lesson.hasQuiz !== false; // Assume has quiz unless explicitly false
+                const hasQuiz = lesson.hasQuiz !== false;
                 
                 return (
                   <div
@@ -558,7 +570,7 @@ export default function ModuleContent({
           moduleId={moduleId}
           lessonOrder={currentLesson.order}
           onClose={handleCloseQuiz}
-          onQuizPassed={() => handleQuizPassed(currentLesson.order)}
+          onQuizPassed={handleQuizPassAndAdvance}
         />
       )}
     </div>

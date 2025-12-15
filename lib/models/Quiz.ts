@@ -219,7 +219,7 @@ const QuizSchema = new Schema<IQuiz>(
     },
     maxAttempts: {
       type: Number,
-      default: 3,
+      default: 5,
       min: [1, "Must allow at least 1 attempt"],
     },
     isPublished: {
