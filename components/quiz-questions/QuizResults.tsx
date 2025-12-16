@@ -262,7 +262,7 @@ export default function QuizResults({ results, quiz, onClose, onQuizPassed }: Qu
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
             {passed && onQuizPassed && (
               <Button onClick={onQuizPassed} size="lg" className="bg-accent text-accent-foreground hover:opacity-90 w-full sm:w-auto">
-                {t('continueToNextLesson')}
+                {t('nextLesson')}
               </Button>
             )}
             <Button onClick={onClose} size="lg" variant="outline" className="w-full sm:w-auto">

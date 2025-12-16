@@ -368,7 +368,8 @@
     "retakeQuiz": "Retake Quiz",
     "quizPassed": "Quiz Passed",
     "hasQuiz": "Has Quiz",
-    "lessonMarkedComplete": "Lesson Completed"
+    "lessonMarkedComplete": "Lesson Completed",
+    "completeModule": "Complete Module"
   },
   
   "enrollment": {
@@ -556,7 +557,8 @@
     "attemptsRemaining": "Attempts Remaining",
     "startQuiz": "Start Quiz",
     "maxAttemptsReached": "Maximum Attempts Reached",
-    "maxAttemptsReachedMessage": "You have used all your attempts for this quiz. Please review the module content and try again later if retries are enabled."
+    "maxAttemptsReachedMessage": "You have used all your attempts for this quiz. Please review the module content and try again later if retries are enabled.",
+    "nextLesson": "Next Lesson"
   },
   
   "CoursesPage": {

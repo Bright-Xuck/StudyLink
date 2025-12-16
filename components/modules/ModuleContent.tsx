@@ -271,7 +271,7 @@ export default function ModuleContent({
     
     setQuizPassedForLesson(currentLesson.order);
 
-    toast.success(t("quizPassedSuccess") || "Quiz passed! Moving to next lesson...");
+    toast.success(t("quizPassed"));
 
     await nextLesson();
   };
