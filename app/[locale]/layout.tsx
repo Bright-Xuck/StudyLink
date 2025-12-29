@@ -52,7 +52,10 @@ export const metadata: Metadata = {
     title: 'ZenithScholar Platform - Learn Research Skills',
     description: 'Your trusted marketplace for digital accounts, social media services, and virtual contacts.',
   },
-}
+  icons: {
+    icon: '/logo.png',
+  },
+} 
 
 interface LocaleLayoutProps {
   children: React.ReactNode;
@@ -77,6 +80,9 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
+      <head>
+        <link rel="icon" href="/logo.png" type="image/png" />
+      </head>
       <body className={`${inter.variable} ${poppins.variable} ${inter.className} ${poppins.className} ${montserrat.variable} ${montserrat.className} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>
           <ThemeProvider>

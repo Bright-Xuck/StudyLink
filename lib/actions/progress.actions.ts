@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/db";
 import Progress, { IProgress } from "@/lib/models/Progress";
 import Course from "@/lib/models/Course";
 import Module from "@/lib/models/Module";
+import User from "@/lib/models/User";
 import { getCurrentUser } from "@/lib/utils/jwt";
 import { getLocale } from "next-intl/server";
 import mongoose from "mongoose";
@@ -37,6 +38,23 @@ export async function initializeCourseProgress(courseId: string) {
         success: false,
         error: locale === "fr" ? "Cours introuvable" : "Course not found",
       };
+    }
+
+    // Auto-enroll user in free courses when they start progress
+    try {
+      const user = await User.findById(tokenPayload.userId);
+      if (course.isFree && user) {
+        const objectIdCourseId = new mongoose.Types.ObjectId(courseId);
+        if (!user.purchasedCourses.some((id) => id.equals(objectIdCourseId))) {
+          user.purchasedCourses.push(objectIdCourseId);
+          await user.save();
+          course.enrolledCount = (course.enrolledCount || 0) + 1;
+          await course.save();
+        }
+      }
+    } catch (err) {
+      console.error("Auto-enroll failed:", err);
+      // Don't block progress initialization on auto-enroll failure
     }
 
     // Check if progress already exists
