@@ -53,6 +53,7 @@ interface ModuleContentProps {
   moduleId: string;
   courseId: string;
   userId: string;
+  nextModuleSlug?: string;
   progress?: {
     lessonsProgress: LessonProgress[];
     modulesProgress?: ModuleProgress[];
@@ -64,6 +65,7 @@ export default function ModuleContent({
   lessons,
   moduleId,
   courseId,
+  nextModuleSlug,
   progress,
 }: ModuleContentProps) {
   const t = useTranslations("module");
@@ -431,15 +433,25 @@ export default function ModuleContent({
                   </button>
                 )}
 
-                {/* Complete Module - Show on last lesson when completed */}
+                {/* Next Module or Complete Module - Show on last lesson when completed */}
                 {!hasNextLesson() && (isLessonCompleted(selectedLesson.order) || quizPassedForLesson === selectedLesson.order) && (
-                  <button
-                    onClick={() => router.back()}
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
-                  >
-                    <CheckCircle className="h-4 w-4" />
-                    {t("completeModule")}
-                  </button>
+                  nextModuleSlug ? (
+                    <button
+                      onClick={nextLesson}
+                      className="bg-primary hover:opacity-90 text-primary-foreground px-6 py-2 rounded-lg transition-opacity font-medium flex items-center gap-2"
+                    >
+                      {t("nextModule")}
+                      <Play className="h-4 w-4" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => router.back()}
+                      className="bg-accent hover:bg-accent/90 text-accent-foreground px-6 py-2 rounded-lg transition-colors font-medium flex items-center gap-2"
+                    >
+                      <CheckCircle className="h-4 w-4" />
+                      {t("completeModule")}
+                    </button>
+                  )
                 )}
               </div>
             </div>

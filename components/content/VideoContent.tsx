@@ -1,7 +1,8 @@
 "use client";
 
 import { updateLessonTime, markLessonComplete } from "../../lib/actions/progress.actions";
-import { Clock, CheckCircle, ChevronRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Clock, CheckCircle, ChevronRight, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import ReactPlayer from "react-player";
@@ -21,6 +22,7 @@ interface VideoContentProps {
   quizPassedForLesson?: number | null;
   onTakeQuiz?: () => void;
   hasNextLesson?: boolean;
+  nextModuleSlug?: string;
   onNextLesson?: () => void;
   onComplete?: () => void; // parent refresh
 }
@@ -34,9 +36,11 @@ export default function VideoContent({
   onWatchedChange,
   onLocalMarkComplete,
   hasNextLesson,
+  nextModuleSlug,
   onNextLesson,
   onComplete,
 }: VideoContentProps) {
+  const router = useRouter();
   const [timeSpent, setTimeSpent] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hasWatched, setHasWatched] = useState(false);
@@ -105,54 +109,43 @@ export default function VideoContent({
       {/* Complete Lesson Button */}
       <div className="mt-4">
         <Button
-          onClick={() => {
-            setHasWatched(true);
-            onWatchedChange?.(true);
-            console.log("✅ onWatchedChange called");
-            setLocalCompleted(true);
-            setLocalCourseProgress((prev) => {
-              return prev;
-            });
+          onClick={async () => {
+            try {
+              setLoadingComplete(true);
+              setHasWatched(true);
+              onWatchedChange?.(true);
+              setLocalCompleted(true);
+              onLocalMarkComplete?.(lessonOrder);
 
-            onLocalMarkComplete?.(lessonOrder);
-
-            (async () => {
-              try {
-                setLoadingComplete(true);
-                const updated = await markLessonComplete(courseId, moduleId, lessonOrder, 0);
-
-                // Update local progress percent if returned (safe access and fallback)
-                const returnedProgressPercent = (updated as any)?.progress?.courseProgressPercentage ?? (updated as any)?.progressPercentage ?? (updated as any)?.courseProgressPercentage;
-                if (typeof returnedProgressPercent === "number") {
-                  setLocalCourseProgress(returnedProgressPercent);
-                }
-
-                toast.success(t("lessonMarkedComplete"));
-
-                onComplete?.();
-
-                // If there's a next lesson, show Next button via onNextLesson
-                
-              } catch (error) {
-                console.error("Error marking lesson complete:", error);
-                toast.error(t("errorMarkingComplete"));
-              } finally {
-                setLoadingComplete(false);
-              }
-            })();
-
-            // Notify the component flow handler as before
-            onContentCompleteAction?.(lessonOrder);
-            console.log("✅ onContentCompleteAction called");
+              // Mark lesson as complete
+              await markLessonComplete(courseId, moduleId, lessonOrder, 0);
+              toast.success(t("lessonMarkedComplete"));
+              onComplete?.();
+            } catch (error) {
+              console.error("Error marking lesson complete:", error);
+              toast.error(t("errorMarkingComplete"));
+            } finally {
+              setLoadingComplete(false);
+            }
           }}
+          disabled={loadingComplete}
           className="w-full"
           size="lg"
         >
-          <CheckCircle className="h-5 w-5 mr-2" />
-          {t("completeLesson")}
+          {loadingComplete ? (
+            <>
+              <Loader2 className="h-5 w-5 mr-2 animate-spin" />
+              {t("loading")}
+            </>
+          ) : (
+            <>
+              <CheckCircle className="h-5 w-5 mr-2" />
+              {t("completeLesson")}
+            </>
+          )}
         </Button>
 
-        {/* Next Button */}
+        {/* Next Lesson Button - Only show if there's a next lesson within this module */}
         {localCompleted && hasNextLesson && (
           <div className="mt-3">
             <Button onClick={() => onNextLesson?.()} className="w-full" size="lg">

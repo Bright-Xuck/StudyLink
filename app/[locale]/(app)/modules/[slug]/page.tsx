@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
-import { getModuleBySlug } from '@/lib/actions/module.actions';
+import { getModuleBySlug, getNextModule } from '@/lib/actions/module.actions';
 import { getAuthenticatedUser } from '@/lib/actions/auth.actions';
 import { checkModuleAccess } from '@/lib/actions/enrollment.actions';
 import { getCourseProgress } from '@/lib/actions/progress.actions';
@@ -25,9 +25,10 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
 
   const t = await getTranslations('module');
 
-  const [courseModule, user] = await Promise.all([
+  const [courseModule, user, nextModule] = await Promise.all([
     getModuleBySlug(slug),
     getAuthenticatedUser(),
+    getNextModule(slug),
   ]);
 
   if (!courseModule) {
@@ -177,6 +178,7 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
                   moduleId={moduleId}
                   courseId={courseId}
                   userId={user?.id.toString() || "anonymous"}
+                  nextModuleSlug={nextModule?.slug}
                   progress={progress}
                 />
               ) : (
