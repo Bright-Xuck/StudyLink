@@ -466,7 +466,7 @@ const lessonsTemplate = [
   },
   {
     order: 2,
-    type: "video" as const,
+    type: "reading" as const,
     duration: 30,
     isPreview: false,
     hasQuiz: true,
@@ -479,6 +479,986 @@ const lessonsTemplate = [
     hasQuiz: true,
   },
 ];
+
+// Content mappings for each module's lessons
+const contentByModule: Record<string, Record<number, string>> = {
+  // Course 1: Research Methods & Ethics
+  "introduction-to-research": {
+    1: `# Introduction to Research Fundamentals
+
+## Understanding Research
+
+Research is a systematic process of inquiry that aims to expand knowledge and understanding in a particular field. It involves formulating questions, gathering data, analyzing information, and drawing conclusions based on evidence.
+
+### The Research Process
+
+The research process typically follows these key steps:
+
+1. **Problem Identification**: Recognizing a gap in knowledge or a question that needs answering
+2. **Literature Review**: Examining existing research and theories on the topic
+3. **Research Design**: Planning how you will conduct your investigation
+4. **Data Collection**: Gathering information through various methods
+5. **Analysis**: Processing and examining the collected data
+6. **Conclusion**: Drawing insights and answering your research questions
+7. **Dissemination**: Sharing findings with the academic community
+
+## Types of Research
+
+Different types of research serve different purposes:
+
+- **Basic Research**: Seeks to expand knowledge and understanding
+- **Applied Research**: Aims to solve practical problems
+- **Exploratory Research**: Investigates new or poorly understood phenomena
+- **Descriptive Research**: Describes characteristics of a population or phenomenon
+- **Explanatory Research**: Seeks to explain why something happens
+
+Understanding these distinctions helps researchers choose appropriate methodologies for their specific questions.`,
+    2: `# Research Paradigms and Worldviews
+
+## What is a Research Paradigm?
+
+A research paradigm is a philosophical framework that guides how researchers approach their work. It encompasses beliefs about the nature of reality (ontology), how we know things (epistemology), and the methods we use to investigate (methodology).
+
+### Major Research Paradigms
+
+**Positivist Paradigm**
+- Assumes reality is objective and independent of human observation
+- Emphasizes quantitative methods and statistical analysis
+- Seeks universal laws and generalizable findings
+
+**Interpretivist Paradigm**
+- Recognizes that reality is socially constructed
+- Emphasizes understanding meaning and context
+- Uses qualitative methods and in-depth analysis
+
+**Critical Realist Paradigm**
+- Accepts both objective reality and subjective interpretation
+- Combines quantitative and qualitative approaches
+- Focuses on understanding mechanisms and structures
+
+## Choosing a Paradigm
+
+Your research question and objectives should guide your paradigm selection. Different paradigms are suited to different types of inquiry, and researchers often combine elements from multiple paradigms in contemporary research.`,
+    3: `# The Research Question and Problem Statement
+
+## Developing a Strong Research Question
+
+A research question is the foundation of any research project. It should be:
+
+- **Clear and specific**: Unambiguous and focused
+- **Answerable**: Able to be investigated through empirical research
+- **Significant**: Important to your field and relevant to stakeholders
+- **Feasible**: Achievable within your time and resource constraints
+- **Researchable**: Not purely philosophical or opinion-based
+
+### Components of a Research Question
+
+1. **Variables**: The concepts you're investigating
+2. **Population**: Who or what you're studying
+3. **Context**: The setting or circumstances of the study
+4. **Relationship**: How variables relate to each other
+
+## Problem Statements
+
+A problem statement articulates the issue your research addresses. It should:
+- Provide context and background
+- Explain why the problem matters
+- Suggest gaps in current knowledge
+- Lead naturally to your research questions
+
+Well-defined research questions and problem statements set the stage for rigorous and meaningful research.`
+  },
+  "research-design-methodology": {
+    1: `# Quantitative Research Methods
+
+## Overview of Quantitative Research
+
+Quantitative research involves collecting and analyzing numerical data to test hypotheses and answer research questions. It emphasizes measurement, statistical analysis, and generalization.
+
+### Key Characteristics
+
+- **Numerical Data**: Uses numbers and statistics
+- **Large Sample Sizes**: Aims for representative samples
+- **Objective Measurement**: Uses standardized instruments
+- **Statistical Analysis**: Applies mathematical techniques
+- **Generalizability**: Seeks to generalize findings to populations
+
+### Common Quantitative Methods
+
+**Surveys and Questionnaires**
+- Gather data from many participants
+- Can be distributed in-person, online, or by mail
+- Provide standardized, comparable data
+
+**Experiments**
+- Manipulate variables to test cause-and-effect
+- Use control and experimental groups
+- Provide strong evidence of causation
+
+**Correlational Studies**
+- Examine relationships between variables
+- No manipulation of variables
+- Cannot establish causation but indicates associations`,
+    2: `# Qualitative Research Methods
+
+## Understanding Qualitative Research
+
+Qualitative research explores phenomena in depth, seeking to understand meaning, context, and human experiences. It uses non-numerical data such as text, images, and observations.
+
+### Key Characteristics
+
+- **Textual Data**: Uses words, descriptions, and observations
+- **Small Sample Sizes**: In-depth study of few cases
+- **Flexible Design**: Evolves as understanding develops
+- **Contextual Understanding**: Emphasizes real-world context
+- **Interpretive Analysis**: Focuses on meaning and patterns
+
+### Common Qualitative Methods
+
+**Interviews**
+- One-on-one conversations with participants
+- Provides rich, detailed information
+- Allows for follow-up questions and clarification
+
+**Focus Groups**
+- Discussions with multiple participants
+- Captures group dynamics and perspectives
+- Efficient for gathering diverse viewpoints
+
+**Ethnography**
+- Long-term immersion in a community or organization
+- Observational study with participant interaction
+- Provides deep cultural understanding`,
+    3: `# Mixed-Methods and Research Design Selection
+
+## Mixed-Methods Research
+
+Mixed-methods research combines quantitative and qualitative approaches in a single study. This integration can provide comprehensive understanding by leveraging strengths of both approaches.
+
+### Integration Strategies
+
+**Convergent Design**
+- Collect and analyze quantitative and qualitative data separately
+- Compare and integrate findings
+- Provides validation through triangulation
+
+**Explanatory Sequential Design**
+- Collect quantitative data first
+- Use qualitative data to explain quantitative findings
+- Qualitative phase builds on initial results
+
+**Exploratory Sequential Design**
+- Conduct qualitative exploration first
+- Use findings to develop quantitative instruments
+- Quantitative phase tests patterns discovered qualitatively
+
+## Selecting Your Research Design
+
+Consider these factors:
+- Research questions and objectives
+- Available resources and timeline
+- Access to participants and data
+- Your expertise and preferences
+- Paradigmatic alignment
+
+The right design aligns with your research goals and practical constraints.`
+  },
+  "research-ethics-data-analysis": {
+    1: `# Research Ethics and Participant Protection
+
+## Ethical Principles in Research
+
+Research ethics ensure that studies respect participant dignity and rights. Key ethical principles include:
+
+### Autonomy (Informed Consent)
+
+Participants must:
+- Understand the research purpose and procedures
+- Know potential risks and benefits
+- Voluntarily agree to participate
+- Be able to withdraw at any time
+
+**Effective Consent Requires:**
+- Clear, understandable language
+- Full disclosure of procedures and risks
+- No coercion or undue inducement
+- Time to ask questions
+
+### Beneficence and Non-Maleficence
+
+- Maximize potential benefits
+- Minimize potential harms
+- Balance risks against benefits
+- Provide support if harm occurs
+
+### Justice
+
+- Fair selection of participants
+- Fair distribution of research benefits
+- Equitable access to data
+- Protection of vulnerable populations`,
+    2: `# Data Management and Analysis Fundamentals
+
+## Organizing Your Data
+
+Proper data management is crucial for research integrity:
+
+- **Data Security**: Protect participant confidentiality
+- **Documentation**: Record data collection methods clearly
+- **Organization**: Use consistent naming and structures
+- **Backup**: Maintain multiple secure copies
+- **Access Control**: Limit access to authorized personnel
+
+## Quantitative Data Analysis
+
+### Descriptive Statistics
+
+Describe and summarize data:
+- **Measures of Central Tendency**: Mean, median, mode
+- **Measures of Variation**: Standard deviation, range
+- **Frequencies**: How often values occur
+- **Distributions**: Shape and pattern of data
+
+### Inferential Statistics
+
+Make predictions and test hypotheses:
+- **Hypothesis Testing**: Determine if findings are statistically significant
+- **Confidence Intervals**: Estimate population parameters
+- **Regression Analysis**: Examine relationships between variables`,
+    3: `# Qualitative Data Analysis and Interpretation
+
+## Qualitative Analysis Approaches
+
+### Thematic Analysis
+
+1. **Familiarization**: Read and immerse yourself in data
+2. **Coding**: Assign labels to meaningful data segments
+3. **Theme Development**: Identify patterns and relationships
+4. **Theme Review**: Ensure themes fit the data
+5. **Definition**: Clearly define each theme
+6. **Reporting**: Present themes with supporting evidence
+
+### Content Analysis
+
+- Systematically categorize content
+- Quantify patterns in qualitative data
+- Count frequency of codes or categories
+- Analyze patterns and relationships
+
+## Data Interpretation
+
+- Support conclusions with evidence
+- Consider alternative explanations
+- Acknowledge limitations
+- Relate findings to existing literature
+- Discuss implications and applications
+
+Quality qualitative analysis balances rigor with meaningful insight into human experience.`
+  },
+  
+  // Course 2: Computer Science Research
+  "cs-research-fundamentals": {
+    1: `# CS Research Methods and Fundamentals
+
+## The Nature of Computer Science Research
+
+Computer Science research investigates computational problems, algorithms, systems, and applications. CS research contributes novel insights that advance the field through publications in conferences and journals.
+
+### Types of CS Research
+
+**Theoretical Research**
+- Studies computational complexity and algorithms
+- Proves mathematical properties
+- Develops new computational models
+- Publication venues: ACM STOC, SIAM
+
+**Systems Research**
+- Designs and implements computing systems
+- Addresses performance, reliability, and scalability
+- Creates infrastructure and tools
+- Publication venues: OSDI, SOSP, USENIX
+
+**Application Research**
+- Develops practical solutions to problems
+- Applies CS to other domains
+- Creates novel applications
+- Publication venues: Domain-specific conferences
+
+## CS Research Venues
+
+### Conferences
+- Premier publication venue in CS
+- Selective acceptance (15-30%)
+- Provides feedback and networking
+- Examples: ICML, PLDI, SIGMOD
+
+### Journals
+- In-depth presentation of work
+- Longer publication timelines
+- Examples: ACM Transactions series, IEEE TSE
+
+### Workshops and Seminars
+- Emerging ideas and work-in-progress
+- Community discussion and feedback`,
+    2: `# Literature Review in Computer Science
+
+## Conducting a CS Literature Review
+
+A literature review synthesizes existing knowledge and identifies research gaps. In CS, this involves surveying papers, standards, and systems.
+
+### Information Sources
+
+**Academic Databases**
+- ACM Digital Library (comprehensive CS coverage)
+- IEEE Xplore (systems and engineering)
+- Google Scholar (broad multidisciplinary)
+- Semantic Scholar (AI-powered search)
+
+**Conference Proceedings**
+- Premier conferences publish cutting-edge work
+- Papers available through conference websites
+- Proceedings indexed in digital libraries
+
+**Technical Reports and Preprints**
+- ArXiv for preprints before publication
+- University technical reports
+- Corporate research publications
+
+## Synthesizing Literature
+
+1. **Identify Key Papers**: Find seminal and recent works
+2. **Categorize Research**: Organize by approach or topic
+3. **Identify Gaps**: Find unanswered questions
+4. **Summarize Trends**: Note evolution of the field
+5. **Position Your Work**: Show where your research fits
+
+Effective literature reviews establish context and motivation for CS research.`,
+    3: `# Research Contributions in Computer Science
+
+## What Constitutes a Research Contribution?
+
+A CS research contribution must:
+- Be **novel**: Introduce something not previously published
+- Be **significant**: Have meaningful impact or insight
+- Be **technically sound**: Employ rigorous methods
+- Be **documented**: Clearly described and reproducible
+
+### Types of Contributions
+
+**Algorithmic Contributions**
+- New algorithms with better properties (faster, smaller, etc.)
+- Improved complexity analysis
+- Novel algorithmic techniques
+- Must prove properties and demonstrate advantages
+
+**Systems Contributions**
+- New system design or architecture
+- Performance improvements
+- Novel implementation techniques
+- Must include evaluation and comparison
+
+**Empirical Contributions**
+- Novel experimental findings
+- Benchmark datasets
+- Large-scale studies
+- Must use rigorous experimental methodology
+
+**Theoretical Contributions**
+- New proofs or mathematical results
+- Computational complexity bounds
+- Formal models and specifications
+- Must be mathematically rigorous
+
+## Evaluating Significance
+
+Consider:
+- Does it solve an important problem?
+- Does it advance the field?
+- Does it open new research directions?
+- Does it impact practice?`
+  },
+  "experimental-design-cs": {
+    1: `# Designing CS Experiments
+
+## Experimental Methodology in CS
+
+CS experiments test hypotheses about algorithms, systems, or applications. Well-designed experiments provide evidence for claims and enable reproducible results.
+
+### Experimental Components
+
+**Independent Variables** (what you manipulate)
+- Algorithm parameters
+- System configuration
+- Input characteristics
+- Environmental factors
+
+**Dependent Variables** (what you measure)
+- Execution time
+- Memory usage
+- Throughput
+- Accuracy or quality metrics
+
+**Controls** (what you hold constant)
+- Hardware specifications
+- Software versions
+- Input distributions
+- Experimental environment
+
+## Experimental Design Patterns
+
+**Comparative Studies**
+- Compare new approach to baselines
+- Multiple implementations under same conditions
+- Fair comparison requires careful control
+
+**Parametric Studies**
+- Vary one parameter systematically
+- Measure effects on performance
+- Identify optimal configurations
+
+**Scalability Studies**
+- Test behavior with increasing scale
+- Examine growth rates and limits
+- Important for systems research`,
+    2: `# Measurement and Benchmarking in CS
+
+## Selecting Metrics
+
+Choose metrics that:
+- Directly measure your research questions
+- Are reproducible and comparable
+- Account for trade-offs (time vs. space)
+- Reflect real-world usage patterns
+
+### Common CS Metrics
+
+**Performance Metrics**
+- Execution time (wall-clock or CPU)
+- Memory usage
+- Throughput (operations per second)
+- Latency (response time)
+
+**Quality Metrics**
+- Accuracy for ML/AI systems
+- Approximation ratio for algorithms
+- Compression ratio for data structures
+- Error rate for systems
+
+## Benchmarking Best Practices
+
+1. **Multiple Runs**: Execute experiments many times
+2. **Warm-up**: Discard early runs affected by initialization
+3. **Consistent Environment**: Control system state and load
+4. **Statistical Analysis**: Report averages, standard deviations
+5. **Reproducibility**: Document all parameters and setup
+
+Benchmarking rigor strengthens confidence in experimental results.`,
+    3: `# Statistical Analysis of Experimental Results
+
+## Analyzing CS Experiment Results
+
+Statistical analysis transforms raw measurements into meaningful conclusions.
+
+### Descriptive Statistics
+
+Report:
+- **Mean**: Average performance
+- **Standard Deviation**: Variability in measurements
+- **Median**: Middle value (robust to outliers)
+- **Min/Max**: Range of observations
+
+### Statistical Significance
+
+Test whether observed differences are:
+- Real (not due to random variation)
+- Consistent (reproducible)
+- Meaningful (practically significant)
+
+**Hypothesis Testing**
+- Null hypothesis: No difference between approaches
+- P-value: Probability of observing results if null true
+- Significance level: Typically p < 0.05
+
+### Presenting Results
+
+**Graphs and Tables**
+- Box plots show distribution and outliers
+- Line graphs show trends across parameters
+- Tables provide precise values
+- Error bars indicate uncertainty
+
+Always distinguish correlation from causation and consider confounding factors.`
+  },
+  "publishing-presentation": {
+    1: `# Preparing Your Research for Publication
+
+## Publication Process Overview
+
+The journey from research completion to published paper:
+
+1. **Manuscript Preparation**: Write your paper
+2. **Venue Selection**: Choose conference or journal
+3. **Submission**: Submit to editorial system
+4. **Desk Review**: Editor's initial assessment
+5. **Review Process**: Expert peer review (1-3 months)
+6. **Revision**: Respond to reviewer feedback
+7. **Acceptance/Publication**: Paper is published
+
+### Conference vs. Journal
+
+**Conferences**
+- Faster publication (6-12 months)
+- Selective (10-30% acceptance)
+- Provides feedback and networking
+- Time-sensitive deadlines
+
+**Journals**
+- Longer publication (1-2 years)
+- More selective (varies widely)
+- In-depth review and revision
+- More stable reference
+
+## Paper Structure
+
+Standard CS paper sections:
+- **Abstract**: Concise summary
+- **Introduction**: Motivation and contributions
+- **Related Work**: Literature review
+- **Methods**: Your approach and design
+- **Results**: Experimental findings
+- **Discussion**: Interpretation and implications
+- **Conclusion**: Summary and future work`,
+    2: `# Responding to Peer Review
+
+## Understanding Reviewer Comments
+
+Reviewers evaluate:
+- Novelty and originality
+- Technical soundness
+- Clarity of presentation
+- Experimental rigor
+- Significance of contributions
+
+### Types of Reviews
+
+**Acceptance**: Paper is accepted, sometimes with minor revisions
+**Major Revision**: Significant issues require substantial work
+**Rejection**: Paper doesn't meet standards, encourage resubmission elsewhere
+
+## The Rebuttal Process
+
+Your rebuttal should:
+1. **Thank Reviewers**: Show appreciation for feedback
+2. **Summarize Changes**: List all modifications
+3. **Address Concerns**: Explain how you fixed issues
+4. **Provide Justification**: Support decisions with evidence
+5. **Be Professional**: Avoid defensiveness
+
+### Tips for Effective Rebuttals
+
+- Point-by-point response to each comment
+- Quote reviewer comments for clarity
+- Reference specific pages and experiments
+- Acknowledge valid criticisms gracefully
+- Explain changes in the revised manuscript
+
+Strong rebuttals often result in acceptance after revision.`,
+    3: `# Presenting Your Research
+
+## Effective Research Presentations
+
+### Presentation Components
+
+**Slide Design**
+- Minimal text (one idea per slide)
+- Clear, readable fonts (18pt minimum)
+- Professional color scheme
+- High-quality figures and diagrams
+
+**Verbal Delivery**
+- Speak clearly and pace yourself
+- Make eye contact with audience
+- Use gestures naturally
+- Practice extensively
+
+**Content Organization**
+- Opening: Engage audience and motivate topic
+- Main contribution: Clearly explain novel aspects
+- Results: Show evidence for claims
+- Conclusion: Summarize impact and future work
+
+### Common Presentation Mistakes
+
+- Reading slides verbatim
+- Overly technical slides
+- Rushed explanations
+- Unclear motivation
+- Poor figure quality
+
+## Conference Presentations
+
+**Time Management**
+- Plan for questions and transitions
+- Allocate time to key contributions
+- Leave time for audience questions
+- Have backup slides for deep dives
+
+Practice presentations with colleagues to receive feedback before the conference.`
+  },
+
+  // Course 3: Introduction to Academic Writing
+  "academic-writing-basics": {
+    1: `# Fundamentals of Academic Writing
+
+## What is Academic Writing?
+
+Academic writing communicates research, analysis, and ideas to scholarly audiences. It is:
+- **Formal**: Professional tone without slang
+- **Objective**: Based on evidence, not opinion
+- **Structured**: Organized with clear progression
+- **Supported**: Every claim backed by evidence
+- **Precise**: Uses accurate, specific language
+
+### Key Characteristics
+
+**Clarity**
+- Use clear, direct sentences
+- Avoid jargon or explain terms
+- One main idea per paragraph
+- Logical flow between ideas
+
+**Precision**
+- Choose words carefully
+- Use technical terms correctly
+- Provide specific examples
+- Define ambiguous terms
+
+**Evidence-Based**
+- Support arguments with citations
+- Use credible sources
+- Acknowledge alternative views
+- Distinguish fact from interpretation
+
+## Audience and Purpose
+
+Consider your readers:
+- Academic discipline and expertise
+- Expectations and conventions
+- What they need to understand
+- How they'll use your writing
+
+Different disciplines have different conventions (humanities, sciences, social sciences).`,
+    2: `# Building Strong Arguments
+
+## Thesis Statements
+
+A thesis statement is your main argument or claim. It should:
+
+- **Be Specific**: Clearly state your position
+- **Be Arguable**: Present a claim, not a fact
+- **Be Supportable**: Evidence exists to support it
+- **Be Concise**: One sentence when possible
+
+**Weak Thesis**: "This paper discusses global warming."
+**Strong Thesis**: "Reducing carbon emissions through renewable energy adoption is essential to mitigate climate change impacts by 2050."
+
+## Supporting Your Argument
+
+**Topic Sentences**
+- State the main idea of each paragraph
+- Connect to your thesis
+- Guide reader through argument
+
+**Evidence**
+- Direct quotes from sources
+- Paraphrased information
+- Statistical data
+- Examples and case studies
+
+**Analysis**
+- Explain how evidence supports your claim
+- Connect evidence to your argument
+- Consider counterarguments
+- Show significance
+
+## Paragraph Structure
+
+Each paragraph should:
+1. Begin with a topic sentence
+2. Present evidence or examples
+3. Analyze and interpret the evidence
+4. Connect back to your thesis
+
+Well-structured arguments are persuasive and easy to follow.`,
+    3: `# Academic Tone and Style
+
+## Maintaining Academic Tone
+
+Academic tone is:
+- **Professional**: No casual language or slang
+- **Objective**: Avoid first person unless appropriate
+- **Formal**: Complete sentences, proper grammar
+- **Balanced**: Acknowledge different perspectives
+
+**Conversational (Not Academic)**
+"Technology is really changing how we communicate, and it's pretty awesome."
+
+**Academic**
+"Digital communication technologies have significantly altered interpersonal interaction patterns and social dynamics."
+
+## Common Writing Problems
+
+**Passive Voice Overuse**
+- Academic writing benefits from active voice
+- Use passive voice purposefully, not by default
+- Active: "Researchers conducted the study"
+- Passive: "The study was conducted"
+
+**Vague Language**
+- Use specific, precise terms
+- Avoid "very," "really," "interesting"
+- Quantify when possible
+- Define technical terms
+
+**First Person Usage**
+- In some fields, "I" is acceptable
+- In others, use "the author" or passive voice
+- Consult discipline-specific guidelines
+- Use consistently throughout
+
+## Editing for Clarity
+
+Review your writing for:
+- Sentence length and complexity
+- Word choice appropriateness
+- Grammar and punctuation
+- Consistent terminology
+- Logical flow`
+  },
+  "citation-referencing": {
+    1: `# Understanding Citations and Plagiarism
+
+## What is Plagiarism?
+
+Plagiarism is using others' work or ideas without proper acknowledgment. It includes:
+- Copying text without quotation marks
+- Paraphrasing without citation
+- Using ideas without attribution
+- Self-plagiarism (reusing your own work)
+- Inadequate paraphrasing
+
+### Forms of Plagiarism
+
+**Direct Plagiarism**: Copying exact words without quotes or citations
+**Mosaic Plagiarism**: Mixing unquoted words with citations
+**Accidental Plagiarism**: Incorrect citation or paraphrasing
+**Self-Plagiarism**: Submitting same work twice
+
+## Avoiding Plagiarism
+
+- Take careful notes during research
+- Distinguish between quotes and paraphrases
+- Cite everything that isn't common knowledge
+- Use quotation marks for exact words
+- Follow citation style consistently
+
+## Why Citations Matter
+
+Citations:
+- Give credit to sources
+- Allow readers to verify claims
+- Demonstrate research depth
+- Follow ethical academic standards
+- Build credibility through scholarship
+
+Proper attribution is fundamental to academic integrity.`,
+    2: `# Citation Styles and Systems
+
+## Major Citation Styles
+
+**APA (American Psychological Association)**
+- Used in: Psychology, social sciences, education
+- Format: Author-date system (Smith, 2020)
+- In-text citations with reference list
+
+**MLA (Modern Language Association)**
+- Used in: Humanities, literature, language
+- Format: Author-page system (Smith 45)
+- Works cited list at end
+
+**Chicago/Turabian**
+- Used in: History, humanities, some social sciences
+- Format: Notes and bibliography system
+- Footnotes or endnotes with bibliography
+
+**IEEE (Institute of Electrical and Electronics Engineers)**
+- Used in: Engineering, computer science
+- Format: Numbered citations [1], [2]
+- References list at end
+
+## Choosing a Citation Style
+
+Consider:
+- Your discipline or field
+- Instructor or publication requirements
+- Consistency within your document
+- Available formatting tools
+
+Each style has specific rules for books, journals, websites, and other sources.`,
+    3: `# Creating Accurate References
+
+## Reference List Requirements
+
+Your reference list should:
+- Include all cited sources
+- Be organized alphabetically
+- Use consistent formatting
+- Provide complete publication information
+- Follow the selected style precisely
+
+## Creating Different Reference Types
+
+**Books**
+Include: Author, publication year, title, publisher, location
+
+**Journal Articles**
+Include: Author, year, article title, journal name, volume, issue, pages
+
+**Websites**
+Include: Author, date accessed, URL, site title
+
+**Multimedia**
+Include: Creator, date, title, medium, source
+
+## Formatting Tools
+
+**Reference Managers** (automate formatting)
+- Zotero (free)
+- Mendeley (free and paid)
+- EndNote (paid)
+- RefWorks (institutional)
+
+These tools:
+- Store and organize sources
+- Generate citations automatically
+- Create bibliographies
+- Format in multiple styles
+
+Using reference management software reduces errors and saves time in citation formatting.`
+  },
+  "writing-research-papers": {
+    1: `# Structuring Your Research Paper
+
+## Standard Research Paper Format
+
+### Title and Abstract
+**Title**: Clear, concise statement of paper content
+**Abstract**: 150-250 word summary including:
+- Research question
+- Methods used
+- Key findings
+- Implications
+
+The abstract allows readers to quickly understand your work.
+
+### Introduction
+Establish context and motivation:
+1. **Hook**: Engage reader with significance
+2. **Background**: Explain relevant concepts
+3. **Problem Statement**: Identify the gap
+4. **Research Question**: What will you investigate?
+5. **Thesis**: Your main contribution
+
+Introductions should move from general to specific.
+
+### Literature Review
+Synthesize existing knowledge:
+- Identify key works and theories
+- Discuss major findings
+- Show evolution of the field
+- Identify research gaps
+- Position your work within existing literature
+
+A strong literature review shows comprehensive knowledge of your topic.`,
+    2: `# Methods and Results Sections
+
+## Methodology Section
+
+Explain how you conducted research:
+- **Research Design**: Overall approach
+- **Participants/Subjects**: Who or what you studied
+- **Data Collection**: Procedures and instruments
+- **Data Analysis**: How you processed data
+- **Validity and Reliability**: How you ensured quality
+
+Sufficient detail allows others to:
+- Understand your approach
+- Evaluate appropriateness
+- Replicate the study
+- Assess limitations
+
+## Results Section
+
+Present your findings:
+- Report data relevant to research questions
+- Use tables and figures for clarity
+- Organize logically (by research question often)
+- Present factually without interpretation
+- Note statistical significance
+
+**Results Section Features**:
+- Objective tone
+- Past tense
+- References to tables and figures
+- No discussion of implications
+- Clear and complete
+
+Results should be presented clearly so readers understand what you found.`,
+    3: `# Discussion and Conclusion
+
+## Discussion Section
+
+Interpret your findings:
+1. **Restate Findings**: Briefly summarize key results
+2. **Interpret**: What do findings mean?
+3. **Compare to Literature**: How do they fit with existing knowledge?
+4. **Discuss Implications**: What's the significance?
+5. **Acknowledge Limitations**: What are constraints?
+6. **Suggest Future Work**: What remains unanswered?
+
+Discussion is where you explain why your findings matter.
+
+### Addressing Limitations
+
+Honestly discuss:
+- Sample size constraints
+- Methodological limitations
+- Generalizability limitations
+- Practical constraints
+- Future improvements
+
+Acknowledging limitations strengthens rather than weakens your work.
+
+## Conclusion
+
+- **Summarize**: Main findings and contributions
+- **Broader Impact**: Significance for the field
+- **Applications**: Practical or theoretical implications
+- **Future Directions**: Open questions for further research
+- **Final Thought**: Memorable closing
+
+## Reference List
+
+Complete citations for all sources:
+- Organized alphabetically
+- Formatted consistently
+- Using appropriate citation style
+- Only sources actually cited
+
+Well-written research papers advance knowledge through clear communication of rigorous investigation.`
+  }
+};
+
 
 // Quiz questions templates by module slug
 const quizQuestionsByModule: Record<string, any[]> = {
@@ -1712,22 +2692,25 @@ async function seedDatabase() {
       const course = createdCourses[moduleData.courseIndex];
 
       // Generate lessons for this module
-      const lessons = lessonsTemplate.map((template, index) => ({
-        title: `${moduleData.title} - Lesson ${index + 1}`,
-        titleFr: `${moduleData.titleFr} - Leçon ${index + 1}`,
-        description: faker.lorem.sentence(15),
-        descriptionFr: faker.lorem.sentence(15),
-        type: template.type,
-        content:
-          template.type === "video"
-            ? "https://youtu.be/v-MLGYuWLBo"
-            : faker.lorem.paragraphs(5, "<br/><br/>"),
-        contentFr: faker.lorem.paragraphs(5, "<br/><br/>"),
-        duration: template.duration,
-        order: template.order,
-        isPreview: template.isPreview,
-        hasQuiz: template.hasQuiz,
-      }));
+      const lessons = lessonsTemplate.map((template, index) => {
+        // Get content for this lesson from the contentByModule mapping
+        const moduleContent = contentByModule[moduleData.slug];
+        const lessonContent = moduleContent ? moduleContent[template.order] : faker.lorem.paragraphs(5, "<br/><br/>");
+        
+        return {
+          title: `${moduleData.title} - Lesson ${index + 1}`,
+          titleFr: `${moduleData.titleFr} - Leçon ${index + 1}`,
+          description: faker.lorem.sentence(15),
+          descriptionFr: faker.lorem.sentence(15),
+          type: template.type,
+          content: lessonContent,
+          contentFr: lessonContent,
+          duration: template.duration,
+          order: template.order,
+          isPreview: template.isPreview,
+          hasQuiz: template.hasQuiz,
+        };
+      });
 
       const courseModule = await Module.create({
         courseId: course._id,

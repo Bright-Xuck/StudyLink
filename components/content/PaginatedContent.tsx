@@ -128,7 +128,7 @@ export default function PaginatedContent({
   };
 
   return (
-    <div className="flex flex-col h-full max-h-[calc(100vh-400px)]">
+    <div className="flex flex-col h-full max-h-[calc(100vh-120px)] max-sm:max-h-[calc(100vh-400px)]">
       {/* Time Tracker */}
       <div className="mb-4 flex items-center justify-between flex-shrink-0">
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
