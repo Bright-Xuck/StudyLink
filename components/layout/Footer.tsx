@@ -5,6 +5,21 @@ import { Link } from "@/navigation";
 
 export default function Footer() {
   const t = useTranslations("footer");
+  const footerLinks = {
+  product: [
+    { labelKey: "courses.title", href: "/courses" },
+    { labelKey: "groups.title", href: "/groups" },
+    { labelKey: "subjects.title", href: "/subjects" },
+  ],
+  company: [
+    { labelKey: "footer.about", href: "/about" },
+    { labelKey: "footer.contact", href: "/contact" },
+  ],
+  legal: [
+    { labelKey: "footer.privacy", href: "/privacy" },
+    { labelKey: "footer.terms", href: "/terms" },
+  ],
+};
   return (
     <footer className="bg-[var(--color-primary)] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
