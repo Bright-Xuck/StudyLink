@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "courses": "Cours",
+    "subjects": "Sujets",
+    "groups": "Groupes d'étude",
+    "profile": "Profil",
+    "logout": "Déconnexion",
+    "login": "Connexion",
+    "register": "Inscription"
+  },
+  "landing": {
+    "hero_title": "Maîtrisez Vos Études avec StudyLink",
+    "hero_subtitle": "Connectez-vous avec vos pairs, accédez à des cours de qualité et réussissez vos examens avec notre plateforme d'apprentissage complète",
+    "hero_cta": "Commencer",
+    "features_title": "Pourquoi Choisir StudyLink?",
+    "feature_courses": "Cours de Qualité",
+    "feature_courses_desc": "Des cours soigneusement sélectionnés par des instructeurs experts",
+    "feature_groups": "Groupes d'Étude",
+    "feature_groups_desc": "Collaborez avec vos pairs dans des groupes d'étude organisés",
+    "feature_ai": "Assistant IA",
+    "feature_ai_desc": "Obtenez une aide instantanée et des recommandations d'étude personnalisées",
+    "feature_tracking": "Suivi de Progression",
+    "feature_tracking_desc": "Suivez votre parcours d'apprentissage et vos statistiques de réussite"
+  },
+  "courses": {
+    "title": "Explorer les Cours",
+    "subtitle": "Trouvez des cours adaptés à vos intérêts et vos objectifs",
+    "filter_all": "Tous les Sujets",
+    "search_placeholder": "Rechercher des cours...",
+    "enroll": "S'inscrire",
+    "enrolled": "Inscrit",
+    "lessons": "Leçons",
+    "students": "Étudiants"
+  },
+  "subjects": {
+    "title": "Sujets",
+    "subtitle": "Parcourez tous les sujets et spécialisations disponibles",
+    "courses": "Cours"
+  },
+  "groups": {
+    "title": "Groupes d'Étude",
+    "subtitle": "Rejoignez ou créez des groupes d'étude pour collaborer avec vos pairs",
+    "create": "Créer un Groupe",
+    "join": "Rejoindre un Groupe",
+    "members": "Membres",
+    "search_placeholder": "Rechercher des groupes..."
+  },
+  "auth": {
+    "login_title": "Bienvenue",
+    "login_subtitle": "Connectez-vous pour continuer votre parcours d'apprentissage",
+    "register_title": "Créez Votre Compte",
+    "register_subtitle": "Rejoignez des milliers d'étudiants qui apprennent ensemble",
+    "email": "Adresse E-mail",
+    "password": "Mot de Passe",
+    "confirm_password": "Confirmer le Mot de Passe",
+    "first_name": "Prénom",
+    "last_name": "Nom de Famille",
+    "login_btn": "Se Connecter",
+    "register_btn": "Créer un Compte",
+    "forgot_password": "Mot de passe oublié?",
+    "no_account": "Vous n'avez pas de compte?",
+    "have_account": "Vous avez déjà un compte?",
+    "sign_up_link": "Inscrivez-vous ici",
+    "sign_in_link": "Connectez-vous ici",
+    "remember_me": "Se souvenir de moi",
+    "terms_agree": "J'accepte les Conditions de Service et la Politique de Confidentialité"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "welcome": "Bienvenue",
+    "in_progress": "En Cours",
+    "completed": "Complété",
+    "recommended": "Recommandé Pour Vous",
+    "your_groups": "Vos Groupes d'Étude",
+    "recent_activity": "Activité Récente"
+  },
+  "profile": {
+    "title": "Mon Profil",
+    "edit": "Modifier le Profil",
+    "settings": "Paramètres",
+    "learning_stats": "Statistiques d'Apprentissage",
+    "completed_courses": "Cours Complétés",
+    "total_hours": "Heures Totales",
+    "current_streak": "Série Actuelle",
+    "achievements": "Réalisations"
+  },
+  "footer": {
+    "about": "À Propos de StudyLink",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions de Service",
+    "contact": "Nous Contacter",
+    "copyright": "Tous droits réservés"
+  }
+}

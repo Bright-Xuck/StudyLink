@@ -1,13 +1,5 @@
-import { Hero, Features, CoursesPreview, Testimonials, CTA } from "@/components/sections";
+import { redirect } from '@/navigation';
 
-export default function HomePage() {
-  return (
-    <>
-      <Hero />
-      <Features />
-      <CoursesPreview />
-      <Testimonials />
-      <CTA />
-    </>
-  );
+export default function RootPage() {
+  redirect('/en');
 }

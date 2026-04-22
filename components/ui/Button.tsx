@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 type ButtonVariant = "primary" | "secondary" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";

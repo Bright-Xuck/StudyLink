@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "subjects": "Subjects",
+    "groups": "Study Groups",
+    "profile": "Profile",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Register"
+  },
+  "landing": {
+    "hero_title": "Master Your Studies with StudyLink",
+    "hero_subtitle": "Connect with peers, access quality courses, and ace your exams with our comprehensive learning platform",
+    "hero_cta": "Get Started",
+    "features_title": "Why Choose StudyLink?",
+    "feature_courses": "Quality Courses",
+    "feature_courses_desc": "Carefully curated courses by expert instructors",
+    "feature_groups": "Study Groups",
+    "feature_groups_desc": "Collaborate with peers in organized study groups",
+    "feature_ai": "AI Assistant",
+    "feature_ai_desc": "Get instant help and personalized study recommendations",
+    "feature_tracking": "Progress Tracking",
+    "feature_tracking_desc": "Monitor your learning journey and achievement stats"
+  },
+  "courses": {
+    "title": "Explore Courses",
+    "subtitle": "Find courses tailored to your interests and goals",
+    "filter_all": "All Subjects",
+    "search_placeholder": "Search courses...",
+    "enroll": "Enroll Now",
+    "enrolled": "Enrolled",
+    "lessons": "Lessons",
+    "students": "Students"
+  },
+  "subjects": {
+    "title": "Subjects",
+    "subtitle": "Browse all available subjects and specializations",
+    "courses": "Courses"
+  },
+  "groups": {
+    "title": "Study Groups",
+    "subtitle": "Join or create study groups to collaborate with peers",
+    "create": "Create Group",
+    "join": "Join Group",
+    "members": "Members",
+    "search_placeholder": "Search groups..."
+  },
+  "auth": {
+    "login_title": "Welcome Back",
+    "login_subtitle": "Sign in to continue your learning journey",
+    "register_title": "Create Your Account",
+    "register_subtitle": "Join thousands of students learning together",
+    "email": "Email Address",
+    "password": "Password",
+    "confirm_password": "Confirm Password",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "login_btn": "Sign In",
+    "register_btn": "Create Account",
+    "forgot_password": "Forgot your password?",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "sign_up_link": "Sign up here",
+    "sign_in_link": "Sign in here",
+    "remember_me": "Remember me",
+    "terms_agree": "I agree to the Terms of Service and Privacy Policy"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "in_progress": "In Progress",
+    "completed": "Completed",
+    "recommended": "Recommended For You",
+    "your_groups": "Your Study Groups",
+    "recent_activity": "Recent Activity"
+  },
+  "profile": {
+    "title": "My Profile",
+    "edit": "Edit Profile",
+    "settings": "Settings",
+    "learning_stats": "Learning Statistics",
+    "completed_courses": "Completed Courses",
+    "total_hours": "Total Hours",
+    "current_streak": "Current Streak",
+    "achievements": "Achievements"
+  },
+  "footer": {
+    "about": "About StudyLink",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us",
+    "copyright": "All rights reserved"
+  }
+}
