@@ -1,43 +1,43 @@
 import Link from "next/link";
 import { Button, Badge } from "@/components/ui";
 
-// Sample course data - this will later come from an API
+// Sample subjects data - aligned to Cameroonian curriculum
 const featuredCourses = [
   {
     id: "1",
-    title: "Full-Stack Web Development",
+    title: "Mathematics",
     description:
-      "Master React, Node.js, and PostgreSQL to build complete web applications from scratch.",
-    level: "Intermediate",
-    duration: "12 weeks",
-    students: 2500,
-    rating: 4.8,
-    image: "/images/course-web.svg",
-    tags: ["React", "Node.js", "PostgreSQL"],
+      "Master algebra, geometry, trigonometry, and calculus with step-by-step solutions and practice problems.",
+    level: "Secondary/High",
+    duration: "Continuous",
+    students: 1200,
+    rating: 4.9,
+    image: "/images/course-math.svg",
+    tags: ["Algebra", "Geometry", "Calculus"],
   },
   {
     id: "2",
-    title: "Python for Data Science",
+    title: "English Language",
     description:
-      "Learn Python, pandas, and machine learning fundamentals for data analysis and visualization.",
-    level: "Beginner",
-    duration: "10 weeks",
-    students: 3200,
-    rating: 4.9,
-    image: "/images/course-python.svg",
-    tags: ["Python", "Pandas", "ML"],
+      "Improve your English through literature, grammar, composition, and comprehension exercises aligned to GCE standards.",
+    level: "Secondary/High",
+    duration: "Continuous",
+    students: 1550,
+    rating: 4.8,
+    image: "/images/course-english.svg",
+    tags: ["Literature", "Grammar", "Writing"],
   },
   {
     id: "3",
-    title: "Mobile App Development",
+    title: "Physics",
     description:
-      "Build cross-platform mobile apps with React Native and modern development practices.",
-    level: "Intermediate",
-    duration: "8 weeks",
-    students: 1800,
+      "Explore mechanics, thermodynamics, electricity, and magnetism with interactive experiments and visualizations.",
+    level: "Secondary/High",
+    duration: "Continuous",
+    students: 890,
     rating: 4.7,
-    image: "/images/course-mobile.svg",
-    tags: ["React Native", "TypeScript", "Expo"],
+    image: "/images/course-physics.svg",
+    tags: ["Mechanics", "Waves", "Energy"],
   },
 ];
 
@@ -49,14 +49,14 @@ export function CoursesPreview() {
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-12">
           <div>
             <span className="text-[var(--color-accent)] font-semibold text-sm uppercase tracking-wider">
-              Popular Courses
+              Popular Subjects
             </span>
             <h2 className="mt-2 text-3xl md:text-4xl font-bold text-[var(--color-foreground)]">
-              Start Your Learning Journey
+              Choose Your Subject
             </h2>
           </div>
-          <Button variant="outline" href="/courses">
-            View All Courses
+          <Button variant="outline" href="/subjects">
+            View All Subjects
           </Button>
         </div>
 

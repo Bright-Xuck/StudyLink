@@ -10,24 +10,24 @@ export function CTA() {
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
-          Ready to Start Your{" "}
-          <span className="text-[var(--color-accent)]">Tech Journey</span>?
+          Ready to Excel in Your{" "}
+          <span className="text-[var(--color-accent)]">Studies</span>?
         </h2>
         <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-          Join thousands of learners who have transformed their careers. Start
-          with a free course today and unlock your potential.
+          Join thousands of students across Cameroon who are improving their grades
+          and achieving their academic goals. Start learning today!
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Button variant="primary" size="lg" href="/auth/register">
-            Get Started Free
+            Create Free Account
           </Button>
           <Button
             variant="outline"
             size="lg"
-            href="/courses"
+            href="/subjects"
             className="border-white text-white hover:bg-white hover:text-[var(--color-primary)]"
           >
-            Browse Courses
+            Browse Subjects
           </Button>
         </div>
 
@@ -35,15 +35,15 @@ export function CTA() {
         <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-slate-400 text-sm">
           <span className="flex items-center gap-2">
             <CheckIcon />
-            No credit card required
+            Free access to all subjects
           </span>
           <span className="flex items-center gap-2">
             <CheckIcon />
-            Free starter courses
+            Curriculum-aligned content
           </span>
           <span className="flex items-center gap-2">
             <CheckIcon />
-            Cancel anytime
+            24/7 learning support
           </span>
         </div>
       </div>

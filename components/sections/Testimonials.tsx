@@ -1,27 +1,27 @@
 const testimonials = [
   {
     id: 1,
-    name: "Sarah Chen",
-    role: "Frontend Developer at TechCorp",
+    name: "Amara Nkosi",
+    role: "Form 5 Student, Yaoundé",
     content:
-      "StudyLink transformed my career. The structured curriculum and hands-on projects gave me the confidence to land my dream job. The mentorship was invaluable.",
-    avatar: "SC",
+      "StudyLink helped me understand Mathematics concepts I was struggling with. My grades improved significantly, and I'm confident I'll ace my GCE exams.",
+    avatar: "AN",
   },
   {
     id: 2,
-    name: "Michael Okonkwo",
-    role: "Data Analyst at DataFlow",
+    name: "David Njie",
+    role: "Form 4 Student, Limbe",
     content:
-      "The Python for Data Science course was exactly what I needed. The practical approach and real-world datasets helped me transition from a traditional analyst role.",
-    avatar: "MO",
+      "The study groups feature is amazing. I connect with other students who share my challenges. We motivate each other and learn together. Highly recommended!",
+    avatar: "DN",
   },
   {
     id: 3,
-    name: "Emily Rodriguez",
-    role: "Full-Stack Developer",
+    name: "Grace Tanyi",
+    role: "Form 5 Student, Douala",
     content:
-      "I tried many platforms before finding StudyLink. The difference is the quality of instruction and the supportive community. Worth every penny.",
-    avatar: "ER",
+      "The AI tutor is like having a personal teacher available 24/7. It explains concepts in a way I understand and gives me practice problems exactly when I need them.",
+    avatar: "GT",
   },
 ];
 
@@ -32,14 +32,14 @@ export function Testimonials() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-[var(--color-accent)] font-semibold text-sm uppercase tracking-wider">
-            Testimonials
+            Student Stories
           </span>
           <h2 className="mt-4 text-3xl md:text-4xl font-bold text-[var(--color-foreground)] text-balance">
             What Our Students Say
           </h2>
           <p className="mt-4 text-[var(--color-foreground-muted)] text-lg">
-            Join thousands of successful learners who have transformed their
-            careers with StudyLink.
+            Join thousands of students across Cameroon who are achieving their
+            academic goals with StudyLink.
           </p>
         </div>
 

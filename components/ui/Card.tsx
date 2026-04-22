@@ -2,16 +2,34 @@ interface CardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
+  variant?: "default" | "gradient" | "glass";
+  animated?: boolean;
 }
 
-export function Card({ children, className = "", hover = false }: CardProps) {
+export function Card({
+  children,
+  className = "",
+  hover = false,
+  variant = "default",
+  animated = false,
+}: CardProps) {
+  const variantStyles = {
+    default:
+      "bg-[var(--color-card)] border border-[var(--color-border)] shadow-sm",
+    gradient:
+      "bg-gradient-to-br from-white to-[var(--color-background-alt)] border border-[var(--color-border)] shadow-md",
+    glass: "glass shadow-lg",
+  };
+
   const hoverStyles = hover
-    ? "hover:shadow-xl hover:border-[var(--color-accent)] hover:-translate-y-1"
+    ? "hover:shadow-2xl hover:border-[var(--color-accent)]/30 hover:-translate-y-1"
     : "";
+
+  const animatedClass = animated ? "animate-fade-in-up" : "";
 
   return (
     <div
-      className={`bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl p-6 transition-all duration-300 ${hoverStyles} ${className}`}
+      className={`${variantStyles[variant]} rounded-2xl p-6 transition-smooth ${hoverStyles} ${animatedClass} ${className}`}
     >
       {children}
     </div>
@@ -21,10 +39,20 @@ export function Card({ children, className = "", hover = false }: CardProps) {
 interface CardHeaderProps {
   children: React.ReactNode;
   className?: string;
+  icon?: React.ReactNode;
 }
 
-export function CardHeader({ children, className = "" }: CardHeaderProps) {
-  return <div className={`mb-4 ${className}`}>{children}</div>;
+export function CardHeader({
+  children,
+  className = "",
+  icon,
+}: CardHeaderProps) {
+  return (
+    <div className={`mb-4 flex items-center gap-3 ${className}`}>
+      {icon && <div className="text-2xl">{icon}</div>}
+      <div>{children}</div>
+    </div>
+  );
 }
 
 interface CardTitleProps {
@@ -52,7 +80,7 @@ export function CardDescription({
   className = "",
 }: CardDescriptionProps) {
   return (
-    <p className={`text-[var(--color-foreground-muted)] mt-2 ${className}`}>
+    <p className={`text-[var(--color-foreground-muted)] mt-2 text-sm ${className}`}>
       {children}
     </p>
   );
