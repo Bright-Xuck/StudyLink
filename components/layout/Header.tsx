@@ -1,18 +1,20 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 import { Button } from "@/components/ui";
 
-const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "Subjects", href: "/subjects" },
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Study Groups", href: "/study-groups" },
-];
-
-export function Header() {
+export default function Header() {
+  const t = useTranslations();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const navLinks = [
+    { label: t("nav.home"), href: "/" },
+    { label: t("nav.courses"), href: "/courses" },
+    { label: t("nav.subjects"), href: "/subjects" },
+    { label: t("nav.groups"), href: "/groups" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 bg-[var(--color-background)] border-b border-[var(--color-border)]">
@@ -42,10 +44,10 @@ export function Header() {
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:flex items-center gap-4">
             <Button variant="ghost" href="/auth/login" size="sm">
-              Log In
+              {t("nav.login")}
             </Button>
             <Button variant="primary" href="/auth/register" size="sm">
-              Get Started
+              {t("nav.register")}
             </Button>
           </div>
 
@@ -75,10 +77,10 @@ export function Header() {
               ))}
               <div className="flex flex-col gap-2 pt-4 border-t border-[var(--color-border)]">
                 <Button variant="ghost" href="/auth/login" size="sm">
-                  Log In
+                  {t("nav.login")}
                 </Button>
                 <Button variant="primary" href="/auth/register" size="sm">
-                  Get Started
+                  {t("nav.register")}
                 </Button>
               </div>
             </nav>

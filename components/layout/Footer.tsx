@@ -1,26 +1,10 @@
-import Link from "next/link";
+'use client';
 
-const footerLinks = {
-  product: [
-    { label: "Courses", href: "/courses" },
-    { label: "Pricing", href: "/pricing" },
-    { label: "Mentorship", href: "/mentorship" },
-    { label: "Resources", href: "/resources" },
-  ],
-  company: [
-    { label: "About", href: "/about" },
-    { label: "Careers", href: "/careers" },
-    { label: "Blog", href: "/blog" },
-    { label: "Contact", href: "/contact" },
-  ],
-  legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Terms", href: "/terms" },
-    { label: "Cookie Policy", href: "/cookies" },
-  ],
-};
+import { useTranslations } from "next-intl";
+import { Link } from "@/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
   return (
     <footer className="bg-[var(--color-primary)] text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -32,8 +16,7 @@ export function Footer() {
               <span className="text-xl font-bold">StudyLink</span>
             </Link>
             <p className="text-slate-400 text-sm leading-relaxed">
-              Empowering learners to master mainstream tech skills through
-              structured courses and hands-on projects.
+              {t("about")}
             </p>
           </div>
 
@@ -92,7 +75,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-slate-700 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-slate-400 text-sm">
-            &copy; {new Date().getFullYear()} StudyLink. All rights reserved.
+            &copy; {new Date().getFullYear()} StudyLink. {t("copyright")}
           </p>
           <div className="flex gap-4">
             <SocialIcon type="twitter" />

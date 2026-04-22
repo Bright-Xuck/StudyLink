@@ -2,39 +2,39 @@ import { Card, CardContent } from "@/components/ui";
 
 const features = [
   {
-    title: "Curriculum-Aligned Content",
+    title: "Structured Learning Paths",
     description:
-      "All lessons follow the Cameroonian secondary and high school curriculum to ensure you're learning what's needed for your exams.",
+      "Follow carefully curated learning paths designed to take you from beginner to job-ready in your chosen tech stack.",
     icon: "path",
   },
   {
-    title: "Interactive Learning",
+    title: "Hands-on Projects",
     description:
-      "Learn through interactive lessons, quizzes, and practice problems. Get instant feedback and detailed solutions.",
+      "Build real-world projects that you can add to your portfolio. Learn by doing, not just watching videos.",
     icon: "code",
   },
   {
-    title: "Expert Tutors",
+    title: "Expert Mentorship",
     description:
-      "Learn from experienced educators who understand the Cameroonian education system and exam requirements.",
+      "Get guidance from industry professionals who have worked at top tech companies.",
     icon: "mentor",
   },
   {
-    title: "Study Groups",
+    title: "Community Support",
     description:
-      "Connect with other students, form study groups, set goals together, and motivate each other to succeed.",
+      "Join a vibrant community of learners. Collaborate, share knowledge, and grow together.",
     icon: "community",
   },
   {
-    title: "AI-Powered Guidance",
+    title: "Industry Certificates",
     description:
-      "Get personalized learning recommendations and a virtual tutor that adapts to your learning pace and style.",
+      "Earn recognized certificates upon course completion to showcase your skills to employers.",
     icon: "certificate",
   },
   {
-    title: "Learn at Your Pace",
+    title: "Flexible Learning",
     description:
-      "Study whenever you want, wherever you are. Pause, replay lessons, and revisit materials as many times as you need.",
+      "Learn at your own pace with lifetime access to course materials. Study anytime, anywhere.",
     icon: "clock",
   },
 ];
@@ -46,14 +46,14 @@ export function Features() {
         {/* Section Header */}
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-[var(--color-accent)] font-semibold text-sm uppercase tracking-wider">
-            Why StudyLink
+            Why Choose Us
           </span>
           <h2 className="mt-4 text-3xl md:text-4xl font-bold text-[var(--color-foreground)] text-balance">
-            Your Path to Academic Excellence
+            Everything You Need to Succeed
           </h2>
           <p className="mt-4 text-[var(--color-foreground-muted)] text-lg">
-            We provide comprehensive tools and support to help you excel in your
-            studies and achieve your academic goals.
+            We provide all the tools and resources you need to master tech skills
+            and advance your career.
           </p>
         </div>
 
