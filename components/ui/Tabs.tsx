@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, type ReactNode } from "react";
 import { clsx } from "clsx";
 
 interface TabsContextValue {
@@ -20,7 +20,7 @@ function useTabsContext() {
 
 interface TabsProps {
   defaultValue: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   onChange?: (value: string) => void;
 }
@@ -45,19 +45,24 @@ export function Tabs({
   );
 }
 
+type TabsListVariant = "pills" | "underline" | "boxed";
+
 interface TabsListProps {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
+  variant?: TabsListVariant;
 }
 
-export function TabsList({ children, className = "" }: TabsListProps) {
+export function TabsList({ children, className = "", variant = "pills" }: TabsListProps) {
+  const variantStyles = {
+    pills: "inline-flex items-center gap-1 p-1 bg-[var(--color-gray-100)] rounded-lg",
+    underline: "flex items-center gap-6 border-b border-[var(--color-border)]",
+    boxed: "inline-flex items-center border border-[var(--color-border)] rounded-lg divide-x divide-[var(--color-border)] overflow-hidden",
+  };
+
   return (
     <div
-      className={clsx(
-        "inline-flex items-center gap-1 p-1",
-        "bg-[var(--color-background-alt)] rounded-[var(--radius)]",
-        className
-      )}
+      className={clsx(variantStyles[variant], className)}
       role="tablist"
     >
       {children}
@@ -67,9 +72,11 @@ export function TabsList({ children, className = "" }: TabsListProps) {
 
 interface TabsTriggerProps {
   value: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   disabled?: boolean;
+  icon?: ReactNode;
+  variant?: TabsListVariant;
 }
 
 export function TabsTrigger({
@@ -77,9 +84,34 @@ export function TabsTrigger({
   children,
   className = "",
   disabled = false,
+  icon,
+  variant = "pills",
 }: TabsTriggerProps) {
   const { activeTab, setActiveTab } = useTabsContext();
   const isActive = activeTab === value;
+
+  const baseStyles = "text-sm font-medium transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)] disabled:opacity-50 disabled:cursor-not-allowed";
+  
+  const variantStyles = {
+    pills: clsx(
+      "px-3.5 py-2 rounded-md",
+      isActive
+        ? "bg-white text-[var(--color-text-primary)] shadow-sm"
+        : "text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)]"
+    ),
+    underline: clsx(
+      "pb-3 -mb-px border-b-2",
+      isActive
+        ? "border-[var(--color-primary)] text-[var(--color-text-primary)]"
+        : "border-transparent text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:border-[var(--color-gray-300)]"
+    ),
+    boxed: clsx(
+      "px-4 py-2.5",
+      isActive
+        ? "bg-[var(--color-gray-100)] text-[var(--color-text-primary)]"
+        : "bg-white text-[var(--color-text-secondary)] hover:bg-[var(--color-gray-50)]"
+    ),
+  };
 
   return (
     <button
@@ -89,16 +121,13 @@ export function TabsTrigger({
       disabled={disabled}
       onClick={() => setActiveTab(value)}
       className={clsx(
-        "px-4 py-2 text-sm font-medium rounded-[var(--radius-sm)]",
-        "transition-all duration-200",
-        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-primary)]",
-        isActive
-          ? "bg-[var(--color-background-elevated)] text-[var(--color-foreground)] shadow-sm"
-          : "text-[var(--color-foreground-muted)] hover:text-[var(--color-foreground)]",
-        disabled && "opacity-50 cursor-not-allowed",
+        baseStyles,
+        variantStyles[variant],
+        "flex items-center gap-2",
         className
       )}
     >
+      {icon && <span className="flex-shrink-0">{icon}</span>}
       {children}
     </button>
   );
@@ -106,7 +135,7 @@ export function TabsTrigger({
 
 interface TabsContentProps {
   value: string;
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
 }
 
@@ -124,7 +153,8 @@ export function TabsContent({
   return (
     <div
       role="tabpanel"
-      className={clsx("animate-fade-in", className)}
+      className={clsx("animate-fade-in-up", className)}
+      style={{ animationDuration: "200ms" }}
     >
       {children}
     </div>
