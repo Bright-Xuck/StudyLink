@@ -7,5 +7,8 @@ export {
   CardContent,
   CardFooter,
 } from "./Card";
-export { Input } from "./Input";
+export { Input, Textarea } from "./Input";
 export { Badge } from "./Badge";
+export { Avatar, AvatarGroup } from "./Avatar";
+export { ProgressBar, ProgressRing } from "./Progress";
+export { Tabs, TabsList, TabsTrigger, TabsContent } from "./Tabs";

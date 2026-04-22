@@ -1,13 +1,28 @@
 {
   "nav": {
     "home": "Accueil",
+    "dashboard": "Tableau de Bord",
     "courses": "Cours",
     "subjects": "Sujets",
     "groups": "Groupes d'étude",
     "profile": "Profil",
+    "settings": "Paramètres",
     "logout": "Déconnexion",
     "login": "Connexion",
     "register": "Inscription"
+  },
+  "common": {
+    "search": "Rechercher...",
+    "notifications": "Notifications",
+    "view_all": "Voir Tout",
+    "continue": "Continuer",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "loading": "Chargement...",
+    "no_results": "Aucun résultat trouvé",
+    "see_more": "Voir Plus"
   },
   "landing": {
     "hero_title": "Maîtrisez Vos Études avec StudyLink",
@@ -21,7 +36,11 @@
     "feature_ai": "Assistant IA",
     "feature_ai_desc": "Obtenez une aide instantanée et des recommandations d'étude personnalisées",
     "feature_tracking": "Suivi de Progression",
-    "feature_tracking_desc": "Suivez votre parcours d'apprentissage et vos statistiques de réussite"
+    "feature_tracking_desc": "Suivez votre parcours d'apprentissage et vos statistiques de réussite",
+    "stats_students": "Étudiants Actifs",
+    "stats_courses": "Cours",
+    "stats_groups": "Groupes d'Étude",
+    "stats_countries": "Pays"
   },
   "courses": {
     "title": "Explorer les Cours",
@@ -31,12 +50,26 @@
     "enroll": "S'inscrire",
     "enrolled": "Inscrit",
     "lessons": "Leçons",
-    "students": "Étudiants"
+    "students": "Étudiants",
+    "instructor": "Instructeur",
+    "progress": "Progression",
+    "continue_learning": "Continuer l'Apprentissage",
+    "start_course": "Commencer le Cours",
+    "overview": "Aperçu",
+    "curriculum": "Programme",
+    "reviews": "Avis",
+    "about_course": "À Propos de ce Cours",
+    "what_learn": "Ce que Vous Apprendrez",
+    "requirements": "Prérequis",
+    "level": "Niveau",
+    "duration": "Durée",
+    "certificate": "Certificat Inclus"
   },
   "subjects": {
     "title": "Sujets",
     "subtitle": "Parcourez tous les sujets et spécialisations disponibles",
-    "courses": "Cours"
+    "courses": "Cours",
+    "explore": "Explorer"
   },
   "groups": {
     "title": "Groupes d'Étude",
@@ -44,7 +77,11 @@
     "create": "Créer un Groupe",
     "join": "Rejoindre un Groupe",
     "members": "Membres",
-    "search_placeholder": "Rechercher des groupes..."
+    "search_placeholder": "Rechercher des groupes...",
+    "active_now": "Actifs Maintenant",
+    "your_groups": "Vos Groupes",
+    "discover": "Découvrir des Groupes",
+    "upcoming_sessions": "Sessions à Venir"
   },
   "auth": {
     "login_title": "Bienvenue",
@@ -56,6 +93,7 @@
     "confirm_password": "Confirmer le Mot de Passe",
     "first_name": "Prénom",
     "last_name": "Nom de Famille",
+    "full_name": "Nom Complet",
     "login_btn": "Se Connecter",
     "register_btn": "Créer un Compte",
     "forgot_password": "Mot de passe oublié?",
@@ -64,16 +102,23 @@
     "sign_up_link": "Inscrivez-vous ici",
     "sign_in_link": "Connectez-vous ici",
     "remember_me": "Se souvenir de moi",
-    "terms_agree": "J'accepte les Conditions de Service et la Politique de Confidentialité"
+    "terms_agree": "J'accepte les Conditions de Service et la Politique de Confidentialité",
+    "or_continue": "Ou continuer avec"
   },
   "dashboard": {
     "title": "Tableau de Bord",
     "welcome": "Bienvenue",
+    "greeting": "Prêt à continuer à apprendre?",
     "in_progress": "En Cours",
     "completed": "Complété",
+    "streak": "Jours Consécutifs",
     "recommended": "Recommandé Pour Vous",
     "your_groups": "Vos Groupes d'Étude",
-    "recent_activity": "Activité Récente"
+    "recent_activity": "Activité Récente",
+    "continue_learning": "Continuer l'Apprentissage",
+    "quick_actions": "Actions Rapides",
+    "upcoming": "Sessions à Venir",
+    "no_activity": "Pas encore d'activité récente. Commencez à apprendre maintenant!"
   },
   "profile": {
     "title": "Mon Profil",
@@ -83,7 +128,10 @@
     "completed_courses": "Cours Complétés",
     "total_hours": "Heures Totales",
     "current_streak": "Série Actuelle",
-    "achievements": "Réalisations"
+    "achievements": "Réalisations",
+    "bio": "Biographie",
+    "member_since": "Membre Depuis",
+    "badges": "Badges"
   },
   "footer": {
     "about": "À Propos de StudyLink",

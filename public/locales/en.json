@@ -1,13 +1,28 @@
 {
   "nav": {
     "home": "Home",
+    "dashboard": "Dashboard",
     "courses": "Courses",
     "subjects": "Subjects",
     "groups": "Study Groups",
     "profile": "Profile",
+    "settings": "Settings",
     "logout": "Logout",
     "login": "Login",
     "register": "Register"
+  },
+  "common": {
+    "search": "Search...",
+    "notifications": "Notifications",
+    "view_all": "View All",
+    "continue": "Continue",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "loading": "Loading...",
+    "no_results": "No results found",
+    "see_more": "See More"
   },
   "landing": {
     "hero_title": "Master Your Studies with StudyLink",
@@ -21,7 +36,11 @@
     "feature_ai": "AI Assistant",
     "feature_ai_desc": "Get instant help and personalized study recommendations",
     "feature_tracking": "Progress Tracking",
-    "feature_tracking_desc": "Monitor your learning journey and achievement stats"
+    "feature_tracking_desc": "Monitor your learning journey and achievement stats",
+    "stats_students": "Active Students",
+    "stats_courses": "Courses",
+    "stats_groups": "Study Groups",
+    "stats_countries": "Countries"
   },
   "courses": {
     "title": "Explore Courses",
@@ -31,12 +50,26 @@
     "enroll": "Enroll Now",
     "enrolled": "Enrolled",
     "lessons": "Lessons",
-    "students": "Students"
+    "students": "Students",
+    "instructor": "Instructor",
+    "progress": "Progress",
+    "continue_learning": "Continue Learning",
+    "start_course": "Start Course",
+    "overview": "Overview",
+    "curriculum": "Curriculum",
+    "reviews": "Reviews",
+    "about_course": "About This Course",
+    "what_learn": "What You Will Learn",
+    "requirements": "Requirements",
+    "level": "Level",
+    "duration": "Duration",
+    "certificate": "Certificate Included"
   },
   "subjects": {
     "title": "Subjects",
     "subtitle": "Browse all available subjects and specializations",
-    "courses": "Courses"
+    "courses": "Courses",
+    "explore": "Explore"
   },
   "groups": {
     "title": "Study Groups",
@@ -44,7 +77,11 @@
     "create": "Create Group",
     "join": "Join Group",
     "members": "Members",
-    "search_placeholder": "Search groups..."
+    "search_placeholder": "Search groups...",
+    "active_now": "Active Now",
+    "your_groups": "Your Groups",
+    "discover": "Discover Groups",
+    "upcoming_sessions": "Upcoming Sessions"
   },
   "auth": {
     "login_title": "Welcome Back",
@@ -56,6 +93,7 @@
     "confirm_password": "Confirm Password",
     "first_name": "First Name",
     "last_name": "Last Name",
+    "full_name": "Full Name",
     "login_btn": "Sign In",
     "register_btn": "Create Account",
     "forgot_password": "Forgot your password?",
@@ -64,16 +102,23 @@
     "sign_up_link": "Sign up here",
     "sign_in_link": "Sign in here",
     "remember_me": "Remember me",
-    "terms_agree": "I agree to the Terms of Service and Privacy Policy"
+    "terms_agree": "I agree to the Terms of Service and Privacy Policy",
+    "or_continue": "Or continue with"
   },
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome back",
+    "greeting": "Ready to continue learning?",
     "in_progress": "In Progress",
     "completed": "Completed",
+    "streak": "Day Streak",
     "recommended": "Recommended For You",
     "your_groups": "Your Study Groups",
-    "recent_activity": "Recent Activity"
+    "recent_activity": "Recent Activity",
+    "continue_learning": "Continue Learning",
+    "quick_actions": "Quick Actions",
+    "upcoming": "Upcoming Sessions",
+    "no_activity": "No recent activity yet. Start learning now!"
   },
   "profile": {
     "title": "My Profile",
@@ -83,7 +128,10 @@
     "completed_courses": "Completed Courses",
     "total_hours": "Total Hours",
     "current_streak": "Current Streak",
-    "achievements": "Achievements"
+    "achievements": "Achievements",
+    "bio": "Bio",
+    "member_since": "Member Since",
+    "badges": "Badges"
   },
   "footer": {
     "about": "About StudyLink",

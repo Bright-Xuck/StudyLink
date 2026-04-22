@@ -1,17 +1,34 @@
+import { clsx } from "clsx";
+
 interface CardProps {
   children: React.ReactNode;
   className?: string;
   hover?: boolean;
+  padding?: "none" | "sm" | "md" | "lg";
 }
 
-export function Card({ children, className = "", hover = false }: CardProps) {
-  const hoverStyles = hover
-    ? "hover:shadow-xl hover:border-[var(--color-accent)] hover:-translate-y-1"
-    : "";
+const paddingStyles = {
+  none: "",
+  sm: "p-4",
+  md: "p-6",
+  lg: "p-8",
+};
 
+export function Card({
+  children,
+  className = "",
+  hover = false,
+  padding = "md",
+}: CardProps) {
   return (
     <div
-      className={`bg-[var(--color-card)] border border-[var(--color-border)] rounded-xl p-6 transition-all duration-300 ${hoverStyles} ${className}`}
+      className={clsx(
+        "bg-[var(--color-card)] border border-[var(--color-card-border)]",
+        "rounded-[var(--radius-lg)] transition-all duration-200",
+        paddingStyles[padding],
+        hover && "hover:border-[var(--color-border-strong)] hover:shadow-[var(--shadow-md)]",
+        className
+      )}
     >
       {children}
     </div>
@@ -24,21 +41,36 @@ interface CardHeaderProps {
 }
 
 export function CardHeader({ children, className = "" }: CardHeaderProps) {
-  return <div className={`mb-4 ${className}`}>{children}</div>;
+  return (
+    <div className={clsx("mb-4", className)}>
+      {children}
+    </div>
+  );
 }
 
 interface CardTitleProps {
   children: React.ReactNode;
   className?: string;
+  as?: "h2" | "h3" | "h4";
 }
 
-export function CardTitle({ children, className = "" }: CardTitleProps) {
+export function CardTitle({
+  children,
+  className = "",
+  as: Component = "h3",
+}: CardTitleProps) {
   return (
-    <h3
-      className={`text-xl font-bold text-[var(--color-foreground)] ${className}`}
+    <Component
+      className={clsx(
+        "font-semibold text-[var(--color-foreground)] text-balance",
+        Component === "h2" && "text-xl",
+        Component === "h3" && "text-lg",
+        Component === "h4" && "text-base",
+        className
+      )}
     >
       {children}
-    </h3>
+    </Component>
   );
 }
 
@@ -52,7 +84,7 @@ export function CardDescription({
   className = "",
 }: CardDescriptionProps) {
   return (
-    <p className={`text-[var(--color-foreground-muted)] mt-2 ${className}`}>
+    <p className={clsx("text-sm text-[var(--color-foreground-muted)] mt-1.5", className)}>
       {children}
     </p>
   );
@@ -64,7 +96,7 @@ interface CardContentProps {
 }
 
 export function CardContent({ children, className = "" }: CardContentProps) {
-  return <div className={className}>{children}</div>;
+  return <div className={clsx(className)}>{children}</div>;
 }
 
 interface CardFooterProps {
@@ -74,7 +106,12 @@ interface CardFooterProps {
 
 export function CardFooter({ children, className = "" }: CardFooterProps) {
   return (
-    <div className={`mt-6 pt-4 border-t border-[var(--color-border)] ${className}`}>
+    <div
+      className={clsx(
+        "mt-6 pt-4 border-t border-[var(--color-border)] flex items-center gap-3",
+        className
+      )}
+    >
       {children}
     </div>
   );

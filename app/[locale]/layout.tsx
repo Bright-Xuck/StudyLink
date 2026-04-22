@@ -3,8 +3,6 @@ import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { routing } from '@/navigation';
-import Header from '@/components/layout/Header';
-import Footer from '@/components/layout/Footer';
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
@@ -32,13 +30,9 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className="bg-background">
-      <body className="bg-background text-foreground">
+      <body className="bg-[var(--color-background)] text-[var(--color-foreground)] antialiased">
         <NextIntlClientProvider messages={messages}>
-          <Header />
-          <main>
-            {children}
-          </main>
-          <Footer />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
