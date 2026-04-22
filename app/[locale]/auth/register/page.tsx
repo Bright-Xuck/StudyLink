@@ -1,12 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { Input } from '@/components/ui/Input';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
-import Link from 'next/link';
+import { Link } from '@/navigation';
+import { Input, Button, Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { useState } from 'react';
 
 export default function RegisterPage() {
@@ -22,6 +18,7 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // TODO: Connect to backend API
     console.log('Registration attempt:', formData);
   };
 
@@ -34,94 +31,90 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 flex items-center justify-center py-12">
-        <div className="w-full max-w-md">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-2xl">{t('register_title')}</CardTitle>
-              <p className="text-sm text-[var(--color-foreground-muted)] mt-2">
-                {t('register_subtitle')}
-              </p>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <Input
-                    label={t('first_name')}
-                    placeholder="John"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Input
-                    label={t('last_name')}
-                    placeholder="Doe"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    required
-                  />
-                </div>
+    <main className="min-h-screen flex items-center justify-center py-12">
+      <div className="w-full max-w-md px-4">
+        <Card>
+          <CardHeader className="text-center">
+            <CardTitle className="text-2xl">{t('register_title')}</CardTitle>
+            <p className="text-sm text-[var(--color-foreground-muted)] mt-2">
+              {t('register_subtitle')}
+            </p>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <Input
-                  label={t('email')}
-                  type="email"
-                  placeholder="you@example.com"
-                  name="email"
-                  value={formData.email}
+                  label={t('first_name')}
+                  placeholder="John"
+                  name="firstName"
+                  value={formData.firstName}
                   onChange={handleChange}
                   required
                 />
                 <Input
-                  label={t('password')}
-                  type="password"
-                  placeholder="••••••••"
-                  name="password"
-                  value={formData.password}
+                  label={t('last_name')}
+                  placeholder="Doe"
+                  name="lastName"
+                  value={formData.lastName}
                   onChange={handleChange}
                   required
                 />
-                <Input
-                  label={t('confirm_password')}
-                  type="password"
-                  placeholder="••••••••"
-                  name="confirmPassword"
-                  value={formData.confirmPassword}
+              </div>
+              <Input
+                label={t('email')}
+                type="email"
+                placeholder="you@example.com"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              <Input
+                label={t('password')}
+                type="password"
+                placeholder="••••••••"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+              />
+              <Input
+                label={t('confirm_password')}
+                type="password"
+                placeholder="••••••••"
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required
+              />
+              <div className="flex items-start">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  name="agreeTerms"
+                  checked={formData.agreeTerms}
                   onChange={handleChange}
+                  className="mt-1"
                   required
                 />
-                <div className="flex items-start">
-                  <input
-                    type="checkbox"
-                    id="terms"
-                    name="agreeTerms"
-                    checked={formData.agreeTerms}
-                    onChange={handleChange}
-                    className="mt-1"
-                    required
-                  />
-                  <label htmlFor="terms" className="ml-2 text-sm text-[var(--color-foreground-muted)]">
-                    {t('terms_agree')}
-                  </label>
-                </div>
-                <Button type="submit" variant="primary" size="md" className="w-full">
-                  {t('register_btn')}
-                </Button>
-              </form>
+                <label htmlFor="terms" className="ml-2 text-sm text-[var(--color-foreground-muted)]">
+                  {t('terms_agree')}
+                </label>
+              </div>
+              <Button type="submit" variant="primary" size="md" className="w-full">
+                {t('register_btn')}
+              </Button>
+            </form>
 
-              <p className="text-center text-sm text-[var(--color-foreground-muted)] mt-6">
-                {t('have_account')}{' '}
-                <Link href="/auth/login" className="text-[var(--color-accent)] hover:underline font-medium">
-                  {t('sign_in_link')}
-                </Link>
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-      <Footer />
-    </div>
+            <p className="text-center text-sm text-[var(--color-foreground-muted)] mt-6">
+              {t('have_account')}{' '}
+              <Link href="/auth/login" className="text-[var(--color-accent)] hover:underline font-medium">
+                {t('sign_in_link')}
+              </Link>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    </main>
   );
 }

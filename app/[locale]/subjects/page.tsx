@@ -1,9 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 
 const mockSubjects = [
   { id: '1', name: 'Web Development', courses: 12, students: 5000 },
@@ -18,41 +16,37 @@ export default function SubjectsPage() {
   const t = useTranslations('subjects');
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        {/* Header Section */}
-        <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] text-white py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
-            <p className="text-slate-300">{t('subtitle')}</p>
-          </div>
+    <main>
+      {/* Header Section */}
+      <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
+          <p className="text-slate-300">{t('subtitle')}</p>
         </div>
+      </div>
 
-        {/* Subjects Grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockSubjects.map((subject) => (
-              <Card key={subject.id}>
-                <CardHeader>
-                  <CardTitle>{subject.name}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2">
-                    <p className="text-sm text-[var(--color-foreground-muted)]">
-                      {subject.courses} {t('courses')}
-                    </p>
-                    <p className="text-sm text-[var(--color-foreground-muted)]">
-                      {subject.students} Students
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+      {/* Subjects Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mockSubjects.map((subject) => (
+            <Card key={subject.id}>
+              <CardHeader>
+                <CardTitle>{subject.name}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <p className="text-sm text-[var(--color-foreground-muted)]">
+                    {subject.courses} {t('courses')}
+                  </p>
+                  <p className="text-sm text-[var(--color-foreground-muted)]">
+                    {subject.students} Students
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   );
 }

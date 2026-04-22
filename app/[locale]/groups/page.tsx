@@ -1,9 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { Header } from '@/components/layout/Header';
-import { Footer } from '@/components/layout/Footer';
-import { Button } from '@/components/ui/Button';
+import { Button } from '@/components/ui';
 import { GroupCard } from '@/components/features/GroupCard';
 
 const mockGroups = [
@@ -17,36 +15,32 @@ export default function GroupsPage() {
   const t = useTranslations('groups');
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1">
-        {/* Header Section */}
-        <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] text-white py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-            <div>
-              <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
-              <p className="text-slate-300">{t('subtitle')}</p>
-            </div>
-            <Button variant="primary" size="lg">
-              {t('create')}
-            </Button>
+    <main>
+      {/* Header Section */}
+      <div className="bg-gradient-to-br from-[var(--color-primary)] to-[var(--color-primary-light)] text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-4xl font-bold mb-2">{t('title')}</h1>
+            <p className="text-slate-300">{t('subtitle')}</p>
           </div>
+          <Button variant="primary" size="lg">
+            {t('create')}
+          </Button>
         </div>
+      </div>
 
-        {/* Groups Grid */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mockGroups.map((group) => (
-              <GroupCard
-                key={group.id}
-                {...group}
-                onJoin={() => console.log('Join', group.name)}
-              />
-            ))}
-          </div>
+      {/* Groups Grid */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mockGroups.map((group) => (
+            <GroupCard
+              key={group.id}
+              {...group}
+              onJoin={() => console.log('Join', group.name)}
+            />
+          ))}
         </div>
-      </main>
-      <Footer />
-    </div>
+      </div>
+    </main>
   );
 }
