@@ -3,7 +3,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/navigation";
 
-export function Footer() {
+export default function Footer() {
   const t = useTranslations("footer");
   return (
     <footer className="bg-[var(--color-primary)] text-white">

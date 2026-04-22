@@ -5,7 +5,7 @@ import { getMessages } from 'next-intl/server';
 import { routing } from '@/navigation';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import '../globals.css';
+import "@/app/globals.css";
 
 export const metadata: Metadata = {
   title: 'StudyLink - Master Your Studies',
