@@ -13,16 +13,17 @@ export function Hero() {
           {/* Content */}
           <div className="space-y-6">
             <span className="inline-block px-4 py-2 bg-[var(--color-accent)]/20 text-[var(--color-accent)] rounded-full text-sm font-medium">
-              Welcome to StudyLink
+              Start Learning Today
             </span>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-balance">
-              Excel in Your{" "}
-              <span className="text-[var(--color-accent)]">School Studies</span>
+              Master{" "}
+              <span className="text-[var(--color-accent)]">Mainstream Tech</span>{" "}
+              Skills
             </h1>
             <p className="text-lg text-slate-300 leading-relaxed max-w-lg">
-              Master secondary and high school subjects with interactive lessons
-              aligned to the Cameroonian curriculum. Learn from experienced
-              tutors, join study groups, and achieve your academic goals.
+              Learn the most in-demand programming languages, frameworks, and
+              tools through structured courses designed by industry experts.
+              Build real projects and launch your tech career.
             </p>
             <div className="flex flex-wrap gap-4">
               <Button variant="primary" size="lg" href="/courses">
@@ -35,9 +36,9 @@ export function Hero() {
 
             {/* Stats */}
             <div className="flex flex-wrap gap-8 pt-8 border-t border-slate-700">
-              <Stat value="5K+" label="Active Students" />
-              <Stat value="12+" label="Subjects" />
-              <Stat value="98%" label="Pass Rate" />
+              <Stat value="10K+" label="Students" />
+              <Stat value="50+" label="Courses" />
+              <Stat value="95%" label="Satisfaction" />
             </div>
           </div>
 

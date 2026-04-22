@@ -10,24 +10,24 @@ export function CTA() {
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 text-balance">
-          Ready to Excel in Your{" "}
-          <span className="text-[var(--color-accent)]">Studies</span>?
+          Ready to Start Your{" "}
+          <span className="text-[var(--color-accent)]">Tech Journey</span>?
         </h2>
         <p className="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-          Join thousands of students across Cameroon who are improving their grades
-          and achieving their academic goals. Start learning today!
+          Join thousands of learners who have transformed their careers. Start
+          with a free course today and unlock your potential.
         </p>
         <div className="flex flex-wrap justify-center gap-4">
           <Button variant="primary" size="lg" href="/auth/register">
-            Create Free Account
+            Get Started Free
           </Button>
           <Button
             variant="outline"
             size="lg"
-            href="/subjects"
+            href="/courses"
             className="border-white text-white hover:bg-white hover:text-[var(--color-primary)]"
           >
-            Browse Subjects
+            Browse Courses
           </Button>
         </div>
 
@@ -35,15 +35,15 @@ export function CTA() {
         <div className="mt-12 flex flex-wrap justify-center items-center gap-8 text-slate-400 text-sm">
           <span className="flex items-center gap-2">
             <CheckIcon />
-            Free access to all subjects
+            No credit card required
           </span>
           <span className="flex items-center gap-2">
             <CheckIcon />
-            Curriculum-aligned content
+            Free starter courses
           </span>
           <span className="flex items-center gap-2">
             <CheckIcon />
-            24/7 learning support
+            Cancel anytime
           </span>
         </div>
       </div>
