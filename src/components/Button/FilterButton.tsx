@@ -20,13 +20,9 @@ const FilterButton: FunctionComponent<IFilterButton> = ({
 
   const handleFilter = () => {
     if (filterByType) {
-      dispatch({ type: "SET_FILTERS_BY_TYPE", payload: filter });
-      isSearching
-        ? dispatch({ type: "SET_FILTER_SEARCHED_COURSES_BY_TYPE" })
-        : dispatch({ type: "SET_FILTERS_BY_TYPE" });
+      dispatch({ type: "SET_FILTERS_BY_TYPE", payload: [filter] });
     } else {
-      dispatch({ type: "SET_FILTERS_BY_TIME", payload: filter });
-      dispatch({ type: "SET_FILTERED_BY_TIME_COURSES" });
+      dispatch({ type: "SET_FILTERS_BY_TIME", payload: [filter] });
     }
   };
 

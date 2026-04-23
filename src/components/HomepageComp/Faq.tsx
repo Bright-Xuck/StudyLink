@@ -51,7 +51,7 @@ export const FaqComp: FunctionComponent<IFaq> = ({
   const dispatch = useAppDispatch();
 
   const toggleFaq = () => {
-    dispatch({ type: "showFaqAnswer", payload: id });
+    dispatch({ type: "SHOW_FAQ_ANSWER", payload: id });
   };
 
   return (

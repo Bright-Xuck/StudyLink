@@ -20,7 +20,7 @@ const ButtonGroup: FunctionComponent<IButtonGroup> = ({ filters }) => {
   const dispatch = useAppDispatch();
 
   const cancelSearch = () => {
-    dispatch({ type: "resetSearchQuery" });
+    dispatch({ type: "RESET_SEARCH_QUERY" });
   };
 
   const isCoursesPage = pathname?.includes("/courses");

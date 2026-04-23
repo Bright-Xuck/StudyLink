@@ -186,7 +186,7 @@ export const FavEmojiButton: FunctionComponent<IFavBtn> = ({
   const dispatch = useAppDispatch();
 
   const toggleFavorite = () => {
-    dispatch({ type: "toggleLoved", payload: name });
+    dispatch({ type: "TOGGLE_LOVED", payload: name });
     dispatch({ type: "SET_FILTERS_BY_TYPE" });
     dispatch({ type: "SET_FILTER_COURSES_BY_SEARCH" });
     dispatch({ type: "SET_FILTER_SEARCHED_COURSES_BY_TYPE" });

@@ -21,7 +21,7 @@ export interface IContactForm {
   name: string;
   email: string;
   subject: string;
-  msg: string;
+  message: string;
 }
 
 export const ContactComp: FunctionComponent = () => {

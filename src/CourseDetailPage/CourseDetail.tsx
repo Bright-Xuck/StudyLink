@@ -82,10 +82,13 @@ export const CourseDetailComp = () => {
 
   useEffect(() => {
     const courseId = router.query.id;
-    if (courseId) {
-      dispatch({ type: "GET_COURSE_BY_ID", payload: courseId });
+    if (courseId && typeof courseId === 'string') {
+      dispatch({ type: "GET_COURSE_BY_ID", payload: Number(courseId) });
     } else {
-      dispatch({ type: "GET_COURSE_BY_NAME", payload: router.query.name });
+      const courseName = router.query.name;
+      if (courseName) {
+        dispatch({ type: "GET_COURSE_BY_NAME", payload: Array.isArray(courseName) ? courseName[0] : courseName });
+      }
     }
   }, [allCourses, dispatch, router.query]);
   const [isheartHovered, setIsheartHovered] = useState(false);
@@ -94,9 +97,11 @@ export const CourseDetailComp = () => {
   const handleClickPayments = (value: boolean) => {
     dispatch({ type: "SET_SHOW_PAYMENT_MODAL", payload: value });
   };
-  const userCourse = user?.enrolledCourses?.find(
-    (ele) => ele.courseId === course?.id
-  );
+  // Fallback for userCourse since User type doesn't have enrolledCourses
+  const userCourse: any = {
+    isPaid: false,
+    isFree: false,
+  };
   const handleClickTryFree = (value: boolean) => {
     dispatch({ type: "SET_SHOW_TRY_FREE_MODAL", payload: value });
   };

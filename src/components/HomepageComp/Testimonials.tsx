@@ -63,7 +63,7 @@ export const Testimony: FunctionComponent<ITestimony> = ({
   };
 
   const resetActive = () => {
-    dispatch({ type: "resetActiveTestimonials" });
+    dispatch({ type: "RESET_ACTIVE_TESTIMONIALS" });
   };
 
   return (
