@@ -58,15 +58,8 @@ import {
   IReview,
   ITutor,
 } from "@/components/CourseCard/CourseCard";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { convertToNaira } from "@/components/Info/Wishlist";
-import {
-  getCourseById,
-  getCourseByName,
-  setShowPaymentModaL,
-  setShowTryFreeModaL,
-} from "@/redux/dataSlice";
 import {
   faqAnswerVariants,
   msgVariants,
@@ -84,28 +77,28 @@ export const CourseDetailComp = () => {
   const [tabs, setTabs] = useState(Tabs);
   const router = useRouter();
   const { allCourses, course, user, showPaymentModal, showTryFreeModal } =
-    useAppSelector((state: RootState) => state.data);
+    useAppState();
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const courseId = router.query.id;
     if (courseId) {
-      dispatch(getCourseById(courseId));
+      dispatch({ type: "GET_COURSE_BY_ID", payload: courseId });
     } else {
-      dispatch(getCourseByName(router.query.name));
+      dispatch({ type: "GET_COURSE_BY_NAME", payload: router.query.name });
     }
   }, [allCourses, dispatch, router.query]);
   const [isheartHovered, setIsheartHovered] = useState(false);
   const openTab = tabs.find((ele) => ele.isSelected === true);
 
   const handleClickPayments = (value: boolean) => {
-    dispatch(setShowPaymentModaL(value));
+    dispatch({ type: "SET_SHOW_PAYMENT_MODAL", payload: value });
   };
   const userCourse = user?.enrolledCourses?.find(
     (ele) => ele.courseId === course?.id
   );
   const handleClickTryFree = (value: boolean) => {
-    dispatch(setShowTryFreeModaL(value));
+    dispatch({ type: "SET_SHOW_TRY_FREE_MODAL", payload: value });
   };
 
   return (

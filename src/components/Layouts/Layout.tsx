@@ -25,5 +25,6 @@ const Layout: FunctionComponent<ILayout> = ({ children }) => {
   );
 };
 
+export { Layout };
 export default Layout;
 

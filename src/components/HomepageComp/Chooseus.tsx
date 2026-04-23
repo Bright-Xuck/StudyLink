@@ -1,3 +1,5 @@
+"use client";
+
 import { ChooseusStyles, ReasonStyles } from "@/styles/HomepageStyles/Homepage";
 import React, { FunctionComponent, useState } from "react";
 import SectionHead from "../SectionHead/SectionHead";

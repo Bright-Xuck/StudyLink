@@ -35,9 +35,10 @@ import {
   TutorHeadStyle,
 } from "@/styles/CoursepageStyles/CourseDetail";
 import { XtraSmall } from "@/styles/SectionHeadStyles/Small";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
-import { convertToNaira } from "../Info/Wishlist";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
+import {
+  convertToNaira,
+} from "../Info/Wishlist";
 import { IButton } from "@/styles/ButtonStyles/ButtonGroup";
 import {
   FormButton,
@@ -47,12 +48,6 @@ import { useForm } from "react-hook-form";
 import { LoadingDone, Logo, Paypal, Tick, VisaCard } from "../Icons/Icons";
 import { EachFormVariants } from "@/Animations/PaymentVariants";
 import { PageLinkStyle } from "@/styles/LinkStyles/Link";
-import {
-  pushNotification,
-  setShowPaymentModaL,
-  setShowTryFreeModaL,
-  setUserData,
-} from "@/redux/dataSlice";
 import { IUser } from "@/Constant/constant";
 import { INotification } from "../Info/Notifications";
 import { v4 as uuidv4 } from "uuid";
@@ -68,12 +63,10 @@ export const freeTrial: IPlan = {
 
 export const Payment: FunctionComponent<IPayment> = ({ isFreeTrial }) => {
   const dispatch = useAppDispatch();
-  const { showPaymentModal, showTryFreeModal } = useAppSelector(
-    (state: RootState) => state.data
-  );
+  const { showPaymentModal, showTryFreeModal } = useAppState();
   const ref = useOutsideClickDiv(() => {
-    showPaymentModal && dispatch(setShowPaymentModaL(false));
-    showTryFreeModal && dispatch(setShowTryFreeModaL(false));
+    showPaymentModal && dispatch({ type: "setShowPaymentModaL", payload: false });
+    showTryFreeModal && dispatch({ type: "setShowTryFreeModaL", payload: false });
   });
   return (
     <PaymentCompStyles>
@@ -97,9 +90,7 @@ interface IFormB {
   card: ICard;
 }
 export const PaymentForm: FunctionComponent = ({}) => {
-  const { course, user, showTryFreeModal, showPaymentModal } = useAppSelector(
-    (state: RootState) => state.data
-  );
+  const { course, user, showTryFreeModal, showPaymentModal } = useAppState();
   const plans: IPlan[] = [
     {
       name: "Full",
@@ -182,7 +173,7 @@ export const PaymentForm: FunctionComponent = ({}) => {
     } else {
       realUser = user;
     }
-    dispatch(setUserData(realUser));
+    dispatch({ type: "setUserData", payload: realUser });
     setSteps({ step: 2, completedPrevious: true });
     reset();
   };
@@ -237,7 +228,7 @@ export const PaymentForm: FunctionComponent = ({}) => {
           message: `Welcome to ${course.name}, you were successfully enrolled in the 1 week trial!`,
           id: id,
         };
-        dispatch(pushNotification(notification));
+      dispatch({ type: "pushNotification", payload: notification });
       }
     }
   };

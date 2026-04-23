@@ -1,14 +1,4 @@
-import {
-  removeFromFavorite,
-  removeNotification,
-  setFilterCoursesBySearch,
-  setFilterCoursesByType,
-  setFilterSearchedCoursesByType,
-  showNotificationlist,
-  showWishlist,
-} from "@/redux/dataSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { SocialStyles } from "@/styles/FooterStyles/Footer";
 import { DesktopMobile } from "@/styles/HeroStyles/Hero";
 import { TrashContStyle } from "@/styles/HeroStyles/Info";
@@ -51,12 +41,12 @@ export const FooterLogo = () => {
 export const Heart: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch(showWishlist(false));
+    dispatch({ type: "showWishlist", payload: false });
   };
   const handleMouseOver = () => {
-    dispatch(showWishlist(true));
+    dispatch({ type: "showWishlist", payload: true });
   };
-  const { allCourses } = useAppSelector((state: RootState) => state.data);
+  const { allCourses } = useAppState();
   const favorites = allCourses.filter((ele) => ele.isLoved === true);
   return (
     <IconStyle onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
@@ -88,12 +78,12 @@ export const Heart: FunctionComponent = () => {
 export const Notification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch(showNotificationlist(false));
+    dispatch({ type: "showNotificationlist", payload: false });
   };
   const handleMouseOver = () => {
-    dispatch(showNotificationlist(true));
+    dispatch({ type: "showNotificationlist", payload: true });
   };
-  const { notificationList } = useAppSelector((state: RootState) => state.data);
+  const { notificationList } = useAppState();
   return (
     <IconStyle onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
       <svg
@@ -342,7 +332,7 @@ interface ITrashNotif {
 export const TrashNotification: FunctionComponent<ITrashNotif> = ({ id }) => {
   const dispatch = useAppDispatch();
   const handleDelete = () => {
-    dispatch(removeNotification(id));
+    dispatch({ type: "removeNotification", payload: id });
   };
   return (
     <TrashContStyle onClick={handleDelete}>

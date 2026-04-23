@@ -9,7 +9,7 @@ import { useParams } from "next/navigation";
 
 export default function CourseDetailPage() {
   const params = useParams();
-  const courseName = params.name as string;
+  const courseName = (params?.name as string) || "";
 
   return (
     <>

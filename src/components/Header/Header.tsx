@@ -16,12 +16,12 @@ const Header: FunctionComponent = () => {
   const pathname = usePathname();
 
   const toggleMenu = () => {
-    dispatch({ type: "toggleNav" });
+    dispatch({ type: "TOGGLE_NAV" });
   };
 
   useEffect(() => {
     // Close mobile menu on route change
-    dispatch({ type: "closeNav" });
+    dispatch({ type: "CLOSE_NAV" });
   }, [pathname, dispatch]);
 
   const isCoursesActive = pathname?.includes("/courses");

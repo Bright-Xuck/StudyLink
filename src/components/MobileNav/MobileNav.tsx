@@ -16,7 +16,7 @@ const MobileNav: FunctionComponent = () => {
   const pathname = usePathname();
 
   const toggleMenu = () => {
-    dispatch({ type: "closeNav" });
+    dispatch({ type: "CLOSE_NAV" });
   };
 
   const isCoursesActive = pathname?.includes("/courses");

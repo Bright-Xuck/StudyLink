@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorStyles } from "@/styles/ContactpageStyles/Contact";
 import { CenterItemStyle } from "@/styles/HeroStyles/CenterItem";
 import { DesktopMobile, ImprovedDesktopMobile } from "@/styles/HeroStyles/Hero";
