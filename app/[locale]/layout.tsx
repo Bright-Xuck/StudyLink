@@ -1,5 +1,3 @@
-'use client';
-
 import { ReactNode } from 'react';
 import { NextIntlClientProvider } from 'next-intl';
 import { AppProvider } from '@/context/AppContext';
@@ -33,3 +31,4 @@ export default async function LocaleLayout({
     </NextIntlClientProvider>
   );
 }
+
