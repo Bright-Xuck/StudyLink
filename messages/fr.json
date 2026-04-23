@@ -1,0 +1,46 @@
+{
+  "navigation": {
+    "courses": "Cours",
+    "about": "À Propos",
+    "contact": "Nous Contacter",
+    "home": "Accueil"
+  },
+  "hero": {
+    "title": "Aidez-nous à {{action}} votre carrière en Technologie",
+    "actions": ["Démarrer", "Commencer"],
+    "description": "StudyLink est une plateforme d'E-Learning inclusive qui se spécialise dans l'aide aux personnes pour commencer leur parcours dans le monde en évolution de la technologie",
+    "viewCourses": "Voir Nos Cours"
+  },
+  "courses": {
+    "title": "Nos Cours",
+    "filterByTime": "Filtrer par Durée",
+    "filterByType": "Filtrer par Type",
+    "search": "Rechercher des cours...",
+    "noResults": "Aucun cours trouvé",
+    "viewCourse": "Voir le Cours"
+  },
+  "about": {
+    "title": "À Propos de StudyLink",
+    "description": "En savoir plus sur notre mission et notre vision"
+  },
+  "contact": {
+    "title": "Nous Contacter",
+    "email": "Email",
+    "message": "Message",
+    "send": "Envoyer le Message",
+    "contactInfo": "Entrez en contact avec nous"
+  },
+  "footer": {
+    "company": "Entreprise",
+    "community": "Communauté",
+    "legal": "Légal",
+    "followUs": "Nous Suivre"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "success": "Succès",
+    "close": "Fermer",
+    "submit": "Soumettre"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "navigation": {
+    "courses": "Courses",
+    "about": "About Us",
+    "contact": "Contact Us",
+    "home": "Home"
+  },
+  "hero": {
+    "title": "Let's help you {{action}} your career in Tech",
+    "actions": ["Start", "Begin"],
+    "description": "StudyLink is an inclusive E-Learning platform that specializes in helping people kickstart their journey into the evolving world of technology",
+    "viewCourses": "View Our Courses"
+  },
+  "courses": {
+    "title": "Our Courses",
+    "filterByTime": "Filter by Time",
+    "filterByType": "Filter by Type",
+    "search": "Search courses...",
+    "noResults": "No courses found",
+    "viewCourse": "View Course"
+  },
+  "about": {
+    "title": "About StudyLink",
+    "description": "Learn more about our mission and vision"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "contactInfo": "Get in touch with us"
+  },
+  "footer": {
+    "company": "Company",
+    "community": "Community",
+    "legal": "Legal",
+    "followUs": "Follow Us"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "close": "Close",
+    "submit": "Submit"
+  }
+}
