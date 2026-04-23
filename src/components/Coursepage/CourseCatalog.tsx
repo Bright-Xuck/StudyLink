@@ -1,16 +1,12 @@
+"use client";
+
 import { CourseCardStyles } from "@/styles/CourseStyles/CourseCard";
 import { FunctionComponent, useEffect, useState } from "react";
 import ButtonGroup from "../Button/ButtonGroup";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { CourseCatalogStyles } from "@/styles/CoursepageStyles/Coursepage";
 import { CourseCard } from "../CourseCard/CourseCard";
 import { convertToNaira } from "../Info/Wishlist";
-import {
-  resetFiltersByType,
-  setFilterCoursesBySearch,
-  setFilterCoursesByType,
-} from "@/redux/dataSlice";
 import { DetailH3Styles } from "@/styles/CoursepageStyles/CourseDetail";
 import { ErrorMsg } from "./Error";
 
@@ -23,16 +19,16 @@ const CourseCatalog: FunctionComponent = () => {
     filteredSearchCoursesByType,
     searchQuery,
     isSearching,
-  } = useAppSelector((state: RootState) => state.data);
+  } = useAppState();
   const dispatch = useAppDispatch();
   const [lengthOfList, setLengthOfList] = useState(0);
 
   useEffect(() => {
     if (isSearching) {
-      dispatch(resetFiltersByType());
-      dispatch(setFilterCoursesBySearch());
+      dispatch({ type: "resetFiltersByType" });
+      dispatch({ type: "setFilterCoursesBySearch" });
     } else {
-      dispatch(setFilterCoursesByType());
+      dispatch({ type: "setFilterCoursesByType" });
     }
   }, [dispatch, isSearching, searchQuery]);
 
@@ -50,7 +46,6 @@ const CourseCatalog: FunctionComponent = () => {
     searchQuery,
   ]);
 
-  // fix the course card arguments issue
   return (
     <CourseCatalogStyles>
       <ButtonGroup filters={filtersByType} />
@@ -119,7 +114,6 @@ const CourseCatalog: FunctionComponent = () => {
               introVideo={ele.introVideo}
             />
           ))}
-        {/* fix the zero element issue */}
         {isSearching && filteredSearchCoursesByType?.length === 0 && (
           <ErrorMsg errormsg="No Match Found" />
         )}
@@ -129,3 +123,4 @@ const CourseCatalog: FunctionComponent = () => {
 };
 
 export default CourseCatalog;
+

@@ -1,11 +1,11 @@
+"use client";
+
 import { FaqCompStyles, FaqStyles } from "@/styles/HomepageStyles/FaqStyles";
 import { ActualPaddedSectionStyle } from "@/styles/HomepageStyles/Section";
 import { FunctionComponent } from "react";
 import SectionHead from "../SectionHead/SectionHead";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { FaqArrow } from "../Icons/Icons";
-import { showFaqAnswer } from "@/redux/dataSlice";
 import { AnimatePresence, motion } from "framer-motion";
 import { faqAnswerVariants } from "@/Animations/LandingPageVariants";
 
@@ -15,8 +15,10 @@ export interface IFaq {
   answer: string;
   showAnswer: boolean;
 }
+
 export const Faq: FunctionComponent = () => {
-  const { faqs } = useAppSelector((state: RootState) => state.data);
+  const { faqs } = useAppState();
+
   return (
     <FaqStyles>
       <ActualPaddedSectionStyle>
@@ -49,8 +51,9 @@ export const FaqComp: FunctionComponent<IFaq> = ({
   const dispatch = useAppDispatch();
 
   const toggleFaq = () => {
-    dispatch(showFaqAnswer(id));
+    dispatch({ type: "showFaqAnswer", payload: id });
   };
+
   return (
     <FaqCompStyles onClick={toggleFaq} $showAnswer={showAnswer}>
       <div className="question">
@@ -58,17 +61,19 @@ export const FaqComp: FunctionComponent<IFaq> = ({
         <FaqArrow $showAnswer={showAnswer} />
       </div>
       <AnimatePresence>
-      {showAnswer && (
-        <motion.div className="answer"
-        variants={faqAnswerVariants}
-        initial = "initial"
-        animate = "final"
-        exit= "exit"
-        >
-          <p>{answer}</p>
-        </motion.div>
-      )}
+        {showAnswer && (
+          <motion.div
+            className="answer"
+            variants={faqAnswerVariants}
+            initial="initial"
+            animate="final"
+            exit="exit"
+          >
+            <p>{answer}</p>
+          </motion.div>
+        )}
       </AnimatePresence>
     </FaqCompStyles>
   );
 };
+

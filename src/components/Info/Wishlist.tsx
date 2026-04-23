@@ -1,31 +1,35 @@
+"use client";
+
 import { Addtowishlist, WishlistStyles } from "@/styles/HeroStyles/Info";
 import React, { FunctionComponent, useEffect, useState } from "react";
 import WishlistItem from "./WishlistItem";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { showWishlist } from "@/redux/dataSlice";
-import { RootState } from "@/redux/store";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { ICourse } from "../CourseCard/CourseCard";
 
-//   A function which converts dollar to naira based on the exchange rate
 const exchangeRate: number = 750;
 export const convertToNaira = (dollar: number) => {
   return Math.round(exchangeRate * dollar);
 };
 
 const Wishlist: FunctionComponent = () => {
-  const { allCourses } = useAppSelector((state: RootState) => state.data);
+  const { allCourses } = useAppState();
   const [wishList, setWishlist] = useState<ICourse[]>([]);
+
   useEffect(() => {
     const favourite = allCourses.filter((ele) => ele.isLoved === true);
     setWishlist(favourite);
   }, [allCourses]);
+
   const dispatch = useAppDispatch();
+
   const handleMouseLeave = () => {
-    dispatch(showWishlist(false));
+    dispatch({ type: "showWishlist", payload: false });
   };
+
   const handleMouseOver = () => {
-    dispatch(showWishlist(true));
+    dispatch({ type: "showWishlist", payload: true });
   };
+
   return (
     <WishlistStyles
       length={wishList.length}
@@ -58,3 +62,4 @@ const Wishlist: FunctionComponent = () => {
 };
 
 export default Wishlist;
+

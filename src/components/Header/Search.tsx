@@ -1,11 +1,12 @@
+"use client";
+
 import { SearchStyle } from "@/styles/HeaderStyles/Search";
 import React, { FunctionComponent } from "react";
 import { NavMagnifyingGlass } from "../Icons/Icons";
 import { useForm } from "react-hook-form";
 import { ISearchProps } from "../Hero/HeroSearch";
-import { useAppDispatch } from "@/redux/hook";
+import { useAppDispatch } from "@/context/AppContext";
 import { useRouter } from "next/navigation";
-import { setSearchQuery } from "@/redux/dataSlice";
 
 const Search: FunctionComponent = () => {
   const {
@@ -16,10 +17,10 @@ const Search: FunctionComponent = () => {
   } = useForm<ISearchProps>({ mode: "onBlur", defaultValues: { query: "" } });
   const dispatch = useAppDispatch();
   const router = useRouter();
+
   const handleSearch = (data: ISearchProps) => {
-    dispatch(setSearchQuery(data.query));
+    dispatch({ type: "setSearchQuery", payload: data.query });
     router.push("/courses");
-    // reset();
   };
 
   return (
@@ -37,3 +38,4 @@ const Search: FunctionComponent = () => {
 };
 
 export default Search;
+

@@ -1,6 +1,6 @@
-import { showNotificationlist } from "@/redux/dataSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+"use client";
+
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import {
   NotificationItemStyles,
   NotificationListStyle,
@@ -15,14 +15,17 @@ export interface INotification {
 }
 
 export const NotificationList: FunctionComponent = () => {
-  const { notificationList } = useAppSelector((state: RootState) => state.data);
+  const { notificationList } = useAppState();
   const dispatch = useAppDispatch();
+
   const handleMouseLeave = () => {
-    dispatch(showNotificationlist(false));
+    dispatch({ type: "showNotificationlist", payload: false });
   };
+
   const handleMouseOver = () => {
-    dispatch(showNotificationlist(true));
+    dispatch({ type: "showNotificationlist", payload: true });
   };
+
   return (
     <NotificationListStyle
       length={notificationList?.length ? notificationList.length : 0}
@@ -53,6 +56,7 @@ export const NotificationList: FunctionComponent = () => {
 interface INotificationFC extends INotification {
   isEndOfList: boolean;
 }
+
 export const Notificationitem: FunctionComponent<INotificationFC> = ({
   id,
   type,
@@ -72,3 +76,4 @@ export const Notificationitem: FunctionComponent<INotificationFC> = ({
     </NotificationItemStyles>
   );
 };
+

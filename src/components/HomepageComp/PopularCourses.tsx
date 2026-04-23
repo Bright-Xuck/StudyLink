@@ -1,11 +1,11 @@
+"use client";
+
 import React, { FunctionComponent, useEffect } from "react";
 import SectionHead from "../SectionHead/SectionHead";
 import ButtonGroup from "../Button/ButtonGroup";
 import { PaddedSectionStyle } from "@/styles/HomepageStyles/Section";
 import { CoursesGroupStyle } from "@/styles/HeroStyles/coursesGroup";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
-import { setFilteredByTimeCourses } from "@/redux/dataSlice";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { CourseCard } from "../CourseCard/CourseCard";
 import { convertToNaira } from "../Info/Wishlist";
 import { LinkStyle } from "@/styles/LinkStyles/Link";
@@ -14,12 +14,11 @@ import { CenterItemStyle } from "@/styles/HeroStyles/CenterItem";
 import { PopularCoursesStyles } from "@/styles/HomepageStyles/PopularCourses";
 
 const PopularCourses = () => {
-  const { filtersByTime, filteredByTimeCourses, allCourses } = useAppSelector(
-    (state: RootState) => state.data
-  );
+  const { filtersByTime, filteredByTimeCourses, allCourses } = useAppState();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(setFilteredByTimeCourses());
+    dispatch({ type: "setFilteredByTimeCourses" });
   }, [dispatch, allCourses]);
 
   return (
@@ -76,3 +75,4 @@ const PopularCourses = () => {
 };
 
 export default PopularCourses;
+

@@ -1,21 +1,18 @@
+"use client";
+
 import {
   TestimonialStyles,
   TestimonyStyles,
 } from "@/styles/HomepageStyles/Homepage";
 import SectionHead from "../SectionHead/SectionHead";
 import { ActualPaddedSectionStyle } from "@/styles/HomepageStyles/Section";
-import { FunctionComponent, useEffect } from "react";
+import { FunctionComponent } from "react";
 import Image from "next/image";
 import { BlackQuote, Union, WhiteQuote } from "../Icons/Icons";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
-import {
-  resetActiveTestimonials,
-  setActiveTestimonials,
-} from "@/redux/dataSlice";
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 
 export const Testimonials: FunctionComponent = () => {
-  const { testimonies } = useAppSelector((state: RootState) => state.data);
+  const { testimonies } = useAppState();
 
   return (
     <TestimonialStyles>
@@ -50,6 +47,7 @@ export interface ITestimony {
   comment: string;
   isActive: boolean;
 }
+
 export const Testimony: FunctionComponent<ITestimony> = ({
   name,
   img,
@@ -59,11 +57,13 @@ export const Testimony: FunctionComponent<ITestimony> = ({
   id,
 }) => {
   const dispatch = useAppDispatch();
+
   const makeActive = () => {
-    dispatch(setActiveTestimonials(id));
+    dispatch({ type: "setActiveTestimonials", payload: id });
   };
+
   const resetActive = () => {
-    dispatch(resetActiveTestimonials());
+    dispatch({ type: "resetActiveTestimonials" });
   };
 
   return (
@@ -86,3 +86,4 @@ export const Testimony: FunctionComponent<ITestimony> = ({
     </TestimonyStyles>
   );
 };
+

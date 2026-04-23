@@ -1,13 +1,6 @@
-import {
-  setFilterCoursesBySearch,
-  setFilterCoursesByType,
-  setFilterSearchedCoursesByType,
-  setFilteredByTimeCourses,
-  setFiltersByTime,
-  setFiltersByType,
-} from "@/redux/dataSlice";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+"use client";
+
+import { useAppDispatch, useAppState } from "@/context/AppContext";
 import { FilterButtonStyles } from "@/styles/ButtonStyles/ButtonGroup";
 import React, { FunctionComponent } from "react";
 
@@ -16,24 +9,27 @@ export interface IFilterButton {
   isSelected: boolean;
   filterByType?: boolean;
 }
+
 const FilterButton: FunctionComponent<IFilterButton> = ({
   filter,
   isSelected,
   filterByType,
 }) => {
   const dispatch = useAppDispatch();
-  const {isSearching} = useAppSelector((state:RootState) => state.data);
-  
+  const { isSearching } = useAppState();
+
   const handleFilter = () => {
     if (filterByType) {
-      dispatch(setFiltersByType(filter));
-      isSearching ? dispatch(setFilterSearchedCoursesByType()) : dispatch(setFilterCoursesByType());
+      dispatch({ type: "setFiltersByType", payload: filter });
+      isSearching
+        ? dispatch({ type: "setFilterSearchedCoursesByType" })
+        : dispatch({ type: "setFilterCoursesByType" });
     } else {
-      // for homepage popular and new filters
-      dispatch(setFiltersByTime(filter));
-      dispatch(setFilteredByTimeCourses());
+      dispatch({ type: "setFiltersByTime", payload: filter });
+      dispatch({ type: "setFilteredByTimeCourses" });
     }
   };
+
   return (
     <FilterButtonStyles onClick={handleFilter} $isSelected={isSelected}>
       {filter}
@@ -42,3 +38,4 @@ const FilterButton: FunctionComponent<IFilterButton> = ({
 };
 
 export default FilterButton;
+

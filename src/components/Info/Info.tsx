@@ -1,15 +1,16 @@
+"use client";
+
 import { InfoStyles } from "@/styles/HeroStyles/Info";
 import MobileNav from "../MobileNav/MobileNav";
-import React, { FunctionComponent, useState } from "react";
-import { useAppSelector } from "@/redux/hook";
-import { RootState } from "@/redux/store";
+import React, { FunctionComponent } from "react";
+import { useAppState } from "@/context/AppContext";
 import { AnimatePresence } from "framer-motion";
 import Wishlist from "./Wishlist";
 import { NotificationList } from "./Notifications";
 
 const Info: FunctionComponent = () => {
-  const { isNavOpen, isWishlistOpen, isNotificationOpen } = useAppSelector((state: RootState) => state.data);
-  
+  const { isNavOpen, isWishlistOpen, isNotificationOpen } = useAppState();
+
   return (
     <InfoStyles>
       <h3>80% discount on all courses when you use a discount code.</h3>
@@ -17,10 +18,7 @@ const Info: FunctionComponent = () => {
         <AnimatePresence>{isNavOpen && <MobileNav />}</AnimatePresence>
       </div>
       <div className="desktop">
-        {/* add animation to this component */}
-        <AnimatePresence>
-          {isWishlistOpen && <Wishlist />}
-        </AnimatePresence>
+        <AnimatePresence>{isWishlistOpen && <Wishlist />}</AnimatePresence>
         <AnimatePresence>
           {isNotificationOpen && <NotificationList />}
         </AnimatePresence>
@@ -30,3 +28,4 @@ const Info: FunctionComponent = () => {
 };
 
 export default Info;
+

@@ -1,3 +1,5 @@
+"use client";
+
 import { MobileNavStyles } from "@/styles/HeaderStyles/MobileNav";
 import { SideMenuButtonStyle } from "@/styles/HeaderStyles/SideMenuButton";
 import { PageLinkStyle } from "@/styles/LinkStyles/Link";
@@ -6,28 +8,31 @@ import Link from "next/link";
 import React, { FunctionComponent } from "react";
 import { motion } from "framer-motion";
 import { slidevariants } from "../../Animations/LandingPageVariants";
-import { useAppDispatch, useAppSelector } from "@/redux/hook";
-import { closeNav } from "@/redux/dataSlice";
-import { useRouter } from "next/router";
+import { useAppDispatch } from "@/context/AppContext";
+import { usePathname } from "next/navigation";
 
-
-// setIsNavOpen: Dispatch<SetStateAction<boolean>>;
-const MobileNav:FunctionComponent= () => {
+const MobileNav: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const toggleMenu =()=>{
-    dispatch(closeNav());
-  }
-  const router = useRouter();
-  
+  const pathname = usePathname();
+
+  const toggleMenu = () => {
+    dispatch({ type: "closeNav" });
+  };
+
+  const isCoursesActive = pathname?.includes("/courses");
+  const isAboutActive = pathname?.includes("/about");
+  const isContactActive = pathname?.includes("/contact");
+
   return (
     <MobileNavStyles>
       <div className="nothing" onClick={toggleMenu}></div>
-      <motion.div className="sidemenu"
-      variants={slidevariants}
-      initial = "initial"
-      animate = "final"
-      exit= "exit"
-      key= "hinokami"
+      <motion.div
+        className="sidemenu"
+        variants={slidevariants}
+        initial="initial"
+        animate="final"
+        exit="exit"
+        key="hinokami"
       >
         <div className="one">
           <div className="avatar">
@@ -41,13 +46,28 @@ const MobileNav:FunctionComponent= () => {
           </div>
           <div className="sidemenu-links">
             <Link href={"/courses"}>
-              <PageLinkStyle color="var(--grey-500, #525252)" $ispageactive={router.pathname === "/courses"}>Courses</PageLinkStyle>
+              <PageLinkStyle
+                color="var(--grey-500, #525252)"
+                $ispageactive={isCoursesActive}
+              >
+                Courses
+              </PageLinkStyle>
             </Link>
             <Link href={"/about"}>
-              <PageLinkStyle color="var(--grey-500, #525252)" $ispageactive={router.pathname === "/about"}>About Us</PageLinkStyle>
+              <PageLinkStyle
+                color="var(--grey-500, #525252)"
+                $ispageactive={isAboutActive}
+              >
+                About Us
+              </PageLinkStyle>
             </Link>
             <Link href={"/contact"}>
-              <PageLinkStyle color="var(--grey-500, #525252)" $ispageactive={router.pathname === "/contact"}>Contact Us</PageLinkStyle>
+              <PageLinkStyle
+                color="var(--grey-500, #525252)"
+                $ispageactive={isContactActive}
+              >
+                Contact Us
+              </PageLinkStyle>
             </Link>
           </div>
           <div className="sidemenu-links">
@@ -64,14 +84,18 @@ const MobileNav:FunctionComponent= () => {
               </div>
             </SideMenuButtonStyle>
             <Link href={"#"}>
-              <PageLinkStyle color="var(--grey-500, #525252)" $ispageactive={false}>Profile</PageLinkStyle>
+              <PageLinkStyle color="var(--grey-500, #525252)" $ispageactive={false}>
+                Profile
+              </PageLinkStyle>
             </Link>
           </div>
         </div>
         <div className="two">
-        <Link href={"#"}>
-              <PageLinkStyle color="var(--red, #D92D20)" $ispageactive={false}>Logout</PageLinkStyle>
-            </Link>
+          <Link href={"#"}>
+            <PageLinkStyle color="var(--red, #D92D20)" $ispageactive={false}>
+              Logout
+            </PageLinkStyle>
+          </Link>
         </div>
       </motion.div>
     </MobileNavStyles>
@@ -79,3 +103,4 @@ const MobileNav:FunctionComponent= () => {
 };
 
 export default MobileNav;
+
