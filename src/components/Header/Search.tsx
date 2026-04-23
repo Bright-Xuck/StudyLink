@@ -19,7 +19,7 @@ const Search: FunctionComponent = () => {
   const router = useRouter();
 
   const handleSearch = (data: ISearchProps) => {
-    dispatch({ type: "setSearchQuery", payload: data.query });
+    dispatch({ type: "SET_SEARCH_QUERY", payload: data.query });
     router.push("/courses");
   };
 

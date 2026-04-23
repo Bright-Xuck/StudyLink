@@ -19,11 +19,11 @@ export const NotificationList: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const handleMouseLeave = () => {
-    dispatch({ type: "showNotificationlist", payload: false });
+    dispatch({ type: "SHOW_NOTIFICATION", payload: false });
   };
 
   const handleMouseOver = () => {
-    dispatch({ type: "showNotificationlist", payload: true });
+    dispatch({ type: "SHOW_NOTIFICATION", payload: true });
   };
 
   return (

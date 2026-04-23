@@ -18,7 +18,7 @@ const PopularCourses = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch({ type: "setFilteredByTimeCourses" });
+    dispatch({ type: "SET_FILTERED_BY_TIME_COURSES" });
   }, [dispatch, allCourses]);
 
   return (

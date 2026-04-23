@@ -59,7 +59,7 @@ export const Testimony: FunctionComponent<ITestimony> = ({
   const dispatch = useAppDispatch();
 
   const makeActive = () => {
-    dispatch({ type: "setActiveTestimonials", payload: id });
+    dispatch({ type: "SET_ACTIVE_TESTIMONIALS", payload: id });
   };
 
   const resetActive = () => {

@@ -26,9 +26,9 @@ const CourseCatalog: FunctionComponent = () => {
   useEffect(() => {
     if (isSearching) {
       dispatch({ type: "resetFiltersByType" });
-      dispatch({ type: "setFilterCoursesBySearch" });
+      dispatch({ type: "SET_FILTER_COURSES_BY_SEARCH" });
     } else {
-      dispatch({ type: "setFilterCoursesByType" });
+      dispatch({ type: "SET_FILTERS_BY_TYPE" });
     }
   }, [dispatch, isSearching, searchQuery]);
 

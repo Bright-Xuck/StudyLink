@@ -65,8 +65,8 @@ export const Payment: FunctionComponent<IPayment> = ({ isFreeTrial }) => {
   const dispatch = useAppDispatch();
   const { showPaymentModal, showTryFreeModal } = useAppState();
   const ref = useOutsideClickDiv(() => {
-    showPaymentModal && dispatch({ type: "setShowPaymentModaL", payload: false });
-    showTryFreeModal && dispatch({ type: "setShowTryFreeModaL", payload: false });
+    showPaymentModal && dispatch({ type: "SET_SHOW_PAYMENT_MODAL", payload: false });
+    showTryFreeModal && dispatch({ type: "SET_SHOW_TRY_FREE_MODAL", payload: false });
   });
   return (
     <PaymentCompStyles>
@@ -173,7 +173,7 @@ export const PaymentForm: FunctionComponent = ({}) => {
     } else {
       realUser = user;
     }
-    dispatch({ type: "setUserData", payload: realUser });
+    dispatch({ type: "SET_USER_DATA", payload: realUser });
     setSteps({ step: 2, completedPrevious: true });
     reset();
   };
@@ -228,7 +228,7 @@ export const PaymentForm: FunctionComponent = ({}) => {
           message: `Welcome to ${course.name}, you were successfully enrolled in the 1 week trial!`,
           id: id,
         };
-      dispatch({ type: "pushNotification", payload: notification });
+      dispatch({ type: "PUSH_NOTIFICATION", payload: notification });
       }
     }
   };

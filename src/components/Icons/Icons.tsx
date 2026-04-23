@@ -41,10 +41,10 @@ export const FooterLogo = () => {
 export const Heart: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch({ type: "showWishlist", payload: false });
+    dispatch({ type: "SHOW_WISHLIST", payload: false });
   };
   const handleMouseOver = () => {
-    dispatch({ type: "showWishlist", payload: true });
+    dispatch({ type: "SHOW_WISHLIST", payload: true });
   };
   const { allCourses } = useAppState();
   const favorites = allCourses.filter((ele) => ele.isLoved === true);
@@ -78,10 +78,10 @@ export const Heart: FunctionComponent = () => {
 export const Notification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch({ type: "showNotificationlist", payload: false });
+    dispatch({ type: "SHOW_NOTIFICATION", payload: false });
   };
   const handleMouseOver = () => {
-    dispatch({ type: "showNotificationlist", payload: true });
+    dispatch({ type: "SHOW_NOTIFICATION", payload: true });
   };
   const { notificationList } = useAppState();
   return (
@@ -332,7 +332,7 @@ interface ITrashNotif {
 export const TrashNotification: FunctionComponent<ITrashNotif> = ({ id }) => {
   const dispatch = useAppDispatch();
   const handleDelete = () => {
-    dispatch({ type: "removeNotification", payload: id });
+    dispatch({ type: "REMOVE_NOTIFICATION", payload: id });
   };
   return (
     <TrashContStyle onClick={handleDelete}>

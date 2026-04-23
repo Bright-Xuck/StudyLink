@@ -23,11 +23,11 @@ const Wishlist: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   const handleMouseLeave = () => {
-    dispatch({ type: "showWishlist", payload: false });
+    dispatch({ type: "SHOW_WISHLIST", payload: false });
   };
 
   const handleMouseOver = () => {
-    dispatch({ type: "showWishlist", payload: true });
+    dispatch({ type: "SHOW_WISHLIST", payload: true });
   };
 
   return (

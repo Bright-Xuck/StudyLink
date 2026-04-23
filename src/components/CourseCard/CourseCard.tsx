@@ -187,9 +187,9 @@ export const FavEmojiButton: FunctionComponent<IFavBtn> = ({
 
   const toggleFavorite = () => {
     dispatch({ type: "toggleLoved", payload: name });
-    dispatch({ type: "setFilterCoursesByType" });
-    dispatch({ type: "setFilterCoursesBySearch" });
-    dispatch({ type: "setFilterSearchedCoursesByType" });
+    dispatch({ type: "SET_FILTERS_BY_TYPE" });
+    dispatch({ type: "SET_FILTER_COURSES_BY_SEARCH" });
+    dispatch({ type: "SET_FILTER_SEARCHED_COURSES_BY_TYPE" });
   };
 
   const handleOnHover = (e: MouseEvent<HTMLButtonElement>) => {

@@ -45,7 +45,7 @@ export const ContactComp: FunctionComponent = () => {
 
   const handleContactForm = (data: IContactForm) => {
     reset();
-    dispatch({ type: "setContactForm", payload: data });
+    dispatch({ type: "SET_CONTACT_FORM", payload: data });
     setIsContactFormSubmitted(true);
   };
 
