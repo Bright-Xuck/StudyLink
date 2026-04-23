@@ -36,7 +36,7 @@ export const ContactComp: FunctionComponent = () => {
       name: "",
       email: "",
       subject: "",
-      msg: "",
+      message: "",
     },
   });
 
@@ -129,15 +129,15 @@ export const ContactComp: FunctionComponent = () => {
               </div>
               <div className="form-ele">
                 <FormLabelStyles>
-                  <label htmlFor="msg">Message</label>
+                  <label htmlFor="message">Message</label>
                 </FormLabelStyles>
                 <TextareaStyles>
                   <textarea
                     placeholder="Give a brief description"
-                    {...register("msg", { required: "Message is required" })}
+                    {...register("message", { required: "Message is required" })}
                   />
                 </TextareaStyles>
-                <ErrorStyles>{errors?.msg && errors.msg.message}</ErrorStyles>
+                <ErrorStyles>{errors?.message && errors.message.message}</ErrorStyles>
               </div>
             </div>
             <div className="btn">

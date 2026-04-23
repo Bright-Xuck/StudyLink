@@ -41,10 +41,10 @@ export const FooterLogo = () => {
 export const Heart: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch({ type: "SHOW_WISHLIST", payload: false });
+    dispatch({ type: "HIDE_WISHLIST" });
   };
   const handleMouseOver = () => {
-    dispatch({ type: "SHOW_WISHLIST", payload: true });
+    dispatch({ type: "SHOW_WISHLIST" });
   };
   const { allCourses } = useAppState();
   const favorites = allCourses.filter((ele) => ele.isLoved === true);
@@ -78,10 +78,10 @@ export const Heart: FunctionComponent = () => {
 export const Notification: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const handleMouseLeave = () => {
-    dispatch({ type: "SHOW_NOTIFICATION", payload: false });
+    dispatch({ type: "HIDE_NOTIFICATION" });
   };
   const handleMouseOver = () => {
-    dispatch({ type: "SHOW_NOTIFICATION", payload: true });
+    dispatch({ type: "SHOW_NOTIFICATION" });
   };
   const { notificationList } = useAppState();
   return (
@@ -123,7 +123,7 @@ export interface IMenuComp {
 }
 
 export const Menu: FunctionComponent<IMenuComp> = ({ toggleMenu }) => {
-  const { isNavOpen } = useAppSelector((state: RootState) => state.data);
+  const { isNavOpen } = useAppState();
 
   return (
     <MenuStyle onClick={toggleMenu}>
@@ -260,11 +260,7 @@ interface ITrash {
 export const Trash: FunctionComponent<ITrash> = ({ name }) => {
   const dispatch = useAppDispatch();
   const handleDelete = () => {
-    dispatch(removeFromFavorite(name));
-    // when a favorite is removed, we update all other half states
-    dispatch(setFilterCoursesByType());
-    dispatch(setFilterCoursesBySearch());
-    dispatch(setFilterSearchedCoursesByType());
+    dispatch({ type: "REMOVE_FROM_FAVORITE", payload: name });
   };
   return (
     <TrashContStyle onClick={handleDelete}>

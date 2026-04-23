@@ -18,7 +18,7 @@ const PopularCourses = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch({ type: "SET_FILTERED_BY_TIME_COURSES" });
+    // Filtered courses are computed in the reducer based on state
   }, [dispatch, allCourses]);
 
   return (
@@ -29,7 +29,8 @@ const PopularCourses = () => {
       />
       <div className="inner">
         <PaddedSectionStyle>
-          <ButtonGroup filters={filtersByTime} />
+          {/* Filter buttons converted to IFilterButton format */}
+          <ButtonGroup filters={filtersByTime.map((f) => ({ filter: f, isSelected: true, filterByType: true }))} />
           <CoursesGroupStyle>
             {filteredByTimeCourses?.map((ele, index) => (
               <CourseCard

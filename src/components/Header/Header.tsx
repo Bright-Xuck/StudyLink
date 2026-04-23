@@ -24,9 +24,9 @@ const Header: FunctionComponent = () => {
     dispatch({ type: "CLOSE_NAV" });
   }, [pathname, dispatch]);
 
-  const isCoursesActive = pathname?.includes("/courses");
-  const isAboutActive = pathname?.includes("/about");
-  const isContactActive = pathname?.includes("/contact");
+  const isCoursesActive = pathname?.includes("/courses") ?? false;
+  const isAboutActive = pathname?.includes("/about") ?? false;
+  const isContactActive = pathname?.includes("/contact") ?? false;
 
   return (
     <HeaderStyle>

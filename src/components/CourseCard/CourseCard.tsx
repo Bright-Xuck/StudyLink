@@ -159,7 +159,7 @@ export const CourseCard: FunctionComponent<ICourse> = ({
             </div>
             <FavEmojiButton
               isLoved={isLoved}
-              name={name}
+              id={id}
               isheartHovered={isheartHovered}
               setIsheartHovered={setIsheartHovered}
             />
@@ -172,24 +172,22 @@ export const CourseCard: FunctionComponent<ICourse> = ({
 
 export interface IFavBtn {
   isLoved: boolean;
-  name: string;
+  id: number | null;
   isheartHovered: boolean;
   setIsheartHovered: Dispatch<SetStateAction<boolean>>;
 }
-
 export const FavEmojiButton: FunctionComponent<IFavBtn> = ({
   isLoved,
-  name,
+  id,
   isheartHovered,
   setIsheartHovered,
 }) => {
   const dispatch = useAppDispatch();
 
   const toggleFavorite = () => {
-    dispatch({ type: "TOGGLE_LOVED", payload: name });
-    dispatch({ type: "SET_FILTERS_BY_TYPE" });
-    dispatch({ type: "SET_FILTER_COURSES_BY_SEARCH" });
-    dispatch({ type: "SET_FILTER_SEARCHED_COURSES_BY_TYPE" });
+    if (id !== null) {
+      dispatch({ type: "TOGGLE_LOVED", payload: id });
+    }
   };
 
   const handleOnHover = (e: MouseEvent<HTMLButtonElement>) => {

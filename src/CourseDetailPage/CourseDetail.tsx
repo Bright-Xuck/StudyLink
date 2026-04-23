@@ -128,7 +128,7 @@ export const CourseDetailComp = () => {
                   </motion.div>
                   <FavEmojiButton
                     isLoved={course.isLoved}
-                    name={course.name}
+                    id={course.id}
                     isheartHovered={isheartHovered}
                     setIsheartHovered={setIsheartHovered}
                   />
@@ -146,7 +146,7 @@ export const CourseDetailComp = () => {
                   </motion.div>
                   <FavEmojiButton
                     isLoved={course.isLoved}
-                    name={course.name}
+                    id={course.id}
                     isheartHovered={isheartHovered}
                     setIsheartHovered={setIsheartHovered}
                   />
@@ -360,6 +360,7 @@ export const CourseDetailComp = () => {
             </MainCardStyles>
             <div className="desktop side">
               <SideCard
+                id={course.id}
                 name={course.name}
                 nairaPrice={
                   course.nairaPrice === null
@@ -436,6 +437,7 @@ export const VideoComp: FunctionComponent<IVideo> = ({ url }) => {
 };
 
 export interface ISideCard {
+  id: number | null;
   img: string;
   name: string;
   nairaPrice: number;
@@ -447,6 +449,7 @@ export interface ISideCard {
   userCourse: IEnrolledCourse | undefined;
 }
 export const SideCard: FunctionComponent<ISideCard> = ({
+  id,
   name,
   nairaPrice,
   dollarPrice,
@@ -477,7 +480,7 @@ export const SideCard: FunctionComponent<ISideCard> = ({
             </motion.div>
             <FavEmojiButton
               isLoved={isLoved}
-              name={name}
+              id={id}
               isheartHovered={isheartHovered}
               setIsheartHovered={setIsheartHovered}
             />
