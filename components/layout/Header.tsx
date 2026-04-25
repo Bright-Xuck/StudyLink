@@ -69,11 +69,11 @@ export default function Header() {
                 src={"/logo.png"}
                 width={100}
                 height={100}
-                alt="ZenithScholar"
+                alt="StudyLink"
               />
             </div>
             <span className="text-xl font-bold text-foreground">
-              ZenithScholar
+              StudyLink
             </span>
           </Link>
 

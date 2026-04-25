@@ -29,12 +29,12 @@ const montserrat = Montserrat({
 })
 
 export const metadata: Metadata = {
-  title: 'ZenithScholar Platform - Where Research Excellence Begins',
-  description: 'Master research methodology, ethics, and academic writing with our comprehensive training platform',
-  keywords: ['ZenithScholar', 'zenith scholar', 'btverse'],
-  authors: [{ name: 'ZenithScholar' }],
-  creator: 'BiotecUniverse',
-  publisher: 'botecuniverse.org',
+  title: 'StudyLink - Secondary School Learning in Cameroon',
+  description: 'StudyLink helps students master school subjects with structured lessons, quizzes, and progress tracking.',
+  keywords: ['StudyLink', 'study link', 'secondary school learning'],
+  authors: [{ name: 'StudyLink' }],
+  creator: 'StudyLink',
+  publisher: 'studylink.cm',
   robots: {
     index: true,
     follow: true,
@@ -43,14 +43,14 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: process.env.NEXT_PUBLIC_APP_URL,
-    title: 'ZenithScholar Platform - Learn Research Skills',
-    description: 'Your trusted marketplace for digital accounts, social media services, and virtual contacts.',
-    siteName: 'ZenithScholar',
+    title: 'StudyLink - Secondary School Learning in Cameroon',
+    description: 'StudyLink helps students master school subjects with structured lessons, quizzes, and progress tracking.',
+    siteName: 'StudyLink',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'ZenithScholar Platform - Learn Research Skills',
-    description: 'Your trusted marketplace for digital accounts, social media services, and virtual contacts.',
+    title: 'StudyLink - Secondary School Learning in Cameroon',
+    description: 'StudyLink helps students master school subjects with structured lessons, quizzes, and progress tracking.',
   },
   icons: {
     icon: '/logo.png',

@@ -27,8 +27,8 @@ export default function ContactCards() {
     {
       icon: Mail,
       title: t("writeUs"),
-      content: "btversea@gmail.com",
-      href: "mailto:btversea@gmail.com",
+      content: "support@studylink.cm",
+      href: "mailto:support@studylink.cm",
       color: "from-purple-500 to-purple-800",
     },
     {

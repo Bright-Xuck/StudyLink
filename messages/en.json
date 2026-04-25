@@ -15,101 +15,101 @@
   },
 
   "hero": {
-    "title": "Where Research Excellence Begins",
-    "subtitle": "Master research methodology, ethics, and academic writing with our comprehensive training platform",
-    "cta": "Get Started",
-    "ctaSecondary": "Browse Courses"
+    "title": "StudyLink — Your Secondary & High School Study Companion",
+    "subtitle": "Build strong subject skills in Mathematics, Physics, English, ICT and more with curriculum-aligned lessons.",
+    "cta": "Start Learning",
+    "ctaSecondary": "Browse Subjects"
   },
   
   "features": {
-    "title": "Why Choose ZenithScholar Platform",
+    "title": "Why StudyLink",
     "experts": {
-      "title": "Expert Instructors",
-      "description": "Learn from experienced researchers and academic professionals"
+      "title": "Trusted Tutors",
+      "description": "Learn with teachers who understand Cameroon secondary and high school subjects"
     },
     "actionable": {
-      "title": "Actionable Training",
-      "description": "Practical skills you can apply to your research immediately"
+      "title": "Structured Curriculum",
+      "description": "Clear lesson paths that match school subjects and exam preparation"
     },
     "quizzes": {
-      "title": "Interactive Quizzes",
-      "description": "Test your knowledge with engaging assessments"
+      "title": "Practice Quizzes",
+      "description": "Check your understanding with short, subject-focused assessments"
     },
     "certificates": {
-      "title": "Verified Certificates",
-      "description": "Earn recognized certificates upon course completion"
+      "title": "Learning Achievements",
+      "description": "Track your progress and celebrate study milestones"
     }
   },
   
   "courses": {
-    "title": "Featured Courses",
-    "subtitle": "Explore our comprehensive research training courses designed to enhance your academic skills",
+    "title": "Recommended Subjects",
+    "subtitle": "Explore curriculum-aligned subjects designed for secondary and high school learners.",
     "free": "FREE",
     "paid": "PAID",
-    "modules": "modules",
-    "viewCourse": "View Course",
-    "viewAll": "View All Courses",
+    "modules": "subjects",
+    "viewCourse": "View Subject",
+    "viewAll": "View All Subjects",
     "learnMore": "Learn More",
     "updatedAt": "Updated"
   },
   
   "cta": {
-    "title": "Ready to Start Your Research Journey?",
-    "description": "Join thousands of researchers who have enhanced their skills with our comprehensive training platform.",
-    "button": "Get Started for Free"
+    "title": "Ready to continue your study journey?",
+    "description": "Join students across Cameroon who are studying smarter with guided subjects and progress tracking.",
+    "button": "Start Studying"
   },
   
   "testimonials": {
-    "title": "What Our Students Say",
-    "subtitle": "Join thousands of satisfied students who have transformed their careers with Zenith Scholar",
+    "title": "What Cameroonian Students Say",
+    "subtitle": "Join learners who are gaining confidence in school subjects with StudyLink.",
     "testimonials": {
       "testimonial1": {
-        "content": "The courses at Zenith Scholar completely transformed my career. The practical approach and real-world projects helped me land my dream job as a software developer."
+        "content": "StudyLink helped me understand algebra clearly and prepare for my exams."
       },
       "testimonial2": {
-        "content": "As a working professional, the flexible learning schedule was perfect for me. The instructors are experts in their fields and always available to help."
+        "content": "The lessons are easy to follow and the progress tracker keeps me motivated."
       },
       "testimonial3": {
-        "content": "The quality of education here rivals top universities. I started my own business using the digital marketing strategies I learned in the course."
+        "content": "I improved my English writing and feel ready for school tests."
       }
     },
     "stats": {
       "students": "Students Enrolled",
-      "satisfaction": "Satisfaction Rate",
-      "courses": "Courses Available",
-      "instructors": "Expert Instructors"
+      "satisfaction": "Success Rate",
+      "courses": "Subjects Available",
+      "instructors": "Expert Tutors"
     }
   },
   
   "popularModules": {
-    "title": "Popular Learning Modules",
-    "subtitle": "Explore our most sought-after modules that students love",
-    "trending": "Trending Now",
+    "title": "Popular Study Subjects",
+    "subtitle": "Browse the subjects most used by secondary school learners.",
+    "trending": "Popular Now",
     "free": "Free",
     "premium": "Premium",
     "lessons": "lessons",
     "viewModule": "Explore",
-    "viewAllModules": "View All Modules",
+    "viewAllModules": "View All Subjects",
     "modules": {
       "react": {
-        "description": "Master React fundamentals with hands-on projects and build modern web applications"
+        "description": "Build key mathematics skills with guided problem solving and examples."
       },
       "python": {
-        "description": "Learn data analysis using Python, Pandas, and visualization libraries for real-world insights"
+        "description": "Learn ICT foundations and computer science concepts for school success."
       },
       "marketing": {
-        "description": "Develop comprehensive digital marketing strategies that drive business growth and engagement"
+        "description": "Strengthen your language skills in English and French with clear study practice."
       }
     }
   },
   
   "footer": {
-    "about": "About Us",
+    "about": "About StudyLink",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "contact": "Contact Us",
-    "copyright": "© 2025 ZenithScholar Platform. All rights reserved.",
-    "tagline": "Empowering researchers with ethical practices and methodological excellence.",
+    "copyright": "© 2026 StudyLink. All rights reserved.",
+    "tagline": "Supporting Cameroon students with guided subjects, progress tracking, and study groups.",
     "quickLinks": "Quick Links",
     "home": "Home",
     "courses": "Courses",
@@ -118,11 +118,11 @@
     "cookies": "Cookie Policy",
     "compliance": "Compliance",
     "contactTitle": "Contact",
-    "email": "info@zenithscholar.com",
-    "phone": "+237 123 456 789",
-    "address": "University of Buea, Cameroon",
-    "foundedBy": "Founded by",
-    "bioticUniverse": "BiotecUniverse"
+    "email": "support@studylink.cm",
+    "phone": "+237 691 311 346",
+    "address": "Yaoundé, Cameroon",
+    "foundedBy": "Powered by",
+    "bioticUniverse": "StudyLink Team"
   },
   
   "auth": {
@@ -166,41 +166,41 @@
   
   "dashboard": {
     "welcome": "Welcome back",
-    "myModules": "My Modules",
+    "myModules": "My Subjects",
     "progress": "Progress",
     "certificates": "Certificates",
     "settings": "Settings",
-    "welcomeMessage": "Track your learning progress and continue where you left off",
-    "totalModules": "Total Modules",
+    "welcomeMessage": "Track your study progress and continue where you left off",
+    "totalModules": "Total Subjects",
     "completed": "Completed",
-    "timeSpent": "Time Spent",
+    "timeSpent": "Study Time",
     "continueLearning": "Continue Learning",
     "continueLesson": "Continue Lesson",
-    "noModulesYet": "No modules yet",
-    "noModulesMessage": "Start your learning journey by enrolling in a module",
-    "totalCourses": "Total Courses",
-    "completedCourses": "Completed Courses",
+    "noModulesYet": "No subjects yet",
+    "noModulesMessage": "Start your study journey by enrolling in a subject",
+    "totalCourses": "Total Subjects",
+    "completedCourses": "Subjects Completed",
     "inProgress": "In Progress",
     "lessonsCompleted": "Lessons Completed",
-    "modulesCompleted": "Modules Completed",
+    "modulesCompleted": "Topics Completed",
     "quizzesPassed": "Quizzes Passed",
     "viewAllProgress": "View All Progress",
     "complete": "complete",
-    "continueCourse": "Continue Course",
+    "continueCourse": "Continue Study",
     "lessons": "lessons",
-    "modules": "modules",
-    "myCourses": "My Courses",
-    "browseAll": "Browse All Courses",
-    "noCoursesYet": "No courses yet",
-    "noCoursesMessage": "You haven't enrolled in any courses yet. Start your learning journey today!",
-    "exploreCourses": "Explore Courses",
+    "modules": "topics",
+    "myCourses": "My Subjects",
+    "browseAll": "Browse All Subjects",
+    "noCoursesYet": "No subjects yet",
+    "noCoursesMessage": "You haven't enrolled in any subjects yet. Start your learning journey today!",
+    "exploreCourses": "Explore Subjects",
     "free": "FREE",
     "premium": "PREMIUM",
     "startLearning": "Start Learning",
     "learningProgress": "Learning Progress",
-    "noActiveProgress": "No active courses in progress",
+    "noActiveProgress": "No active subjects in progress",
     "showingTop": "Showing top",
-    "activeCourses": "active courses"
+    "activeCourses": "active subjects"
   },
 
   "certificates": {
@@ -382,18 +382,18 @@
   },
   
   "about": {
-    "title": "About Us",
-    "header": "Welcome to blah blah blah",
+    "title": "About StudyLink",
+    "header": "Helping Cameroon students learn school subjects with confidence",
     "story": "Our Story",
-    "storydescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin placerat, neque nec posuere tincidunt, dolor libero pharetra ex, nec iaculis metus nibh a libero. Suspendisse laoreet neque et commodo viverra. Nullam vestibulum urna sed turpis fringilla, ac sollicitudin augue interdum. Proin congue enim imperdiet tincidunt vulputate. Donec hendrerit, neque nec condimentum posuere, metus ipsum lacinia quam, eget porta nibh purus vel risus.u00a0",
-    "meet": "Meet Our Lead Instructors",
-    "meetdescription": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac eros ut dui bibendum ultricies. Maecenas egestas fringilla semper.",
-    "instructor1": "Info about Instructor 1",
-    "instructor2": "Info about Instructor 2",
-    "instructor3": "Info about Instructor 3",
-    "number": "Number Speaks",
-    "award": "Awards",
-    "country": "Countries",
+    "storydescription": "StudyLink supports secondary and high school students with curriculum-focused lessons, progress tracking, and study group support tailored for Cameroon.",
+    "meet": "Meet Our Lead Educators",
+    "meetdescription": "Our learning team develops lessons in Mathematics, Physics, ICT, English, French, and other core subjects for school success.",
+    "instructor1": "Experienced subject teachers focused on student success",
+    "instructor2": "Curriculum developers who understand exam preparation",
+    "instructor3": "Tutors supporting guided study and progress goals",
+    "number": "Numbers Speak",
+    "award": "Achievements",
+    "country": "Cameroon",
     "partner": "Partners",
     "student": "Students",
     "studentstitle": "What Our Students Have to Say"
@@ -411,8 +411,8 @@
   },
   
   "contactUs": {
-    "title": "Need Help?",
-    "header": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.",
+    "title": "Need Help with Your Studies?",
+    "header": "Reach out to StudyLink support for help with subjects, enrollment, or progress tracking.",
     "callUs": "Call Us",
     "writeUs": "Write Us",
     "mainoffice": "Main Office",
@@ -421,15 +421,15 @@
   },
   
   "contactfaq": {
-    "title": "Frequently asked questions",
-    "question1": "How Does CamChop Work",
-    "answer1": "CamChop connects you with the best nearby restaurants. Use the DoorDash website or app to browse eligible restaurants. Order and securely pay online and your food is on the way! You can even track your delivery right to your door. Getting your favorite foods delivered is that easy.",
-    "question2": "Can I schedule a delivery in advance?",
-    "answer2": " Yes. Before clicking Place Order, simply select Scheduled and you can select the date and time you wish to have your meal delivered. After selecting the date and time you want, click Place Order and we'll handle the rest.",
-    "question3": "How fast will I get my food?",
-    "answer3": " How fast you'll get your food depends on a number of things. How far is the restaurant? How bad is traffic? Is it snowing out?",
-    "question4": "What is a group order and how can I create one?",
-    "answer4": "A group order allows multiple people to add items into an order at the same time. Once a group order is created through a DoorDash"
+    "title": "Frequently Asked Questions",
+    "question1": "How do I join a subject on StudyLink?",
+    "answer1": "Browse available subjects, select the one you want, and enroll to start lessons and quizzes right away.",
+    "question2": "Can I study multiple subjects at once?",
+    "answer2": "Yes. You can enroll in several subjects, track your progress, and move through lessons at your own pace.",
+    "question3": "How do I access quiz results?",
+    "answer3": "After completing a quiz, your score and answers are shown immediately so you can review and improve.",
+    "question4": "What are study groups?",
+    "answer4": "Study groups let learners join together to discuss topics, share tips, and stay motivated while preparing for exams."
   },
   
   "payment": {
@@ -563,8 +563,8 @@
   
   "CoursesPage": {
     "header": {
-      "title": "All Courses",
-      "description": "Browse our comprehensive collection of research training courses"
+      "title": "All Subjects",
+      "description": "Browse our comprehensive collection of curriculum-aligned study subjects"
     },
     "freeCourses": {
       "title": "Free Courses",

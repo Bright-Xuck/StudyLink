@@ -203,10 +203,10 @@ export function LegalDocumentLayout({
                     {t("contactUs")}
                   </Link>
                   <a 
-                    href="mailto:legal@zenithscholar.com"
+                    href="mailto:legal@studylink.cm"
                     className="text-primary hover:underline"
                   >
-                    legal@zenithscholar.com
+                    legal@studylink.cm
                   </a>
                 </div>
               </div>

@@ -44,11 +44,11 @@ export default function AuthLayout({
                 src={"/logo.png"}
                 width={100}
                 height={100}
-                alt="ZenithScholar"
+                alt="StudyLink"
               />
             </div>
             <span className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-              ZenithScholar
+              StudyLink
             </span>
           </Link>
 
@@ -78,7 +78,7 @@ export default function AuthLayout({
 
       {/* Footer */}
       <footer className="relative z-10 py-6 text-center text-sm text-muted-foreground">
-        <p>&copy; {new Date().getFullYear()} ZenithScholar. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} StudyLink. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -20,11 +20,11 @@ export default function Footer() {
                   src={"/logo-name.png"}
                   width={100}
                   height={100}
-                  alt="ZenithScholar"
+                  alt="StudyLink"
                 />
              </div>
               <span className="text-xl font-bold text-foreground">
-                ZenithScholar
+                StudyLink
               </span>
             </div>
             <p className="text-muted-foreground leading-relaxed mb-4">
@@ -33,14 +33,14 @@ export default function Footer() {
             <div className="text-sm text-muted-foreground">
               <p className="mb-1">{t('foundedBy')}</p>
               <a 
-                href="https://biotecuniverse.org" 
+                href="https://studylink.cm" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="inline-flex text-xl font-bold items-center gap-1 text-[#3d8b40] hover:opacity-80 transition-opacity"
               >
                 <Image
                   src="/btverse.png"
-                  alt="BiotecUniverse"
+                  alt="StudyLink"
                   width={24}
                   height={24}
                 />

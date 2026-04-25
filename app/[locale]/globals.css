@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@theme{
+  --animate-cube: cube 8s ease-in-out infinite 0.2s;
+  --animate-cube1: cube1 6s ease-in-out infinite 0.7s;
+  --animate-cube2: cube2 5s ease-in-out infinite 2s;
+  --animate-cube3: cube3 4s ease-in-out infinite 1s;
+  --animate-cube4: cube4 7s ease-in-out infinite 1.5s;
+  --animate-cube5: cube5 5s ease-in-out infinite 3s;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -54,7 +63,7 @@
   --popover-foreground: oklch(0.15 0.01 264);
 
   /* Primary - Teal Blue #0D7377 */
-  --primary: oklch(0.45 0.08 195);
+  --primary: oklch(23.622% 0.15046 273.4);
   --primary-foreground: oklch(0.99 0 0);
 
   /* Secondary - Cameroon Green #1E6F40 */
@@ -355,5 +364,71 @@
   .btn-gradient {
     @apply bg-gradient-to-r from-warning to-accent text-white font-semibold;
     @apply hover:shadow-lg hover:scale-105 transition-all duration-300;
+  }
+}
+
+@keyframes cube {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(15) rotate(960deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cube1 {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20) rotate(960deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cube2 {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20) rotate(960deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cube3 {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20) rotate(960deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cube4 {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20) rotate(960deg);
+    opacity: 0;
+  }
+}
+
+@keyframes cube5 {
+  0% {
+    transform: scale(0) rotate(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(14) rotate(960deg);
+    opacity: 0;
   }
 }

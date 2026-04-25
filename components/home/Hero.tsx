@@ -8,8 +8,17 @@ export default function Hero() {
   const t = useTranslations('hero');
 
   return (
-    <section className="relative hero-gradient-animated text-primary-foreground lg:py-46 py-20 md:py-32">
+    <section className="relative hero-gradient-animated text-primary-foreground lg:py-46 py-20 md:py-32 max-lg:mt-20">
       {/* Background Pattern */}
+      <div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[45%] top-[10%] animate-cube overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[55%] top-[35%] animate-cube5 overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[85%] top-[55%] animate-cube1 overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[45%] top-[85%] animate-cube2 overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[25%] top-[65%] animate-cube3 overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[15%] top-[35%] animate-cube4 overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[85%] top-[25%] animate-cube5 overflow-hidden"></div>
+          </div>
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,_currentColor_1px,_transparent_1px)] bg-[length:24px_24px]"></div>
       
       <div className="container mx-auto px-4 relative z-10">

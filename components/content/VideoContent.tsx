@@ -32,20 +32,16 @@ export default function VideoContent({
   moduleId,
   courseId,
   lessonOrder,
-  onContentCompleteAction,
   onWatchedChange,
   onLocalMarkComplete,
   hasNextLesson,
-  nextModuleSlug,
   onNextLesson,
   onComplete,
 }: VideoContentProps) {
-  const router = useRouter();
   const [timeSpent, setTimeSpent] = useState(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [hasWatched, setHasWatched] = useState(false);
   const [loadingComplete, setLoadingComplete] = useState(false);
-  const [localCourseProgress, setLocalCourseProgress] = useState<number | null>(null);
   const [localCompleted, setLocalCompleted] = useState(false);
   const timeIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const playerRef = useRef<React.ElementRef<typeof ReactPlayer> | null>(null);

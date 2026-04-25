@@ -17,8 +17,8 @@ export async function sendWelcomeEmail(
 ) {
   const subject =
     locale === "fr"
-      ? "Bienvenue sur ZenithScholar Platform"
-      : "Welcome to ZenithScholar Platform";
+      ? "Bienvenue sur StudyLink"
+      : "Welcome to StudyLink";
 
   const html = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
@@ -27,13 +27,13 @@ export async function sendWelcomeEmail(
       }, ${name}!</h1>
       <p>${
         locale === "fr"
-          ? "Merci de vous être inscrit sur ZenithScholar Platform."
-          : "Thank you for signing up for ZenithScholar Platform."
+          ? "Merci de vous être inscrit sur StudyLink."
+          : "Thank you for signing up for StudyLink."
       }</p>
       <p>${
         locale === "fr"
-          ? "Vous pouvez maintenant accéder à nos modules de formation gratuits et premium."
-          : "You can now access our free and premium training modules."
+          ? "Vous pouvez maintenant accéder à nos leçons et matières scolaires."
+          : "You can now access our school subjects and lessons."
       }</p>
       <a href="${process.env.NEXT_PUBLIC_APP_URL}" 
          style="display: inline-block; background-color: #3B82F6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 16px;">
@@ -76,8 +76,8 @@ export async function sendPasswordResetEmail(
       <p>${locale === "fr" ? "Bonjour" : "Hello"} ${name},</p>
       <p>${
         locale === "fr"
-          ? "Vous avez demandé à réinitialiser votre mot de passe. Cliquez sur le bouton ci-dessous pour continuer:"
-          : "You requested to reset your password. Click the button below to continue:"
+          ? "Vous avez demandé à réinitialiser votre mot de passe pour StudyLink. Cliquez sur le bouton ci-dessous pour continuer :"
+          : "You requested to reset your StudyLink password. Click the button below to continue:"
       }</p>
       <a href="${resetUrl}" 
          style="display: inline-block; background-color: #3B82F6; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; margin-top: 16px;">

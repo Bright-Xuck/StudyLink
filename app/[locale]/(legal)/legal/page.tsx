@@ -168,10 +168,10 @@ export default function LegalPage({ params: { locale } }: LegalPageProps) {
                   {t('legalInquiries')}
                 </p>
                 <a 
-                  href="mailto:legal@zenithscholar.com"
+                  href="mailto:legal@studylink.cm"
                   className="text-sm text-primary hover:underline"
                 >
-                  legal@zenithscholar.com
+                  legal@studylink.cm
                 </a>
               </div>
               <div>
@@ -179,10 +179,10 @@ export default function LegalPage({ params: { locale } }: LegalPageProps) {
                   {t('dataProtection')}
                 </p>
                 <a 
-                  href="mailto:privacy@zenithscholar.com"
+                  href="mailto:privacy@studylink.cm"
                   className="text-sm text-primary hover:underline"
                 >
-                  privacy@zenithscholar.com
+                  privacy@studylink.cm
                 </a>
               </div>
               <div>
