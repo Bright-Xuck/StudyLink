@@ -11,7 +11,7 @@ export default function Features() {
       icon: Users,
       titleKey: 'experts.title',
       descKey: 'experts.description',
-      color: 'bg-primary/10 text-primary',
+      color: 'bg-card text-primary',
     },
     {
       icon: Zap,
@@ -48,7 +48,7 @@ export default function Features() {
             return (
               <div
                 key={index}
-                className="bg-card rounded-xl p-8 shadow-sm hover:shadow-lg transition-shadow border border-border"
+                className="bg-primary rounded-xl p-8 shadow-sm hover:shadow-lg transition-shadow border border-border"
               >
                 <div className={`w-16 h-16 ${feature.color} rounded-lg flex items-center justify-center mb-6`}>
                   <Icon className="h-8 w-8" />

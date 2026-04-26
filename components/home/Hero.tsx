@@ -11,7 +11,7 @@ export default function Hero() {
     <section className="relative hero-gradient-animated text-primary-foreground lg:py-46 py-20 md:py-32 max-lg:mt-20">
       {/* Background Pattern */}
       <div>
-            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[45%] top-[10%] animate-cube overflow-hidden"></div>
+            <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[45%] top-[10%] animate-cube overflow-hidden "></div>
             <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[55%] top-[35%] animate-cube5 overflow-hidden"></div>
             <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[85%] top-[55%] animate-cube1 overflow-hidden"></div>
             <div className="border border-white opacity-0 w-2.5 h-2.5 absolute left-[45%] top-[85%] animate-cube2 overflow-hidden"></div>
@@ -23,8 +23,11 @@ export default function Hero() {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl text-primary font-bold mb-6 leading-tight">
             {t('title')}
+          </h1>
+          <h1 className='text-2xl md:text-3xl lg:text-4xl text-primary-foreground font-semibold mb-6'>
+              {t('titlextra')}
           </h1>
           <p className="text-xl md:text-2xl mb-10 opacity-90">
             {t('subtitle')}

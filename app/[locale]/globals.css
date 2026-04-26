@@ -48,52 +48,39 @@
 }
 
 :root {
-  --radius: 0.65rem;
+  --radius: 1rem;
 
-  /* Base Colors */
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.15 0.01 264);
+  --background: #f8fafc;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
 
-  /* Card Colors */
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.15 0.01 264);
+  --primary: #334ee3;
+  --primary-foreground: #ffffff;
 
-  /* Popover Colors */
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.15 0.01 264);
+  --secondary: #6366f1;
+  --secondary-foreground: #ffffff;
 
-  /* Primary - Teal Blue #0D7377 */
-  --primary: oklch(23.622% 0.15046 273.4);
-  --primary-foreground: oklch(0.99 0 0);
+  --muted: #f3f4f6;
+  --muted-foreground: #6b7280;
 
-  /* Secondary - Cameroon Green #1E6F40 */
-  --secondary: oklch(0.42 0.11 155);
-  --secondary-foreground: oklch(0.99 0 0);
+  --accent: #f59e0b;
+  --accent-foreground: #111827;
 
-  /* Muted - Soft White #F5F5F5 */
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.55 0.015 264);
+  --success: #16a34a;
+  --success-foreground: #ffffff;
 
-  /* Accent - Vibrant Gold #D4AF37 */
-  --accent: oklch(0.75 0.12 85);
-  --accent-foreground: oklch(0.15 0.01 264);
+  --warning: #f97316;
+  --warning-foreground: #111827;
 
-  /* Success - Cameroon Green #1E6F40 */
-  --success: oklch(0.42 0.11 155);
-  --success-foreground: oklch(0.99 0 0);
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
 
-  /* Warning - Coral #FF6B6B */
-  --warning: oklch(0.7 0.19 25);
-  --warning-foreground: oklch(0.99 0 0);
-
-  /* Destructive - Red */
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.99 0 0);
-
-  /* Borders & Inputs */
-  --border: oklch(0.92 0.004 264);
-  --input: oklch(0.92 0.004 264);
-  --ring: oklch(0.45 0.08 195);
+  --border: #e5e7eb;
+  --input: #d1d5db;
+  --ring: #6366f1;
 
   /* Congratulations Page Colors */
   --blue: oklch(0.55 0.18 240);
@@ -164,9 +151,14 @@
     @apply border-border outline-ring/50;
   }
 
+  html {
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply min-h-screen bg-background text-foreground antialiased;
     font-family: var(--font-inter);
+    transition: background-color 0.2s ease, color 0.2s ease;
   }
 
   /* Zenith Scholar Typography System */

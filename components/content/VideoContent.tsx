@@ -1,7 +1,6 @@
 "use client";
 
 import { updateLessonTime, markLessonComplete } from "../../lib/actions/progress.actions";
-import { useRouter } from "next/navigation";
 import { Clock, CheckCircle, ChevronRight, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";

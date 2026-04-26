@@ -19,30 +19,30 @@ export default function Testimonials() {
   const testimonials: Testimonial[] = [
     {
       id: '1',
-      name: 'Sarah Johnson',
-      role: 'Software Developer',
+      name: 'Bechem Harris',
+      role: 'Secondary School Student',
       avatar: '/avatars/sarah.jpg',
       content: 'testimonials.testimonial1.content',
       rating: 5,
-      course: 'Advanced Web Development'
+      course: 'Mathematics'
     },
     {
       id: '2',
-      name: 'Michael Chen',
-      role: 'Data Analyst',
+      name: 'Njinya Ryan',
+      role: 'High School Student',
       avatar: '/avatars/michael.jpg',
       content: 'testimonials.testimonial2.content',
       rating: 5,
-      course: 'Data Science Fundamentals'
+      course: 'Biology'
     },
     {
       id: '3',
-      name: 'Amina Diallo',
-      role: 'Business Owner',
+      name: 'Ngalame Brice',
+      role: 'High School Student',
       avatar: '/avatars/amina.jpg',
       content: 'testimonials.testimonial3.content',
-      rating: 5,
-      course: 'Digital Marketing Strategy'
+      rating: 4.5,
+      course: 'English'
     }
   ];
 

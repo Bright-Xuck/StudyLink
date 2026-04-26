@@ -17,7 +17,7 @@ export default function Footer() {
             <div className="flex items-center space-x-2 mb-4">
               <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                 <Image
-                  src={"/logo-name.png"}
+                  src={"/studylinkfavicon.png"}
                   width={100}
                   height={100}
                   alt="StudyLink"

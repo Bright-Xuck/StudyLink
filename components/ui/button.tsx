@@ -11,18 +11,18 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <button
         className={cn(
-          'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none',
+          'inline-flex items-center justify-center rounded-2xl border font-medium transition-all duration-200 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none',
           {
-            'bg-primary text-primary-foreground hover:opacity-90': variant === 'default',
-            'bg-destructive text-primary-foreground hover:opacity-90': variant === 'destructive',
-            'border border-border bg-background hover:bg-accent hover:text-accent-foreground': variant === 'outline',
-            'bg-secondary text-secondary-foreground hover:opacity-90': variant === 'secondary',
-            'hover:bg-accent hover:text-accent-foreground': variant === 'ghost',
+            'bg-primary text-primary-foreground border-transparent shadow-sm hover:shadow-md hover:opacity-95 active:translate-y-0.5': variant === 'default',
+            'bg-destructive text-destructive-foreground border-transparent shadow-sm hover:shadow-md hover:opacity-95 active:translate-y-0.5': variant === 'destructive',
+            'border border-border bg-background text-foreground hover:border-primary hover:bg-primary/10 hover:text-foreground': variant === 'outline',
+            'bg-secondary text-secondary-foreground border-transparent shadow-sm hover:shadow-md hover:opacity-95 active:translate-y-0.5': variant === 'secondary',
+            'bg-transparent text-foreground hover:bg-muted hover:text-foreground': variant === 'ghost',
           },
           {
-            'h-10 px-4 py-2': size === 'default',
-            'h-9 px-3 text-sm': size === 'sm',
-            'h-11 px-8': size === 'lg',
+            'h-11 px-6': size === 'default',
+            'h-9 px-4 text-sm': size === 'sm',
+            'h-12 px-8': size === 'lg',
           },
           className
         )}

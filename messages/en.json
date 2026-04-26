@@ -15,7 +15,8 @@
   },
 
   "hero": {
-    "title": "StudyLink — Your Secondary & High School Study Companion",
+    "title": "StudyLink",
+    "titlextra": "Your Secondary & High School Study Companion",
     "subtitle": "Build strong subject skills in Mathematics, Physics, English, ICT and more with curriculum-aligned lessons.",
     "cta": "Start Learning",
     "ctaSecondary": "Browse Subjects"
@@ -120,7 +121,7 @@
     "contactTitle": "Contact",
     "email": "support@studylink.cm",
     "phone": "+237 691 311 346",
-    "address": "Yaoundé, Cameroon",
+    "address": "Buea, Cameroon",
     "foundedBy": "Powered by",
     "bioticUniverse": "StudyLink Team"
   },

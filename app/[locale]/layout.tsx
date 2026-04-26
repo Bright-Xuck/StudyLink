@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     description: 'StudyLink helps students master school subjects with structured lessons, quizzes, and progress tracking.',
   },
   icons: {
-    icon: '/logo.png',
+    icon: '/studylinkfavicon.png',
   },
 } 
 
@@ -81,7 +81,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <head>
-        <link rel="icon" href="/logo.png" type="image/png" />
+        <link rel="icon" href="/public/studylinkfavicon.png" type="image/png" />
       </head>
       <body className={`${inter.variable} ${poppins.variable} ${inter.className} ${poppins.className} ${montserrat.variable} ${montserrat.className} antialiased`}>
         <NextIntlClientProvider messages={messages} locale={locale}>

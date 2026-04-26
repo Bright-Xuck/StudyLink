@@ -63,9 +63,9 @@ export default function DashboardNav() {
   };
 
   return (
-    <header className="bg-card shadow-sm fixed w-full top-0 z-50 border-b border-border">
-      <nav className="px-8 py-4">
-        <div className="flex items-center justify-between">
+    <header className="bg-card/95 backdrop-blur-sm fixed w-full top-0 z-50 border-b border-border shadow-sm transition-all duration-200">
+      <nav className="px-6 py-4 lg:px-8">
+        <div className="flex items-center justify-between gap-4">
           {/* Logo */}
           <Link href={`/`} className="flex items-center space-x-2">
             <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
@@ -132,7 +132,7 @@ export default function DashboardNav() {
           <div className="hidden md:flex items-center space-x-4">
             <button
               onClick={toggleTheme}
-              className="text-muted-foreground hover:text-primary transition-colors"
+              className="text-muted-foreground hover:text-primary transition-all duration-200"
               aria-label="Toggle theme"
             >
               {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
@@ -176,7 +176,7 @@ export default function DashboardNav() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 space-y-4">
+          <div className="md:hidden mt-4 pb-4 space-y-4 border-t border-border pt-4">
             <Link
               href={`/`}
               className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
