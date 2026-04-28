@@ -1,12 +1,22 @@
-import { Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink, Clock, BookOpen } from "lucide-react";
 
-export default function ProjectBoxes({ id, name, description, image, tech, liveLink, githubLink, features }) {
+export default function ProjectBoxes({ id, name, description, image, subjects, liveLink, githubLink, features, comingSoon }) {
   return (
-    <div className="bg-muted-foreground backdrop-blur-sm border border-white/20 rounded-lg overflow-hidden hover:border-white/40 transition-all duration-300 hover:scale-105">
+    <div className="bg-card backdrop-blur-sm border border-border rounded-lg overflow-hidden hover:border-primary/40 transition-all duration-300 hover:scale-105 relative shadow-sm">
+      {/* Coming Soon Badge */}
+      {comingSoon && (
+        <div className="absolute top-4 right-4 z-10">
+          <div className="flex items-center gap-1 px-3 py-1 bg-warning/20 text-warning-foreground text-xs rounded-full border border-warning/30">
+            <Clock size={12} />
+            <span className="font-medium">Coming Soon</span>
+          </div>
+        </div>
+      )}
+
       {/* Image Section */}
-      <div className="w-full h-48 overflow-hidden bg-black/60">
-        <img 
-          src={image} 
+      <div className="w-full h-48 overflow-hidden bg-muted">
+        <img
+          src={image}
           alt={name}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
@@ -14,45 +24,57 @@ export default function ProjectBoxes({ id, name, description, image, tech, liveL
 
       {/* Content Section */}
       <div className="p-6">
-        <h2 className="text-2xl font-bold text-white mb-3">{name}</h2>
-        
-        <p className="text-white/80 text-sm mb-4 line-clamp-3">{description}</p>
+        <h2 className="text-2xl font-bold text-card-foreground mb-3">{name}</h2>
 
-        {/* Tech Stack */}
+        <p className="text-muted-foreground text-sm mb-4 line-clamp-3">{description}</p>
+
+        {/* Subjects */}
         <div className="mb-4">
-          <h4 className="text-xs uppercase text-lime-300 font-semibold mb-2">Tech Stack</h4>
+          <h4 className="text-xs uppercase text-primary font-semibold mb-2 flex items-center gap-1">
+            <BookOpen size={12} />
+            Subjects Covered
+          </h4>
           <div className="flex flex-wrap gap-2">
-            {tech && tech.map((t, index) => (
-              <span key={index} className="px-3 py-1 bg-white/10 text-white text-xs rounded-full border border-white/20">
-                {t}
+            {subjects && subjects.map((subject, index) => (
+              <span key={index} className="px-3 py-1 bg-secondary/10 text-secondary-foreground text-xs rounded-full border border-secondary/20">
+                {subject}
               </span>
             ))}
           </div>
         </div>
 
         {/* Links */}
-        <div className="flex gap-3 pt-4 border-t border-white/10">
-          {githubLink && (
-            <a 
-              href={githubLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-all duration-300"
-            >
-              <Github size={18} />
-              <span className="text-sm">Code</span>
-            </a>
-          )}
-          {liveLink && (
-            <a 
-              href={liveLink} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-4 py-2 bg-lime-300/20 hover:bg-lime-300/30 text-lime-300 rounded-lg transition-all duration-300"
-            >
-              <ExternalLink size={18} />
-              <span className="text-sm">Live</span>
-            </a>
+        <div className="flex gap-3 pt-4 border-t border-border">
+          {comingSoon ? (
+            <div className="flex items-center gap-2 px-4 py-2 bg-muted text-muted-foreground rounded-lg cursor-not-allowed">
+              <Clock size={18} />
+              <span className="text-sm">Enroll Soon</span>
+            </div>
+          ) : (
+            <>
+              {githubLink && (
+                <a
+                  href={githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-secondary/10 hover:bg-secondary/20 text-secondary-foreground rounded-lg transition-all duration-300"
+                >
+                  <Github size={18} />
+                  <span className="text-sm">Resources</span>
+                </a>
+              )}
+              {liveLink && (
+                <a
+                  href={liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 px-4 py-2 bg-primary/10 hover:bg-primary/20 text-primary rounded-lg transition-all duration-300"
+                >
+                  <ExternalLink size={18} />
+                  <span className="text-sm">Enroll</span>
+                </a>
+              )}
+            </>
           )}
         </div>
       </div>
