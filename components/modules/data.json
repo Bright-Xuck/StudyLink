@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "ZenithScholar (BTVerse Research Ethics)",
+    "description": "A comprehensive research training platform offering courses on research methodologies, ethics, and academic writing. Features interactive quizzes, expert instructors, and verified certificates for students pursuing academic excellence.",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=500&fit=crop",
+    "tech": ["Next.js", "React", "TypeScript", "Tailwind CSS", "Node.js"],
+    "liveLink": "https://btverse-research-ethics.vercel.app/",
+    "githubLink": "",
+    "features": ["Course Management", "Interactive Quizzes", "Certificate Generation", "Multi-language Support"]
+  },
+  {
+    "id": 2,
+    "name": "Cam Chop - Food Delivery App",
+    "description": "A full-featured food delivery platform connecting restaurants, dashers, and customers. Offers grocery delivery, convenience store services, and a membership program with premium benefits.",
+    "image": "https://cam-chop.vercel.app/photos/multicuisinea.jpg",
+    "tech": ["React", "Node.js", "MongoDB", "Firebase", "Stripe API"],
+    "liveLink": "https://cam-chop.vercel.app/",
+    "githubLink": "",
+    "features": ["Real-time Tracking", "Payment Integration", "Dasher Dashboard", "Restaurant Management"]
+  },
+  {
+    "id": 3,
+    "name": "YouTube Video Downloader",
+    "description": "A command-line tool and web application for downloading YouTube videos in multiple quality formats. Supports batch downloads and playlist extraction with an intuitive interface.",
+    "image": "https://images.unsplash.com/photo-1611532736579-6b16e2b50449?w=800&h=500&fit=crop",
+    "tech": ["Python", "JavaScript", "Flask", "FFmpeg", "API Integration"],
+    "liveLink": "",
+    "githubLink": "https://github.com/Bright-Xuck/Youtube-Video-Dowloader",
+    "features": ["Quality Selection", "Batch Download", "Playlist Support", "Multiple Format Support"]
+  },
+  {
+    "id": 4,
+    "name": "Personal Portfolio",
+    "description": "A modern, fully responsive portfolio website showcasing projects, skills, and professional experience. Features smooth animations, interactive sections, and a glass-morphism design.",
+    "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=500&fit=crop",
+    "tech": ["React", "Vite", "Tailwind CSS", "React Router", "Lucide Icons"],
+    "liveLink": "https://bright-portfolio.vercel.app/",
+    "githubLink": "https://github.com/Bright-Xuck/portfolio",
+    "features": ["Smooth Scrolling", "Animated Components", "Project Showcase", "Contact Section"]
+  }
+]

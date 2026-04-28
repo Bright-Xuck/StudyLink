@@ -1,14 +1,10 @@
-import CourseCard from '@/components/modules/CourseCard';
-import { getAllCourses } from '@/lib/actions/course.actions';
 import { BookOpen } from 'lucide-react';
 import { getTranslations } from "next-intl/server";
+import Projects from '@/components/modules/projects.jsx'
 
 export default async function CoursesPage() {
   const t = await getTranslations('CoursesPage');
-  const courses = await getAllCourses();
-
-  const freeCourses = courses.filter(c => c.isFree);
-  const paidCourses = courses.filter(c => !c.isFree);
+  
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -41,95 +37,13 @@ export default async function CoursesPage() {
 
       <div className="container mx-auto px-4 py-12">
         {/* Free Courses Section */}
-        {freeCourses.length > 0 && (
-          <section className="mb-16">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-foreground mb-2">
-                  {t('freeCourses.title')}
-                </h2>
-                <p className="text-muted-foreground">
-                  {t('freeCourses.description')}
-                </p>
-              </div>
-              <span className="bg-accent text-accent-foreground px-4 py-2 rounded-full font-semibold">
-                {freeCourses.length} {t('freeCourses.countLabel')}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {freeCourses.map((course) => (
-                <CourseCard
-                  key={course._id}
-                  id={course._id}
-                  title={course.title}
-                  description={course.description}
-                  imageUrl={course.imageUrl}
-                  department={course.department}
-                  faculty={course.faculty || ""}
-                  isFree={course.isFree}
-                  price={course.price || 0}
-                  duration={course.duration}
-                  level={course.level}
-                  slug={course.slug}
-                  moduleCount={course.moduleCount}
-                />
-              ))}
-            </div>
-          </section>
-        )}
+       <Projects />
 
         {/* Premium Courses Section */}
-        {paidCourses.length > 0 && (
-          <section>
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h2 className="text-3xl font-bold text-foreground mb-2">
-                  {t('premiumCourses.title')}
-                </h2>
-                <p className="text-muted-foreground">
-                  {t('premiumCourses.description')}
-                </p>
-              </div>
-              <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full font-semibold">
-                {paidCourses.length} {t('premiumCourses.countLabel')}
-              </span>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {paidCourses.map((course) => (
-                <CourseCard
-                  key={course._id}
-                  id={course._id}
-                  title={course.title}
-                  description={course.description}
-                  imageUrl={course.imageUrl}
-                  department={course.department}
-                  faculty={course.faculty || ""}
-                  isFree={course.isFree}
-                  price={course.price || 0}
-                  duration={course.duration}
-                  level={course.level}
-                  slug={course.slug}
-                  moduleCount={course.moduleCount}
-                />
-              ))}
-            </div>
-          </section>
-        )}
+       
 
         {/* Empty State */}
-        {courses.length === 0 && (
-          <div className="text-center py-16">
-            <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-2xl font-bold text-foreground mb-2">
-              {t('emptyState.title')}
-            </h3>
-            <p className="text-muted-foreground">
-              {t('emptyState.description')}
-            </p>
-          </div>
-        )}
+        
       </div>
     </div>
   );
