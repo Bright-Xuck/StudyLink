@@ -166,7 +166,7 @@ export default async function CourseDetailPage({ params }: CourseDetailPageProps
                 </div>
                 <div className="bg-card border border-border rounded-xl p-6">
                   <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {course.objectives.map((objective, index) => (
+                    {course.objectives.map((objective: string, index: number) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle2 className="w-5 h-5 text-success flex-shrink-0 mt-1" />
                         <span className="text-muted-foreground">{objective}</span>

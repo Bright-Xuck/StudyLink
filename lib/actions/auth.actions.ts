@@ -1,7 +1,6 @@
 "use server";
 
 import { connectDB } from "@/lib/db";
-import User, { IUser } from "@/lib/models/User";
 import {
   registerSchema,
   loginSchema,
@@ -18,19 +17,17 @@ import {
 } from "@/lib/utils/jwt";
 import { sendWelcomeEmail, sendPasswordResetEmail } from "@/lib/utils/email";
 import crypto from "crypto";
+import bcrypt from "bcryptjs";
 import { ZodError } from "zod";
-import mongoose from "mongoose";
 
 export async function registerUser(data: RegisterInput, locale: string = "en") {
   try {
     // Validate input
     const validatedData = registerSchema.parse(data);
 
-    // Connect to database
-    await connectDB();
+    const sql = await connectDB();
 
-    // Check if user already exists
-    const existingUser = await User.findOne({ email: validatedData.email });
+    const [existingUser] = await sql`SELECT id FROM users WHERE email = ${validatedData.email.toLowerCase()} LIMIT 1`;
     if (existingUser) {
       return {
         success: false,
@@ -41,19 +38,17 @@ export async function registerUser(data: RegisterInput, locale: string = "en") {
       };
     }
 
-    // Create new user
-    const user = (await User.create({
-      name: validatedData.name,
-      email: validatedData.email,
-      password: validatedData.password,
-      phone: validatedData.phone,
-      department: validatedData.department,
-      role: "student",
-    })) as IUser & { _id: mongoose.Types.ObjectId };
+    const hashedPassword = await bcrypt.hash(validatedData.password, 10);
+
+    const [user] = await sql`
+      INSERT INTO users (name, email, password, phone, department, role)
+      VALUES (${validatedData.name}, ${validatedData.email.toLowerCase()}, ${hashedPassword}, ${validatedData.phone ?? null}, ${validatedData.department ?? null}, 'student')
+      RETURNING id, name, email, role
+    `;
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: user.id,
       email: user.email,
       role: user.role,
     });
@@ -71,7 +66,7 @@ export async function registerUser(data: RegisterInput, locale: string = "en") {
           ? "Compte créé avec succès!"
           : "Account created successfully!",
       user: {
-        id: user._id.toString(),
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -102,13 +97,14 @@ export async function loginUser(data: LoginInput, locale: string = "en") {
     // Validate input
     const validatedData = loginSchema.parse(data);
 
-    // Connect to database
-    await connectDB();
+    const sql = await connectDB();
 
-    // Find user and include password
-    const user = (await User.findOne({ email: validatedData.email }).select(
-      "+password"
-    )) as (IUser & { _id: mongoose.Types.ObjectId }) | null;
+    const [user] = await sql`
+      SELECT id, name, email, password, role
+      FROM users
+      WHERE email = ${validatedData.email.toLowerCase()}
+      LIMIT 1
+    `;
 
     if (!user) {
       return {
@@ -121,7 +117,7 @@ export async function loginUser(data: LoginInput, locale: string = "en") {
     }
 
     // Check password
-    const isPasswordValid = await user.comparePassword(validatedData.password);
+    const isPasswordValid = await bcrypt.compare(validatedData.password, user.password);
 
     if (!isPasswordValid) {
       return {
@@ -135,7 +131,7 @@ export async function loginUser(data: LoginInput, locale: string = "en") {
 
     // Generate JWT token
     const token = generateToken({
-      userId: user._id.toString(),
+      userId: user.id,
       email: user.email,
       role: user.role,
     });
@@ -147,7 +143,7 @@ export async function loginUser(data: LoginInput, locale: string = "en") {
       success: true,
       message: locale === "fr" ? "Connexion réussie!" : "Login successful!",
       user: {
-        id: user._id.toString(),
+        id: user.id,
         name: user.name,
         email: user.email,
         role: user.role,
@@ -200,24 +196,27 @@ export async function getAuthenticatedUser() {
       return null;
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    const user = (await User.findById(tokenPayload.userId).select(
-      "-password"
-    )) as (IUser & { _id: mongoose.Types.ObjectId }) | null;
+    const [user] = await sql`
+      SELECT id, name, email, phone, department, role, purchased_courses
+      FROM users
+      WHERE id = ${tokenPayload.userId}
+      LIMIT 1
+    `;
 
     if (!user) {
       return null;
     }
 
     return {
-      id: user._id.toString(),
+      id: user.id,
       name: user.name,
       email: user.email,
       phone: user.phone,
       department: user.department,
       role: user.role,
-      purchasedModules: user.purchasedCourses.map((id) => id.toString()),
+      purchasedModules: (user.purchased_courses || []).map((id: string) => String(id)),
     };
   } catch (error) {
     console.error("Get authenticated user error:", error);
@@ -232,9 +231,9 @@ export async function requestPasswordReset(
   try {
     const validatedData = forgotPasswordSchema.parse(data);
 
-    await connectDB();
+    const sql = await connectDB();
 
-    const user = await User.findOne({ email: validatedData.email });
+    const [user] = await sql`SELECT id, email, name FROM users WHERE email = ${validatedData.email.toLowerCase()} LIMIT 1`;
 
     if (!user) {
       // Don't reveal if user exists or not for security
@@ -255,9 +254,12 @@ export async function requestPasswordReset(
       .digest("hex");
 
     // Save hashed token and expiry to database
-    user.resetPasswordToken = hashedToken;
-    user.resetPasswordExpires = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
-    await user.save();
+    const expiresAt = new Date(Date.now() + 60 * 60 * 1000);
+    await sql`
+      UPDATE users
+      SET reset_password_token = ${hashedToken}, reset_password_expires = ${expiresAt}
+      WHERE id = ${user.id}
+    `;
 
     // Send reset email
     await sendPasswordResetEmail(user.email, user.name, resetToken, locale);
@@ -286,16 +288,19 @@ export async function resetPassword(
   locale: string = "en"
 ) {
   try {
-    await connectDB();
+    const sql = await connectDB();
 
     // Hash the token from URL
     const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
 
     // Find user with valid token
-    const user = await User.findOne({
-      resetPasswordToken: hashedToken,
-      resetPasswordExpires: { $gt: Date.now() },
-    }).select("+resetPasswordToken +resetPasswordExpires");
+    const [user] = await sql`
+      SELECT id
+      FROM users
+      WHERE reset_password_token = ${hashedToken}
+        AND reset_password_expires > NOW()
+      LIMIT 1
+    `;
 
     if (!user) {
       return {
@@ -307,11 +312,12 @@ export async function resetPassword(
       };
     }
 
-    // Update password (will be hashed by pre-save hook)
-    user.password = newPassword;
-    user.resetPasswordToken = undefined;
-    user.resetPasswordExpires = undefined;
-    await user.save();
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await sql`
+      UPDATE users
+      SET password = ${hashedPassword}, reset_password_token = NULL, reset_password_expires = NULL
+      WHERE id = ${user.id}
+    `;
 
     return {
       success: true,

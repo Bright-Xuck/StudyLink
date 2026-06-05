@@ -1,11 +1,7 @@
 "use server";
 
 import { connectDB } from "@/lib/db";
-import User from "@/lib/models/User";
-import Course, { ICourse } from "@/lib/models/Course";
-import Module from "@/lib/models/Module";
 import { getCurrentUser } from "@/lib/utils/jwt";
-import mongoose from "mongoose";
 import { getLocale } from "next-intl/server";
 
 /**
@@ -27,10 +23,9 @@ export async function enrollFreeCourse(courseId: string) {
       };
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    // Check if course exists and is free
-    const course = await Course.findById(courseId);
+    const [course] = await sql`SELECT id, is_free, enrolled_count FROM courses WHERE id = ${courseId} LIMIT 1`;
 
     if (!course) {
       return {
@@ -39,7 +34,7 @@ export async function enrollFreeCourse(courseId: string) {
       };
     }
 
-    if (!course.isFree) {
+    if (!course.is_free) {
       return {
         success: false,
         error:
@@ -49,8 +44,7 @@ export async function enrollFreeCourse(courseId: string) {
       };
     }
 
-    // Get user
-    const user = await User.findById(tokenPayload.userId);
+    const [user] = await sql`SELECT id, purchased_courses FROM users WHERE id = ${tokenPayload.userId} LIMIT 1`;
 
     if (!user) {
       return {
@@ -60,8 +54,7 @@ export async function enrollFreeCourse(courseId: string) {
     }
 
     // Check if already enrolled
-    const objectIdCourseId = new mongoose.Types.ObjectId(courseId);
-    if (user.purchasedCourses.some((id) => id.equals(objectIdCourseId))) {
+    if ((user.purchased_courses || []).includes(courseId)) {
       return {
         success: true,
         message:
@@ -72,12 +65,17 @@ export async function enrollFreeCourse(courseId: string) {
     }
 
     // Add course to user's purchased courses
-    user.purchasedCourses.push(objectIdCourseId);
-    await user.save();
+    await sql`
+      UPDATE users
+      SET purchased_courses = array_append(COALESCE(purchased_courses, '{}'::uuid[]), ${courseId}::uuid)
+      WHERE id = ${user.id}
+    `;
 
-    // Increment enrolled count
-    course.enrolledCount = (course.enrolledCount || 0) + 1;
-    await course.save();
+    await sql`
+      UPDATE courses
+      SET enrolled_count = COALESCE(enrolled_count, 0) + 1
+      WHERE id = ${course.id}
+    `;
 
     return {
       success: true,
@@ -104,23 +102,20 @@ export async function checkCourseAccess(courseId: string): Promise<boolean> {
       return false;
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    // Check if course is free
-    const course = await Course.findById(courseId);
-    if (course?.isFree) {
+    const [course] = await sql`SELECT id, is_free FROM courses WHERE id = ${courseId} LIMIT 1`;
+    if (course?.is_free) {
       return true;
     }
 
-    // Check if user purchased the course
-    const user = await User.findById(tokenPayload.userId);
+    const [user] = await sql`SELECT purchased_courses FROM users WHERE id = ${tokenPayload.userId} LIMIT 1`;
 
     if (!user) {
       return false;
     }
 
-    const objectIdCourseId = new mongoose.Types.ObjectId(courseId);
-    return user.purchasedCourses.some((id) => id.equals(objectIdCourseId));
+    return (user?.purchased_courses || []).includes(courseId);
   } catch (error) {
     console.error("Check access error:", error);
     return false;
@@ -138,16 +133,15 @@ export async function checkModuleAccess(moduleId: string): Promise<boolean> {
       return false;
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    // Get module to find parent course
-    const courseModule = await Module.findById(moduleId);
+    const [courseModule] = await sql`SELECT course_id FROM modules WHERE id = ${moduleId} LIMIT 1`;
     if (!courseModule) {
       return false;
     }
 
     // Check course access
-    return await checkCourseAccess(courseModule.courseId.toString());
+    return await checkCourseAccess(courseModule.course_id);
   } catch (error) {
     console.error("Check module access error:", error);
     return false;
@@ -166,55 +160,43 @@ export async function getUserEnrolledCourses() {
       return [];
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    const user = await User.findById(tokenPayload.userId).populate({
-      path: "purchasedCourses",
-      populate: {
-        path: "modules",
-        model: "Module",
-      },
-    });
+    const [user] = await sql`SELECT purchased_courses FROM users WHERE id = ${tokenPayload.userId} LIMIT 1`;
 
     if (!user) {
       return [];
     }
 
     // Transform courses based on locale
-    return (user.purchasedCourses as unknown as ICourse[]).map(
-      (course: ICourse) => ({
-        _id: course._id.toString(),
-        title: locale === "fr" ? course.titleFr : course.title,
-        description:
-          locale === "fr" ? course.descriptionFr : course.description,
-        slug: course.slug,
-        imageUrl: course.imageUrl,
-        department: course.department,
-        faculty: course.faculty,
-        isFree: course.isFree,
-        price: course.price,
-        duration: course.duration,
-        level: course.level,
-        moduleCount: course.modules.length,
-      })
-    );
+    const purchasedIds = (user?.purchased_courses || []).map((id: string) => String(id));
+    if (!purchasedIds.length) return [];
+
+    const courses = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, department, faculty, is_free, price, duration, level,
+             (SELECT COUNT(*) FROM modules WHERE modules.course_id = courses.id AND modules.is_published = TRUE)::int AS module_count
+      FROM courses
+      WHERE id = ANY(${purchasedIds}) AND is_published = TRUE
+    `;
+
+    return courses.map((course) => ({
+      _id: course.id,
+      title: locale === "fr" ? course.title_fr : course.title,
+      description: locale === "fr" ? course.description_fr : course.description,
+      slug: course.slug,
+      imageUrl: course.image_url,
+      department: course.department ?? "",
+      faculty: course.faculty ?? "",
+      isFree: Boolean(course.is_free),
+      price: Number(course.price ?? 0),
+      duration: course.duration ?? "",
+      level: course.level ?? "beginner",
+      moduleCount: Number(course.module_count ?? 0),
+    }));
   } catch (error) {
     console.error("Get enrolled courses error:", error);
     return [];
   }
-}
-
-interface IModuleData {
-  _id: mongoose.Types.ObjectId | string;
-  titleFr?: string;
-  title: string;
-  descriptionFr?: string;
-  description: string;
-  slug: string;
-  imageUrl: string;
-  duration: string;
-  level: string;
-  lessons?: unknown[];
 }
 
 interface EnrolledModule {
@@ -242,49 +224,50 @@ export async function getUserEnrolledModules() {
       return [];
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    const user = await User.findById(tokenPayload.userId).populate({
-      path: "purchasedCourses",
-      populate: {
-        path: "modules",
-        model: "Module",
-      },
-    });
+    const [user] = await sql`SELECT purchased_courses FROM users WHERE id = ${tokenPayload.userId} LIMIT 1`;
 
     if (!user) {
       return [];
     }
 
-    // Flatten all modules from all enrolled courses
-    const allModules: EnrolledModule[] = [];
+    const purchasedIds = (user?.purchased_courses || []).map((id: string) => String(id));
+    if (!purchasedIds.length) return [];
 
-    for (const course of user.purchasedCourses as unknown as ICourse[]) {
-      if (course.modules && Array.isArray(course.modules)) {
-        for (const courseModule of course.modules as unknown as IModuleData[]) {
-          allModules.push({
-            _id: courseModule._id.toString(),
-            courseId: course._id.toString(),
-            courseTitle: locale === "fr" ? course.titleFr : course.title,
-            title:
-              locale === "fr"
-                ? courseModule.titleFr || courseModule.title
-                : courseModule.title,
-            description:
-              locale === "fr"
-                ? courseModule.descriptionFr || courseModule.description
-                : courseModule.description,
-            slug: courseModule.slug,
-            imageUrl: courseModule.imageUrl,
-            duration: courseModule.duration,
-            level: courseModule.level,
-            lessonCount: courseModule.lessons?.length || 0,
-          });
-        }
-      }
-    }
+    const modules = await sql`
+      SELECT
+        m.id,
+        m.course_id,
+        c.title,
+        c.title_fr,
+        m.title AS module_title,
+        m.title_fr AS module_title_fr,
+        m.description,
+        m.description_fr,
+        m.slug,
+        m.image_url,
+        m.duration,
+        m.level,
+        COALESCE(jsonb_array_length(m.lessons), 0)::int AS lesson_count
+      FROM modules m
+      JOIN courses c ON c.id = m.course_id
+      WHERE m.course_id = ANY(${purchasedIds}) AND m.is_published = TRUE
+      ORDER BY m."order" ASC
+    `;
 
-    return allModules;
+    return modules.map((courseModule) => ({
+      _id: courseModule.id,
+      courseId: courseModule.course_id,
+      courseTitle: locale === "fr" ? courseModule.title_fr : courseModule.title,
+      title: locale === "fr" ? courseModule.module_title_fr : courseModule.module_title,
+      description: locale === "fr" ? courseModule.description_fr : courseModule.description,
+      slug: courseModule.slug,
+      imageUrl: courseModule.image_url,
+      duration: courseModule.duration,
+      level: courseModule.level,
+      lessonCount: Number(courseModule.lesson_count ?? 0),
+    }));
   } catch (error) {
     console.error("Get enrolled modules error:", error);
     return [];
@@ -306,9 +289,9 @@ export async function getCourseEnrollmentStatus(courseId: string) {
       };
     }
 
-    await connectDB();
+    const sql = await connectDB();
 
-    const course = await Course.findById(courseId);
+    const [course] = await sql`SELECT id, is_free, price FROM courses WHERE id = ${courseId} LIMIT 1`;
     if (!course) {
       return {
         isEnrolled: false,
@@ -333,8 +316,8 @@ export async function getCourseEnrollmentStatus(courseId: string) {
       isEnrolled: false,
       canEnroll: true,
       reason: course.isFree ? "free_course" : "paid_course",
-      price: course.price,
-      isFree: course.isFree,
+      price: Number(course.price ?? 0),
+      isFree: Boolean(course.is_free),
     };
   } catch (error) {
     console.error("Get enrollment status error:", error);
