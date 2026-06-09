@@ -36,7 +36,7 @@ export default function ProjectBoxes({ id, name, description, image, subjects, l
           </h4>
           <div className="flex flex-wrap gap-2">
             {subjects && subjects.map((subject, index) => (
-              <span key={index} className="px-3 py-1 bg-secondary/10 text-secondary-foreground text-xs rounded-full border border-secondary/20">
+              <span key={index} className="px-3 py-1 bg-secondary/10 text-secondary-background text-xs rounded-full border border-secondary/20">
                 {subject}
               </span>
             ))}

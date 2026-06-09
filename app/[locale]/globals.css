@@ -257,8 +257,8 @@
   .hero-gradient-subtle {
     background: linear-gradient(
       to bottom right,
-      oklch(0.45 0.08 195 / 0.95),
-      oklch(0.42 0.11 155 / 0.9)
+      oklch(34.188% 0.08851 246.308 / 0.95),
+      oklch(94.374% 0.01589 167.09 / 0.9)
     );
   }
 
@@ -276,12 +276,12 @@
       ),
       radial-gradient(
         at 100% 100%,
-        oklch(0.42 0.11 155 / 0.3) 0px,
+        oklch(45.132% 0.10836 121.1 / 0.3) 0px,
         transparent 50%
       ),
       radial-gradient(
         at 0% 100%,
-        oklch(0.45 0.08 195 / 0.2) 0px,
+        oklch(93.173% 0.00326 198.894 / 0.2) 0px,
         transparent 50%
       ),
       var(--background);
@@ -291,10 +291,10 @@
   .hero-gradient-animated {
     background: linear-gradient(
       -45deg,
-      oklch(0.45 0.08 195),
-      oklch(0.42 0.11 155),
+      oklch(92% 0.00704 248.243),
+      oklch(29.898% 0.10028 255.523),
       oklch(0.75 0.12 85),
-      oklch(0.42 0.11 155)
+      oklch(33.035% 0.0851 246.084)
     );
     background-size: 400% 400%;
     animation: gradient-shift 15s ease infinite;

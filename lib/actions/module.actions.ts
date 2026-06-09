@@ -1,8 +1,6 @@
 "use server";
 
 import { connectDB } from "@/lib/db";
-import Module from "@/lib/models/Module";
-import Course from "@/lib/models/Course";
 import { getLocale } from "next-intl/server";
 
 // Helper to safely extract an id string from a populated field or ObjectId
@@ -20,27 +18,41 @@ function extractId(field: any): string | undefined {
  */
 export async function getAllModules() {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const modules = await Module.find({ isPublished: true })
-      .populate("courseId")
-      .sort({ order: 1 })
-      .lean();
+    const modules = await sql`
+      SELECT
+        m.id,
+        m.course_id,
+        m.title,
+        m.title_fr,
+        m.description,
+        m.description_fr,
+        m.slug,
+        m.image_url,
+        m.duration,
+        m.level,
+        m."order",
+        COALESCE(jsonb_array_length(m.lessons), 0)::int AS lesson_count
+      FROM modules m
+      WHERE m.is_published = TRUE
+      ORDER BY m."order" ASC
+    `;
 
     // Transform data based on locale
     return modules.map((courseModule) => ({
-      _id: courseModule._id.toString(),
-      courseId: extractId(courseModule.courseId),
-      title: locale === "fr" ? courseModule.titleFr : courseModule.title,
+      _id: courseModule.id,
+      courseId: courseModule.course_id,
+      title: locale === "fr" ? courseModule.title_fr : courseModule.title,
       description:
-        locale === "fr" ? courseModule.descriptionFr : courseModule.description,
+        locale === "fr" ? courseModule.description_fr : courseModule.description,
       slug: courseModule.slug,
-      imageUrl: courseModule.imageUrl,
+      imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
       order: courseModule.order,
-      lessonCount: courseModule.lessons?.length || 0,
+      lessonCount: Number(courseModule.lesson_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching modules:", error);
@@ -53,43 +65,61 @@ export async function getAllModules() {
  */
 export async function getModuleBySlug(slug: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const courseModule = await Module.findOne({ slug, isPublished: true })
-      .populate("courseId")
-      .lean();
+    const [courseModule] = await sql`
+      SELECT
+        m.id,
+        m.course_id,
+        m.title,
+        m.title_fr,
+        m.description,
+        m.description_fr,
+        m.content,
+        m.content_fr,
+        m.objectives,
+        m.objectives_fr,
+        m.slug,
+        m.image_url,
+        m.duration,
+        m.level,
+        m."order",
+        m.lessons,
+        c.title AS course_title,
+        c.title_fr AS course_title_fr,
+        c.slug AS course_slug,
+        c.is_free AS course_is_free,
+        c.price AS course_price
+      FROM modules m
+      JOIN courses c ON c.id = m.course_id
+      WHERE m.slug = ${slug} AND m.is_published = TRUE
+      LIMIT 1
+    `;
 
     if (!courseModule) {
       return null;
     }
 
-  // Get course info (use extracted id when populated)
-  const course = await Course.findById(extractId(courseModule.courseId)).lean();
-
     return {
-      _id: courseModule._id.toString(),
-      courseId: extractId(courseModule.courseId),
-      courseName: course
-        ? locale === "fr"
-          ? course.titleFr
-          : course.title
-        : "",
-      courseSlug: course?.slug,
-      isFree: course?.isFree || false,
-      coursePrice: course?.price || 0,
-      title: locale === "fr" ? courseModule.titleFr : courseModule.title,
+      _id: courseModule.id,
+      courseId: courseModule.course_id,
+      courseName: locale === "fr" ? courseModule.course_title_fr : courseModule.course_title,
+      courseSlug: courseModule.course_slug,
+      isFree: Boolean(courseModule.course_is_free),
+      coursePrice: Number(courseModule.course_price ?? 0),
+      title: locale === "fr" ? courseModule.title_fr : courseModule.title,
       description:
-        locale === "fr" ? courseModule.descriptionFr : courseModule.description,
-      content: locale === "fr" ? courseModule.contentFr : courseModule.content,
+        locale === "fr" ? courseModule.description_fr : courseModule.description,
+      content: locale === "fr" ? courseModule.content_fr : courseModule.content,
       objectives:
-        locale === "fr" ? courseModule.objectivesFr : courseModule.objectives,
+        locale === "fr" ? courseModule.objectives_fr : courseModule.objectives,
       slug: courseModule.slug,
-      imageUrl: courseModule.imageUrl,
+      imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
       order: courseModule.order,
-      lessons: courseModule.lessons,
+      lessons: courseModule.lessons ?? [],
     };
   } catch (error) {
     console.error("Error fetching module:", error);
@@ -102,27 +132,28 @@ export async function getModuleBySlug(slug: string) {
  */
 export async function getModulesByCourse(courseId: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const modules = await Module.find({
-      courseId,
-      isPublished: true,
-    })
-      .sort({ order: 1 })
-      .lean();
+    const modules = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, duration, level, "order",
+             COALESCE(jsonb_array_length(lessons), 0)::int AS lesson_count
+      FROM modules
+      WHERE course_id = ${courseId} AND is_published = TRUE
+      ORDER BY "order" ASC
+    `;
 
     return modules.map((courseModule) => ({
-      _id: courseModule._id.toString(),
-      title: locale === "fr" ? courseModule.titleFr : courseModule.title,
+      _id: courseModule.id,
+      title: locale === "fr" ? courseModule.title_fr : courseModule.title,
       description:
-        locale === "fr" ? courseModule.descriptionFr : courseModule.description,
+        locale === "fr" ? courseModule.description_fr : courseModule.description,
       slug: courseModule.slug,
-      imageUrl: courseModule.imageUrl,
+      imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
       order: courseModule.order,
-      lessonCount: courseModule.lessons?.length || 0,
+      lessonCount: Number(courseModule.lesson_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching modules by course:", error);
@@ -135,42 +166,47 @@ export async function getModulesByCourse(courseId: string) {
  */
 export async function getFeaturedModules(limit: number = 6) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    // Get featured courses first
-    const featuredCourses = await Course.find({
-      isPublished: true,
-    })
-      .sort({ order: 1 })
-      .limit(3)
-      .lean();
+    const featuredCourses = await sql`
+      SELECT id FROM courses WHERE is_published = TRUE ORDER BY "order" ASC LIMIT 3
+    `;
 
     if (!featuredCourses.length) return [];
 
-    const courseIds = featuredCourses.map((c) => c._id);
+    const courseIds = featuredCourses.map((c) => c.id);
 
-    // Get modules from featured courses
-    const modules = await Module.find({
-      courseId: { $in: courseIds },
-      isPublished: true,
-    })
-      .populate("courseId")
-      .sort({ order: 1 })
-      .limit(limit)
-      .lean();
+    const modules = await sql`
+      SELECT
+        m.id,
+        m.course_id,
+        m.title,
+        m.title_fr,
+        m.description,
+        m.description_fr,
+        m.slug,
+        m.image_url,
+        m.duration,
+        m.level,
+        COALESCE(jsonb_array_length(m.lessons), 0)::int AS lesson_count
+      FROM modules m
+      WHERE m.course_id = ANY(${courseIds}) AND m.is_published = TRUE
+      ORDER BY m."order" ASC
+      LIMIT ${limit}
+    `;
 
     return modules.map((courseModule) => ({
-      _id: courseModule._id.toString(),
-      courseId: extractId(courseModule.courseId),
-      title: locale === "fr" ? courseModule.titleFr : courseModule.title,
+      _id: courseModule.id,
+      courseId: courseModule.course_id,
+      title: locale === "fr" ? courseModule.title_fr : courseModule.title,
       description:
-        locale === "fr" ? courseModule.descriptionFr : courseModule.description,
+        locale === "fr" ? courseModule.description_fr : courseModule.description,
       slug: courseModule.slug,
-      imageUrl: courseModule.imageUrl,
+      imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
-      lessonCount: courseModule.lessons?.length || 0,
+      lessonCount: Number(courseModule.lesson_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching featured modules:", error);
@@ -183,43 +219,59 @@ export async function getFeaturedModules(limit: number = 6) {
  */
 export async function getModuleById(moduleId: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const courseModule = await Module.findById(moduleId)
-      .populate("courseId")
-      .lean();
+    const [courseModule] = await sql`
+      SELECT
+        m.id,
+        m.course_id,
+        m.title,
+        m.title_fr,
+        m.description,
+        m.description_fr,
+        m.content,
+        m.content_fr,
+        m.objectives,
+        m.objectives_fr,
+        m.slug,
+        m.image_url,
+        m.duration,
+        m.level,
+        m.lessons,
+        c.title AS course_title,
+        c.title_fr AS course_title_fr,
+        c.is_free AS course_is_free
+      FROM modules m
+      JOIN courses c ON c.id = m.course_id
+      WHERE m.id = ${moduleId}
+      LIMIT 1
+    `;
 
     if (!courseModule) {
       return null;
     }
 
-  const course = await Course.findById(extractId(courseModule.courseId)).lean();
-
     return {
-      _id: courseModule._id.toString(),
-      courseId: extractId(courseModule.courseId),
-      courseName: course
-        ? locale === "fr"
-          ? course.titleFr
-          : course.title
-        : "",
-      isFree: course?.isFree || false,
-      title: locale === "fr" ? courseModule.titleFr : courseModule.title,
+      _id: courseModule.id,
+      courseId: courseModule.course_id,
+      courseName: locale === "fr" ? courseModule.course_title_fr : courseModule.course_title,
+      isFree: Boolean(courseModule.course_is_free),
+      title: locale === "fr" ? courseModule.title_fr : courseModule.title,
       description:
-        locale === "fr" ? courseModule.descriptionFr : courseModule.description,
-      content: locale === "fr" ? courseModule.contentFr : courseModule.content,
+        locale === "fr" ? courseModule.description_fr : courseModule.description,
+      content: locale === "fr" ? courseModule.content_fr : courseModule.content,
       objectives:
-        locale === "fr" ? courseModule.objectivesFr : courseModule.objectives,
+        locale === "fr" ? courseModule.objectives_fr : courseModule.objectives,
       slug: courseModule.slug,
-      imageUrl: courseModule.imageUrl,
+      imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
-      lessons: courseModule.lessons.map((lesson) => ({
-        _id: lesson._id?.toString(),
-        title: locale === "fr" ? lesson.titleFr : lesson.title,
+      lessons: Array.isArray(courseModule.lessons) ? courseModule.lessons.map((lesson: any) => ({
+        _id: lesson._id ?? null,
+        title: locale === "fr" ? lesson.titleFr || lesson.title : lesson.title,
         description:
-          locale === "fr" ? lesson.descriptionFr : lesson.description,
+          locale === "fr" ? lesson.descriptionFr || lesson.description : lesson.description,
         type: lesson.type,
         content:
           locale === "fr" ? lesson.contentFr || lesson.content : lesson.content,
@@ -227,7 +279,7 @@ export async function getModuleById(moduleId: string) {
         order: lesson.order,
         isPreview: lesson.isPreview,
         hasQuiz: lesson.hasQuiz,
-      })),
+      })) : [],
     };
   } catch (error) {
     console.error("Error fetching module by ID:", error);
@@ -240,25 +292,29 @@ export async function getModuleById(moduleId: string) {
  */
 export async function getNextModule(currentModuleId: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const currentModule = await Module.findById(currentModuleId).lean();
+    const [currentModule] = await sql`
+      SELECT course_id, "order" FROM modules WHERE id = ${currentModuleId} LIMIT 1
+    `;
     if (!currentModule) return null;
 
-    const nextModule = await Module.findOne({
-      courseId: currentModule.courseId,
-      order: { $gt: currentModule.order },
-      isPublished: true,
-    })
-      .sort({ order: 1 })
-      .lean();
+    const [nextModule] = await sql`
+      SELECT id, title, title_fr, slug, "order"
+      FROM modules
+      WHERE course_id = ${currentModule.course_id}
+        AND "order" > ${currentModule.order}
+        AND is_published = TRUE
+      ORDER BY "order" ASC
+      LIMIT 1
+    `;
 
     if (!nextModule) return null;
 
     return {
-      _id: nextModule._id.toString(),
-      title: locale === "fr" ? nextModule.titleFr : nextModule.title,
+      _id: nextModule.id,
+      title: locale === "fr" ? nextModule.title_fr : nextModule.title,
       slug: nextModule.slug,
       order: nextModule.order,
     };
@@ -273,25 +329,29 @@ export async function getNextModule(currentModuleId: string) {
  */
 export async function getPreviousModule(currentModuleId: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const currentModule = await Module.findById(currentModuleId).lean();
+    const [currentModule] = await sql`
+      SELECT course_id, "order" FROM modules WHERE id = ${currentModuleId} LIMIT 1
+    `;
     if (!currentModule) return null;
 
-    const previousModule = await Module.findOne({
-      courseId: currentModule.courseId,
-      order: { $lt: currentModule.order },
-      isPublished: true,
-    })
-      .sort({ order: -1 })
-      .lean();
+    const [previousModule] = await sql`
+      SELECT id, title, title_fr, slug, "order"
+      FROM modules
+      WHERE course_id = ${currentModule.course_id}
+        AND "order" < ${currentModule.order}
+        AND is_published = TRUE
+      ORDER BY "order" DESC
+      LIMIT 1
+    `;
 
     if (!previousModule) return null;
 
     return {
-      _id: previousModule._id.toString(),
-      title: locale === "fr" ? previousModule.titleFr : previousModule.title,
+      _id: previousModule.id,
+      title: locale === "fr" ? previousModule.title_fr : previousModule.title,
       slug: previousModule.slug,
       order: previousModule.order,
     };

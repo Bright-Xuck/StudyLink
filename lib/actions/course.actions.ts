@@ -1,40 +1,87 @@
 "use server";
 
 import { connectDB } from "@/lib/db";
-import Course from "@/lib/models/Course";
-import Module from "@/lib/models/Module";
 import { getLocale } from "next-intl/server";
+
+export interface CourseListItem {
+  _id: string;
+  title: string;
+  description: string;
+  slug: string;
+  imageUrl: string;
+  department: string;
+  faculty: string;
+  isFree: boolean;
+  price: number;
+  currency: string;
+  duration: string;
+  level: string;
+  order: number;
+  moduleCount: number;
+  enrolledCount: number;
+}
+
+export interface CourseDetailItem extends CourseListItem {
+  objectives: string[];
+  prerequisites: string[];
+  instructor?: string;
+  instructorBio?: string;
+  modules: unknown[];
+}
 
 /**
  * Get all published courses
  */
-export async function getAllCourses() {
+export async function getAllCourses(): Promise<CourseListItem[]> {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const courses = await Course.find({ isPublished: true })
-      .populate("modules")
-      .sort({ order: 1 })
-      .lean();
+    const courses = await sql`
+      SELECT
+        id,
+        title,
+        title_fr,
+        description,
+        description_fr,
+        slug,
+        image_url,
+        department,
+        faculty,
+        is_free,
+        price,
+        currency,
+        duration,
+        level,
+        "order",
+        enrolled_count,
+        (
+          SELECT COUNT(*)
+          FROM modules
+          WHERE modules.course_id = courses.id
+            AND modules.is_published = TRUE
+        )::int AS module_count
+      FROM courses
+      WHERE is_published = TRUE
+      ORDER BY "order" ASC
+    `;
 
-    // Transform data based on locale
     return courses.map((course) => ({
-      _id: course._id.toString(),
-      title: locale === "fr" ? course.titleFr : course.title,
-      description: locale === "fr" ? course.descriptionFr : course.description,
+      _id: course.id,
+      title: locale === "fr" ? course.title_fr : course.title,
+      description: locale === "fr" ? course.description_fr : course.description,
       slug: course.slug,
-      imageUrl: course.imageUrl,
-      department: course.department,
-      faculty: course.faculty,
-      isFree: course.isFree,
-      price: course.price,
-      currency: course.currency,
-      duration: course.duration,
-      level: course.level,
+      imageUrl: course.image_url,
+      department: course.department ?? "",
+      faculty: course.faculty ?? "",
+      isFree: course.is_free,
+      price: Number(course.price),
+      currency: course.currency ?? "XAF",
+      duration: course.duration ?? "",
+      level: course.level ?? "beginner",
       order: course.order,
-      moduleCount: course.modules.length,
-      enrolledCount: course.enrolledCount,
+      moduleCount: Number(course.module_count ?? 0),
+      enrolledCount: Number(course.enrolled_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching courses:", error);
@@ -45,39 +92,71 @@ export async function getAllCourses() {
 /**
  * Get course by slug with all modules
  */
-export async function getCourseBySlug(slug: string) {
+export async function getCourseBySlug(slug: string): Promise<CourseDetailItem | null> {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const course = await Course.findOne({ slug, isPublished: true })
-      .populate("modules")
-      .lean();
+    const [course] = await sql`
+      SELECT
+        id,
+        title,
+        title_fr,
+        description,
+        description_fr,
+        objectives,
+        objectives_fr,
+        prerequisites,
+        prerequisites_fr,
+        slug,
+        image_url,
+        department,
+        faculty,
+        is_free,
+        price,
+        currency,
+        duration,
+        level,
+        instructor,
+        instructor_bio,
+        enrolled_count
+      FROM courses
+      WHERE slug = ${slug} AND is_published = TRUE
+      LIMIT 1
+    `;
 
     if (!course) {
       return null;
     }
 
+    const modules = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, duration, level, "order"
+      FROM modules
+      WHERE course_id = ${course.id} AND is_published = TRUE
+      ORDER BY "order" ASC
+    `;
+
     return {
-      _id: course._id.toString(),
-      title: locale === "fr" ? course.titleFr : course.title,
-      description: locale === "fr" ? course.descriptionFr : course.description,
-      objectives: locale === "fr" ? course.objectivesFr : course.objectives,
-      prerequisites:
-        locale === "fr" ? course.prerequisitesFr : course.prerequisites,
+      _id: course.id,
+      title: locale === "fr" ? course.title_fr : course.title,
+      description: locale === "fr" ? course.description_fr : course.description,
+      objectives: locale === "fr" ? course.objectives_fr : course.objectives,
+      prerequisites: locale === "fr" ? course.prerequisites_fr : course.prerequisites,
       slug: course.slug,
-      imageUrl: course.imageUrl,
-      department: course.department,
-      faculty: course.faculty,
-      isFree: course.isFree,
-      price: course.price,
-      currency: course.currency,
-      duration: course.duration,
-      level: course.level,
-      instructor: course.instructor,
-      instructorBio: course.instructorBio,
-      modules: course.modules,
-      enrolledCount: course.enrolledCount,
+      imageUrl: course.image_url,
+      department: course.department ?? "",
+      faculty: course.faculty ?? "",
+      isFree: course.is_free,
+      price: Number(course.price),
+      currency: course.currency ?? "XAF",
+      duration: course.duration ?? "",
+      level: course.level ?? "beginner",
+      instructor: course.instructor ?? "",
+      instructorBio: course.instructor_bio ?? "",
+      modules,
+      order: 0,
+      moduleCount: modules.length,
+      enrolledCount: Number(course.enrolled_count ?? 0),
     };
   } catch (error) {
     console.error("Error fetching course:", error);
@@ -90,28 +169,28 @@ export async function getCourseBySlug(slug: string) {
  */
 export async function getCoursesByDepartment(department: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const courses = await Course.find({
-      department,
-      isPublished: true,
-    })
-      .populate("modules")
-      .sort({ order: 1 })
-      .lean();
+    const courses = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, is_free, price, duration, level,
+             (SELECT COUNT(*) FROM modules WHERE modules.course_id = courses.id AND modules.is_published = TRUE)::int AS module_count
+      FROM courses
+      WHERE department = ${department} AND is_published = TRUE
+      ORDER BY "order" ASC
+    `;
 
     return courses.map((course) => ({
-      _id: course._id.toString(),
-      title: locale === "fr" ? course.titleFr : course.title,
-      description: locale === "fr" ? course.descriptionFr : course.description,
+      _id: course.id,
+      title: locale === "fr" ? course.title_fr : course.title,
+      description: locale === "fr" ? course.description_fr : course.description,
       slug: course.slug,
-      imageUrl: course.imageUrl,
-      isFree: course.isFree,
-      price: course.price,
-      duration: course.duration,
-      level: course.level,
-      moduleCount: course.modules.length,
+      imageUrl: course.image_url,
+      isFree: Boolean(course.is_free),
+      price: Number(course.price ?? 0),
+      duration: course.duration ?? "",
+      level: course.level ?? "beginner",
+      moduleCount: Number(course.module_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching courses by department:", error);
@@ -124,27 +203,30 @@ export async function getCoursesByDepartment(department: string) {
  */
 export async function getFeaturedCourses(limit: number = 6) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const courses = await Course.find({ isPublished: true })
-      .populate("modules")
-      .sort({ order: 1 })
-      .limit(limit)
-      .lean();
+    const courses = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, department, is_free, price, duration, level,
+             (SELECT COUNT(*) FROM modules WHERE modules.course_id = courses.id AND modules.is_published = TRUE)::int AS module_count
+      FROM courses
+      WHERE is_published = TRUE
+      ORDER BY "order" ASC
+      LIMIT ${limit}
+    `;
 
     return courses.map((course) => ({
-      _id: course._id.toString(),
-      title: locale === "fr" ? course.titleFr : course.title,
-      description: locale === "fr" ? course.descriptionFr : course.description,
+      _id: course.id,
+      title: locale === "fr" ? course.title_fr : course.title,
+      description: locale === "fr" ? course.description_fr : course.description,
       slug: course.slug,
-      imageUrl: course.imageUrl,
-      department: course.department,
-      isFree: course.isFree,
-      price: course.price,
-      duration: course.duration,
-      level: course.level,
-      moduleCount: course.modules.length,
+      imageUrl: course.image_url,
+      department: course.department ?? "",
+      isFree: Boolean(course.is_free),
+      price: Number(course.price ?? 0),
+      duration: course.duration ?? "",
+      level: course.level ?? "beginner",
+      moduleCount: Number(course.module_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching featured courses:", error);
@@ -157,26 +239,27 @@ export async function getFeaturedCourses(limit: number = 6) {
  */
 export async function getCourseModules(courseId: string) {
   try {
-    await connectDB();
+    const sql = await connectDB();
     const locale = await getLocale();
 
-    const modules = await Module.find({
-      courseId,
-      isPublished: true,
-    })
-      .sort({ order: 1 })
-      .lean();
+    const modules = await sql`
+      SELECT id, title, title_fr, description, description_fr, slug, image_url, duration, level, "order",
+             COALESCE(jsonb_array_length(lessons), 0)::int AS lesson_count
+      FROM modules
+      WHERE course_id = ${courseId} AND is_published = TRUE
+      ORDER BY "order" ASC
+    `;
 
     return modules.map((module) => ({
-      _id: module._id.toString(),
-      title: locale === "fr" ? module.titleFr : module.title,
-      description: locale === "fr" ? module.descriptionFr : module.description,
+      _id: module.id,
+      title: locale === "fr" ? module.title_fr : module.title,
+      description: locale === "fr" ? module.description_fr : module.description,
       slug: module.slug,
-      imageUrl: module.imageUrl,
-      duration: module.duration,
-      level: module.level,
+      imageUrl: module.image_url,
+      duration: module.duration ?? "",
+      level: module.level ?? "beginner",
       order: module.order,
-      lessonCount: module.lessons.length,
+      lessonCount: Number(module.lesson_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching course modules:", error);
@@ -189,24 +272,20 @@ export async function getCourseModules(courseId: string) {
  */
 export async function getDepartmentsWithCourses() {
   try {
-    await connectDB();
+    const sql = await connectDB();
 
-    const departments = await Course.aggregate([
-      { $match: { isPublished: true } },
-      {
-        $group: {
-          _id: "$department",
-          courseCount: { $sum: 1 },
-          faculty: { $first: "$faculty" },
-        },
-      },
-      { $sort: { _id: 1 } },
-    ]);
+    const departments = await sql`
+      SELECT department, faculty, COUNT(*)::int AS course_count
+      FROM courses
+      WHERE is_published = TRUE
+      GROUP BY department, faculty
+      ORDER BY department ASC
+    `;
 
     return departments.map((dept) => ({
-      department: dept._id,
-      faculty: dept.faculty,
-      courseCount: dept.courseCount,
+      department: dept.department,
+      faculty: dept.faculty ?? "",
+      courseCount: Number(dept.course_count ?? 0),
     }));
   } catch (error) {
     console.error("Error fetching departments:", error);

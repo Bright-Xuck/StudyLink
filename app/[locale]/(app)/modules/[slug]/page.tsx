@@ -161,7 +161,7 @@ export default async function ModuleDetailPage({ params, searchParams }: ModuleD
                     {t('learningObjectives')}
                   </h2>
                   <ul className="space-y-3">
-                    {courseModule.objectives.map((objective, index) => (
+                    {courseModule.objectives.map((objective: string, index: number) => (
                       <li key={index} className="flex items-start gap-3">
                         <CheckCircle className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                         <span className="text-muted-foreground">{objective}</span>
