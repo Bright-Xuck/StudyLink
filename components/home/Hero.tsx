@@ -3,9 +3,11 @@
 import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import { Link } from "@/i18n/navigation";
+import { useAuth } from '@/lib/contexts/AuthProvider';
 
 export default function Hero() {
   const t = useTranslations('hero');
+  const { user } = useAuth();
 
   return (
     <section className="relative hero-gradient-animated text-primary-foreground lg:py-46 py-20 md:py-32 max-lg:mt-20">
@@ -35,7 +37,7 @@ export default function Hero() {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href={`/register`}
+              href={user ? `/courses` : `/register`}
               className="bg-background text-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-all shadow-lg hover:shadow-xl inline-flex items-center justify-center group"
             >
               {t('cta')}
