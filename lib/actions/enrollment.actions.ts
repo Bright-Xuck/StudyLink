@@ -104,11 +104,6 @@ export async function checkCourseAccess(courseId: string): Promise<boolean> {
 
     const sql = await connectDB();
 
-    const [course] = await sql`SELECT id, is_free FROM courses WHERE id = ${courseId} LIMIT 1`;
-    if (course?.is_free) {
-      return true;
-    }
-
     const [user] = await sql`SELECT purchased_courses FROM users WHERE id = ${tokenPayload.userId} LIMIT 1`;
 
     if (!user) {
