@@ -199,19 +199,6 @@ export async function getUserEnrolledCourses() {
   }
 }
 
-interface EnrolledModule {
-  _id: string;
-  courseId: string;
-  courseTitle: string;
-  title: string;
-  description: string;
-  slug: string;
-  imageUrl: string;
-  duration: string;
-  level: string;
-  lessonCount: number;
-}
-
 /**
  * Get user's enrolled modules (across all courses)
  */

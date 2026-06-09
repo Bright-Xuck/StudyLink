@@ -3,16 +3,6 @@
 import { connectDB } from "@/lib/db";
 import { getLocale } from "next-intl/server";
 
-// Helper to safely extract an id string from a populated field or ObjectId
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function extractId(field: any): string | undefined {
-  if (!field) return undefined;
-  if (typeof field === "string") return field;
-  if (field._id) return field._id.toString();
-  if (typeof field.toString === "function") return field.toString();
-  return undefined;
-}
-
 /**
  * Get all modules (across all courses)
  */
@@ -267,7 +257,7 @@ export async function getModuleById(moduleId: string) {
       imageUrl: courseModule.image_url,
       duration: courseModule.duration,
       level: courseModule.level,
-      lessons: Array.isArray(courseModule.lessons) ? courseModule.lessons.map((lesson: any) => ({
+      lessons: Array.isArray(courseModule.lessons) ? courseModule.lessons.map((lesson: Record<string, unknown>) => ({
         _id: lesson._id ?? null,
         title: locale === "fr" ? lesson.titleFr || lesson.title : lesson.title,
         description:
