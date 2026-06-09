@@ -40,8 +40,6 @@ export default function Features() {
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             {t('title')}
           </h2>
-          <h1>jrbckejbckjebckjebckejbckejc</h1>
-          <h3>kckeckjcbkejbckecbkefjcbkj</h3>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
