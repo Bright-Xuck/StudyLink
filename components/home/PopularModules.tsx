@@ -109,9 +109,9 @@ export default function PopularModules({ modules }: PopularModulesProps) {
                 </h3>
 
                 {/* Description */}
-                <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
+                {/* <p className="text-muted-foreground mb-4 line-clamp-2 leading-relaxed">
                   {t(module.description)}
-                </p>
+                </p> */}
 
                 {/* Stats */}
                 <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">

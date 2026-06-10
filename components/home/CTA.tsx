@@ -1,8 +1,12 @@
+"use client";
+
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
+import { useAuth } from "@/lib/contexts/AuthProvider";
 
 export default function CTA() {
   const t = useTranslations();
+  const { user } = useAuth();
 
   return (
     <section className="py-20 bg-primary text-primary-foreground">
@@ -14,7 +18,7 @@ export default function CTA() {
           {t("cta.description")}
         </p>
         <Link
-          href="/register"
+          href={user ? "/dashboard" : "/register"}
           className="inline-block bg-background text-foreground px-8 py-4 rounded-lg font-semibold hover:opacity-90 transition-opacity shadow-lg"
         >
           {t("cta.button")}

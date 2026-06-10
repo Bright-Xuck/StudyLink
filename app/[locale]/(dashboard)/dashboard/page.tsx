@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getAuthenticatedUser } from "@/lib/actions/auth.actions";
-import { getUserEnrolledModules } from "@/lib/actions/enrollment.actions";
+import { getUserEnrolledCourses } from "@/lib/actions/enrollment.actions";
 import { getUserStats, getAllUserProgress } from "@/lib/actions/progress.actions";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
@@ -55,13 +55,14 @@ export default async function DashboardPage() {
 
   const t = await getTranslations("dashboard");
 
-  const [enrolledModules, userStats, allProgress] = await Promise.all([
-    getUserEnrolledModules(),
+  const [enrolledCourses, userStats, allProgress] = await Promise.all([
+    getUserEnrolledCourses(),
     getUserStats(),
     getAllUserProgress(),
   ]);
 
   // Format time spent into hours and minutes
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const formatTimeSpent = (minutes: number) => {
     const hours = Math.floor(minutes / 60);
     const mins = minutes % 60;
@@ -302,7 +303,7 @@ export default async function DashboardPage() {
             </Link>
           </div>
 
-          {enrolledModules.length === 0 ? (
+          {enrolledCourses.length === 0 ? (
             <div className="bg-card border border-border rounded-xl p-12 text-center">
               <BookOpen className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-xl font-semibold text-foreground mb-2">
@@ -320,7 +321,7 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(enrolledModules as ModuleData[]).map((course: ModuleData) => {
+              {(enrolledCourses as ModuleData[]).map((course: ModuleData) => {
                 const courseProgress = (allProgress as ProgressData[])?.find(
                   (p: ProgressData) =>
                     p.courseId._id?.toString() === course._id ||

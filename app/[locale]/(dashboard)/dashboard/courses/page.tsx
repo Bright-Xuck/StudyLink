@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { getAuthenticatedUser } from "@/lib/actions/auth.actions";
-import { getUserEnrolledModules } from "@/lib/actions/enrollment.actions";
+import { getUserEnrolledCourses } from "@/lib/actions/enrollment.actions";
 import { getAllUserProgress } from "@/lib/actions/progress.actions";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
@@ -44,8 +44,8 @@ export default async function MyCoursesPage() {
   }
 
   const t = await getTranslations("myCourses");
-  const [enrolledModules, allProgress] = await Promise.all([
-    getUserEnrolledModules(),
+  const [enrolledCourses, allProgress] = await Promise.all([
+    getUserEnrolledCourses(),
     getAllUserProgress(),
   ]);
 
@@ -56,7 +56,7 @@ export default async function MyCoursesPage() {
   const inProgressCourses = (allProgress as ProgressData[]).filter(
     (p: ProgressData) => !p.completedAt
   );
-  const notStartedCourses = (enrolledModules as ModuleData[]).filter(
+  const notStartedCourses = (enrolledCourses as ModuleData[]).filter(
     (course: ModuleData) =>
       !(allProgress as ProgressData[]).find(
         (p: ProgressData) =>
@@ -65,8 +65,8 @@ export default async function MyCoursesPage() {
       )
   );
 
-  // Check if user has any courses (from either enrolledModules or allProgress)
-  const hasAnyCourses = enrolledModules.length > 0 || allProgress.length > 0;
+  // Check if user has any courses
+  const hasAnyCourses = enrolledCourses.length > 0 || allProgress.length > 0;
 
   return (
     <div className="min-h-screen bg-background">
@@ -89,7 +89,7 @@ export default async function MyCoursesPage() {
               <div>
                 <p className="text-sm text-muted-foreground">{t("totalEnrolled")}</p>
                 <p className="text-2xl font-bold text-foreground">
-                  {enrolledModules.length}
+                  {enrolledCourses.length}
                 </p>
               </div>
             </div>
