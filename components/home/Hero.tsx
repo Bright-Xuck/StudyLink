@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl';
 import { ArrowRight } from 'lucide-react';
 import { Link } from "@/i18n/navigation";
 import { useAuth } from '@/lib/contexts/AuthProvider';
+import { log } from 'console';
 
 export default function Hero() {
   const t = useTranslations('hero');
